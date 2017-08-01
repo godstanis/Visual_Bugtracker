@@ -1,1 +1,3 @@
 # BugWall_Visual_Bugtracker
+
+Will be updated soon...
