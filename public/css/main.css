@@ -1,0 +1,93 @@
+body{
+    font-family: 'Open Sans', sans-serif;
+    background-color: #F6F6F6;
+}
+
+*::selection{
+    background-color: #22B573;
+    color: white;
+}
+
+.content{
+    padding-top: 60px;
+}
+
+.navbar-nav>li>a.profile-image {
+    padding: 10px;
+}
+
+.btn, .alert{
+    border-radius: 0;
+}
+
+.modal{
+    z-index: 999999;
+}
+
+.modal-content{
+    border-radius: 0;
+    border: none;
+}
+
+.modal-content .modal-header{
+    background-color: #22B573;
+    color: white;
+}
+
+.panel{
+    border-radius: 0;
+}
+.panel .panel-heading{
+    background-color: #22B573;
+    border-radius: 0;
+    color: white;
+}
+
+.form-control{
+    border-radius: 0;
+}
+.input-group-addon{
+    border-radius: 0;
+}
+.breadcrumb{
+    border-radius: 0;
+}
+
+.image-input-block input{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.image-input-block label{
+    width: 100%;
+    font-size: 1.10em;
+    font-weight: 700;
+    color: white;
+    background-color: #EC9223;
+    display: inline-block;
+
+    cursor: pointer;
+
+    text-align: center;
+}
+
+.dropdown-menu > li > a:hover{
+    background-color: #22B573;
+    color: white;
+}
+
+@media only screen and (max-width:600px){
+    .content .container {
+        padding-left:0;
+        padding-right:0;
+    }
+
+    .content.container {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+}

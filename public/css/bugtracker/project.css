@@ -1,0 +1,53 @@
+.project-navigation-menu-bar{
+    margin: 10px 0;
+    padding: 0;
+}
+
+
+.project-navigation-menu-bar a{
+    padding: 20px;
+}
+
+@media only screen and (max-width:590px){
+   .project-navigation-menu-bar .navigation-text{
+        display: none;
+    }
+    .project-navigation-menu-bar a{
+        padding: 20px;
+        font-size: 20px;
+    }
+}
+
+.project-creator-badge{
+    border: 2px solid gray;
+    border-radius: 5px;
+    padding: 1px;
+
+    display: inline-block;
+
+    cursor: default;
+
+    font-size: 10px;
+
+    color: gray;
+}
+
+
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    box-shadow: 0 0 5px gray;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
