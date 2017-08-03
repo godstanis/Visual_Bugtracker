@@ -158,7 +158,7 @@ window.Pusher = __webpack_require__(6);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   //authEndpoint : 'http://localhost:8080/Laravel/bugwall-dev/public/broadcasting/auth',
-  authEndpoint: 'http://localhost:8080/Laravel/bugwall-dev/public/pusher-auth',
+  authEndpoint: 'http://localhost:8080/Laravel/BugWall_Visual_Bugtracker/public/pusher-auth',
   //authEndpoint: 'http://bugwall.ru/pusher-auth',
   broadcaster: 'pusher',
   key: 'd14443724916b9ffc79e',
