@@ -1,3 +1,3 @@
 # BugWall_Visual_Bugtracker
 
-Will be updated soon...
+Bug tracing system with a visual editor.
