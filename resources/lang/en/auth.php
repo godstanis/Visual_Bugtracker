@@ -33,6 +33,8 @@ return [
 
     'site_uses_cookies' => 'By submitting this form, you agree to use cookie-files on this site.',
 
+    'account_is_not_activated' => 'Your account is not activated, please follow the activation instructions in the email we sent you',
+
     'activation_failed' => 'No such activation token found',
     'problems_with_activation_question' => 'Problems with activation? Contact us',
 

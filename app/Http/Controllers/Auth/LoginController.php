@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -19,6 +20,22 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
+    /**
+     * The user has been authenticated. We are checking the activation status here.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        if(! $user->activated) {
+            auth()->logout();
+            return back()->with('warning', __('auth.account_is_not_activated'));
+        }
+        return redirect()->intended($this->redirectPath());
+    }
 
     /**
      * Where to redirect users after login.
