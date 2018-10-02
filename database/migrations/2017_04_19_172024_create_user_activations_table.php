@@ -17,7 +17,7 @@ class CreateUserActivationsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('token');
-            $table->timestamp('created_at');
+            $table->timestamps();
         });
     }
 
