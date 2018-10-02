@@ -19,15 +19,13 @@
         @endif
     </div>
 @if(!$issues->isEmpty())
-
-
     <div class="issues-block">
         @include('bugtracker.project.partials.issues-block')
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#create-issue-modal">@lang('projects.issue_create')</button>
     </div>
 @else
     <div class="alert alert-info">There is no issues yet, add one!</div>
 @endif
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#create-issue-modal">@lang('projects.issue_create')</button>
 
 <div>
     {!! View::make('bugtracker.project.partials.issue_create_modal', ['project'=>$project])->render() !!}
