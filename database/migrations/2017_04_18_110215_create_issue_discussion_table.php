@@ -18,8 +18,8 @@ class CreateIssueDiscussionTable extends Migration
             $table->integer('issue_id');
             $table->integer('user_id');
             $table->longText('text');
+            $table->boolean('deleted')->default(false);
             $table->timestamps();
-            $table->boolean('deleted');
         });
     }
 

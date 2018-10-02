@@ -21,12 +21,12 @@ class CreateIssuesTable extends Migration
             $table->integer('type_id');
             $table->integer('priority_id');
             $table->integer('created_by_user_id');
-            $table->integer('closed_by_user_id')->default(null);
+            $table->integer('closed_by_user_id')->nullable();
             $table->integer('assigned_to_user_id');
-            $table->integer('path_id')->default(null);
+            $table->integer('path_id')->nullable();
             $table->boolean('closed')->default(false);
-            $table->timestamps();
             $table->boolean('deleted')->default(false);
+            $table->timestamps();
         });
     }
 

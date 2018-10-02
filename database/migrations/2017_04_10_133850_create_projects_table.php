@@ -19,7 +19,7 @@ class CreateProjectsTable extends Migration
             $table->string('description');
             $table->integer('creator_user_id');
             $table->string('thumbnail_img');
-            $table->string('website_url');
+            $table->string('website_url')->nullable();
             $table->timestamps();
         });
     }
