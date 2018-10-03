@@ -2,9 +2,20 @@
 
 Bug tracking system with a visual editor.
 
-<img src="https://github.com/StanislavBogatov/BugWall_Visual_Bugtracker/blob/master/github_screenshots/444.JPG?raw=true"></img>
-<img src="https://github.com/StanislavBogatov/BugWall_Visual_Bugtracker/blob/master/github_screenshots/111.JPG?raw=true"></img>
+---
 
+#### Technologies used in this project:
+<img src="https://github.com/StanislavBogatov/BugWall_Visual_Bugtracker/blob/master/github_screenshots/technologies_used.PNG?raw=true"></img>
+
+---
+
+#### Application screenshots:
+
+<img width="40%" src="https://github.com/StanislavBogatov/BugWall_Visual_Bugtracker/blob/master/github_screenshots/444.JPG?raw=true"></img>
+<img width="50%" src="https://github.com/StanislavBogatov/BugWall_Visual_Bugtracker/blob/master/github_screenshots/111.JPG?raw=true"></img>
+---
+
+## Project installation:
 #### 1. Update composer dependencies:
 ```
 composer update
