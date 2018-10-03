@@ -2,38 +2,12 @@
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Bugtracker Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| Bugtracker related routes are stored here.
 |
 */
-
-Auth::routes();
-
-Route::post('/pusher-auth', 'PusherAuthController@authorizeBoardChannel')->middleware('auth');
-
-Route::get('account-activation/{token}', 'Auth\ActivationController@activate')->name('account.activation');
-
-Route::get('/', 'HomeController@getHomePage')->name('home');
-
-
-Route::group(['prefix'=>'user', 'middleware'=>'auth'], function(){
-
-    Route::get('{user}/settings', 'User\UserController@getUserSettings')->name('user.settings');
-
-    Route::post('', 'User\UserController@postUserProfileImage')->name('user.update');
-
-    Route::get('{user}', 'User\UserController@getUserPage')->name('user');
-    
-    Route::get('', function(){
-        abort(404);
-    });
-
-});
-
 
 Route::group(['prefix'=>'bugtracker', 'middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
 
@@ -55,7 +29,7 @@ Route::group(['prefix'=>'bugtracker', 'middleware'=>'auth', 'namespace'=>'Bugtra
 
         Route::post('delete-project', 'ProjectsController@postDeleteProject')
             ->name('bugtracker.delete_project')->middleware('can:delete,project');
-        
+
         Route::group(['prefix'=>'boards'], function(){
 
             Route::get('', 'BoardsController@getProjectBoards')
@@ -64,11 +38,11 @@ Route::group(['prefix'=>'bugtracker', 'middleware'=>'auth', 'namespace'=>'Bugtra
                 ->name('project.create_board');
             Route::post('{board}/delete-board', 'BoardsController@postDeleteBoard')
                 ->name('project.delete_board')->middleware('can:delete,board');
-            
+
         });
 
 
-        
+
         Route::group(['prefix'=>'issues'], function(){
 
             Route::get('', 'IssuesController@getProjectIssues')
@@ -82,16 +56,16 @@ Route::group(['prefix'=>'bugtracker', 'middleware'=>'auth', 'namespace'=>'Bugtra
                 ->name('project.issue.close')->middleware('can:delete,issue');
             Route::post('open_issue/{issue}', 'IssuesController@openIssue')
                 ->name('project.issue.open')->middleware('can:delete,issue');
-                
+
 
             Route::get('{issue}/discussion', 'IssueDiscussionController@getDiscussion')
                 ->name('project.issue.discussion');
             Route::post('{issue}/discussion', 'IssueDiscussionController@createMessage')
                 ->name('project.issue.discussion.create');
-                
+
 
         });
-        
+
 
         Route::group(['prefix'=>'team'], function(){
 
@@ -132,16 +106,9 @@ Route::group(['prefix'=>'bugtracker', 'middleware'=>'auth', 'namespace'=>'Bugtra
 
             Route::get('{board?}', 'EditorController@getEditor')->name('project.editor');
 
-            
+
         });
 
     });
 
-});
-
-Route::get('lang/{lang}', ['uses'=>'LanguageController@setLang'])->name('lang.set');
-
-
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
 });
