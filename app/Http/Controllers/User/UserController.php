@@ -15,7 +15,7 @@ class UserController extends Controller
         $data = [
             'userName' => $user->name,
             'userEmail' => $user->email,
-            'profileImagePath' => $user->getImageLink(),
+            'profileImagePath' => $user->imageLink(),
         ];
 
         return view('user.one', $data);
@@ -26,7 +26,7 @@ class UserController extends Controller
         $data = [
             'userName' => auth()->user()->name,
             'userEmail' => auth()->user()->email,
-            'profileImagePath' => auth()->user()->getImageLink(),
+            'profileImagePath' => auth()->user()->imageLink(),
         ];
         
         return view('user.settings', $data);
