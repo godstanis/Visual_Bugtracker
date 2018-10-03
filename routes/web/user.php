@@ -5,7 +5,7 @@
 | User Routes
 |--------------------------------------------------------------------------
 |
-| User related routes are stored here.
+| User related routes are listed here.
 |
 */
 
