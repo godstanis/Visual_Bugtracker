@@ -20,10 +20,11 @@ class CreatePathsTable extends Migration
             //path attributes
             $table->string('stroke_color')->default('green');
             $table->integer('stroke_width')->default(4);
+            $table->string('path_slug');
             $table->longText('path_data');
             // end attributes
-            $table->timestamps();
             $table->boolean('deleted')->default(false);
+            $table->timestamps();
         });
     }
 
