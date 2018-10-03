@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Board extends Model
 {
@@ -25,6 +26,12 @@ class Board extends Model
     public function messages()
     {
         return $this->hasMany('\App\BoardMessage', 'board_id', 'id');
+    }
+
+    public function sourceImageUrl()
+    {
+        $imagePath = config('images.boards_images_dir') . '/' . $this->thumb_image;
+        return Storage::disk('s3')->url($imagePath);
     }
 
     public function getAllJsonPaths()

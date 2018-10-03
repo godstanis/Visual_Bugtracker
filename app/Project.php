@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Project extends Model
 {
@@ -42,5 +43,11 @@ class Project extends Model
     public function getRouteKeyName()
     {
         return 'id';
+    }
+
+    public function thumbnailUrl()
+    {
+        $imagePath = config('images.project_thumb_dir') . '/' . $this->thumbnail_img;
+        return Storage::disk('s3')->url($imagePath);
     }
 }

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
@@ -39,9 +40,10 @@ class User extends Authenticatable
         return 'name';
     }
 
-    public function getImageLink()
+    public function imageLink()
     {
-        return config('images.amazon_base_link') . config('images.user_avatar_dir') . '/' . $this->profile_image;
+        $imagePath = config('images.user_avatar_dir') . '/' . $this->profile_image;
+        return Storage::disk('s3')->url($imagePath);
     }
 
 }

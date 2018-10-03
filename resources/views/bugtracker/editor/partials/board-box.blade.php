@@ -11,13 +11,13 @@
         </div>
         <h4 class="board-title board-box-title">{{ $board->name }}</h4>
         <div class="board-box-img">
-            <img src="{{config('images.amazon_base_link').config('images.boards_images_dir').'/'.$board->thumb_image}}" alt="">
+            <img src="{{ $board->sourceImageUrl() }}" alt="">
         </div>
         <div class="board-box-credentials">
             <span class="pull-right board-box-creator">
                 <span class="text-muted"><em><small>@lang('projects.board_created_by')</small></em></span>
                 <span><a href="{{route('user', ['user'=>$board->creator])}}"><span>@</span>{{ $board->creator->name }}</a></span>
-                <img width="20px" src="https://s3.eu-central-1.amazonaws.com/bugwall.ru/user_profile_images/{{ $board->creator->profile_image }}" alt="profile image">
+                <img width="20px" src="{{ $board->creator->imageLink() }}" alt="profile image">
             </span>
         </div>
     

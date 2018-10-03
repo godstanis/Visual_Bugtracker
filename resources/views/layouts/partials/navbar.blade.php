@@ -38,7 +38,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle profile-image" data-toggle="dropdown" role="button" aria-expanded="false">
                         
-                            <img src="{{ Auth::user()->getImageLink() }}" width="30px" height="30px">
+                            <img src="{{ Auth::user()->imageLink() }}" width="30px" height="30px">
 
                             <span>{{ Auth::user()->name }} <span class="caret"></span></span>
                         </a>

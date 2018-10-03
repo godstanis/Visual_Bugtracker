@@ -30,13 +30,13 @@
         <td>
             <a href="{{ route('user', ['user_name'=>$issue->creator->name]) }}">
                 <span>@</span>{{ $issue->creator->name }}
-                <img class="user-profile-image" src="https://s3.eu-central-1.amazonaws.com/bugwall.ru/user_profile_images/{{ $issue->creator->profile_image }}" alt="" width="20px">
+                <img class="user-profile-image" src="{{ $issue->creator->imageLink() }}" alt="" width="20px">
             </a>
         </td>
         <td>
             <a href="{{ route('user', ['user_name'=>$issue->assignedUser->name]) }}">
                 <span>@</span>{{ $issue->assignedUser->name }}
-                <img class="user-profile-image" src="https://s3.eu-central-1.amazonaws.com/bugwall.ru/user_profile_images/{{ $issue->assignedUser->profile_image }}" alt="" width="20px"></a>
+                <img class="user-profile-image" src="{{ $issue->assignedUser->imageLink() }}" alt="" width="20px"></a>
             </a>
         </td>
         <td>{{ date('m-d-Y, h:s', strtotime($issue->created_at)) }}</td>

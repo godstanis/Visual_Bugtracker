@@ -53,7 +53,7 @@
                 <span class="pull-right project-box-creator">
                     <span class="text-muted"><em><small>@lang('projects.creator_is')</small></em></span>
                     <span class="text-muted">{{ Auth::user()->name }}</span>
-                    <img width="20px" src="{{ config('images.amazon_base_link') . config('images.user_avatar_dir') }}/{{ Auth::user()->profile_image }}" alt="profile image">
+                    <img width="20px" src="{{ Auth::user()->imageLink() }}" alt="profile image">
                 </span>
 
             </div>

@@ -12,7 +12,7 @@
             <div class="issue-discussion-user pull-right">
                 <a href="{{ route('user', ['user_name'=>$post->creator->name]) }}">
                     <span>@</span>{{ $post->creator->name }}
-                    <img class="user-profile-image" src="https://s3.eu-central-1.amazonaws.com/bugwall.ru/user_profile_images/{{ $post->creator->profile_image }}" alt="" width="20px"></a>
+                    <img class="user-profile-image" src="{{ $post->creator->imageLink() }}" alt="" width="20px"></a>
                 </a>
             </div>
         </div>

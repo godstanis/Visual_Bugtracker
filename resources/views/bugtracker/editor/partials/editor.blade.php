@@ -86,7 +86,7 @@
             <svg id="svg-area" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" shape-rendering="auto">
             </svg>
             <div id="bg-element">
-                <img id="bg-element-image" src="" alt="">
+                <img id="bg-element-image" src="{{ $current_board->sourceImageUrl() }}" alt="Board source image">
             </div>
         </div>
     </div>

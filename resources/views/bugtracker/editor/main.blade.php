@@ -82,9 +82,10 @@ svgEditor.init('svg-work-area', 'svg-area', 'bg-element');
     @if($current_board !== null)
     editor_page_data.current_board_id = {{$current_board->id}};
 
-    var image = "{{config('images.amazon_base_link').config('images.boards_images_dir').'/'.$current_board->thumb_image}}";
+    var image = document.getElementById('bg-element-image').src;
     svgEditor.initImage(image);
     dataConstructor.drawElementsFromJSON(drawSVG, '{!! $current_board->getAllJsonPaths() !!}');
+
     @endif
 
 </script>

@@ -110,7 +110,7 @@ $(document).ready(function() {
         <td>
             <a href="{{ route('user', ['user_name'=>$access->user->name]) }}">
                 <span>@</span>{{ $access->user->name }}
-                <img class="user-profile-image" src="{{ $access->user->getImageLink() }}" alt="" width="20px"></a>
+                <img class="user-profile-image" src="{{ $access->user->imageLink() }}" alt="" width="20px"></a>
             </a>
             @if($access->user->can('delete', $project))
                 <div class="project-creator-badge" title="Project creator"><b>@lang('projects.team_creator_badge')</b></div>

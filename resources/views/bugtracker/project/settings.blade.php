@@ -15,7 +15,7 @@
         
         <div class="project-box-image-block" style="display:inline-block;">
             <div class="project-box-img">
-                <img class="image-update" src="{{ config('images.amazon_base_link') . config('images.project_thumb_dir')}}/{{ $project->thumbnail_img }}" alt="Project image">
+                <img class="image-update" src="{{ $project->thumbnailUrl() }}" alt="Project image">
 
             </div>
             <div class="image-input-block">

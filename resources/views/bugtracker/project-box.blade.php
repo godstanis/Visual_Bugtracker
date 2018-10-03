@@ -13,7 +13,7 @@
         
         <div class="project-box-img">
 
-        <img src="{{ config('images.amazon_base_link') . config('images.project_thumb_dir')}}/{{ $project->thumbnail_img }}" alt="">
+        <img src="{{$project->thumbnailUrl()}}" alt="Project image">
 
         </div>
 
@@ -24,7 +24,7 @@
         <span class="pull-right project-box-creator">
             <span class="text-muted"><em><small>@lang('projects.created_by')</small></em></span>
             <span><a href="{{ route('user', ['user_name'=>$project->creator->name]) }}"><span>@</span>{{$project->creator->name}}</a></span>
-            <img width="20px" src="{{ config('images.amazon_base_link') . config('images.user_avatar_dir') }}/{{ $project->creator->profile_image }}" alt="">
+            <img width="20px" src="{{ $project->creator->imageLink() }}" alt="">
         </span>
     </div>
     <div class="project-box-open-btn">
