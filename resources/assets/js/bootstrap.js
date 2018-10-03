@@ -49,8 +49,7 @@ import Echo from "laravel-echo"
 window.Pusher = require('pusher-js');
 
 window.Echo = new Echo({
-    //authEndpoint : 'http://localhost:8080/Laravel/bugwall-dev/public/broadcasting/auth',
-    authEndpoint : 'http://localhost:8080/Laravel/bugwall-dev/public/pusher-auth',
+    authEndpoint: 'http://bugwall.ru/pusher-auth',
     broadcaster: 'pusher',
     key: 'd14443724916b9ffc79e',
     cluster: 'eu',
