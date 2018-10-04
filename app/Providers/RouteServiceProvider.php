@@ -88,7 +88,6 @@ class RouteServiceProvider extends ServiceProvider
         ], function ($router) {
             // Bugtracker routes list
             require base_path('routes/web/bugtracker/project.php');
-            require base_path('routes/web/bugtracker/project/activity.php');
             require base_path('routes/web/bugtracker/project/board.php');
             require base_path('routes/web/bugtracker/project/editor.php');
             require base_path('routes/web/bugtracker/project/issue.php');
