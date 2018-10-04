@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Requests\UserUpdateImageForm;
 use Illuminate\Http\Request;
+use App\Repositories\UserRepository;
 use App\Http\Controllers\Controller;
 
 use App\User;
 
 class UserController extends Controller
 {
+
     public function getUserPage(User $user)
     {
-
         $data = [
             'userName' => $user->name,
             'userEmail' => $user->email,
@@ -19,6 +21,7 @@ class UserController extends Controller
         ];
 
         return view('user.one', $data);
+
     }
 
     public function getUserSettings()
@@ -33,11 +36,10 @@ class UserController extends Controller
 
     }
 
-    public function postUserProfileImage(\App\Http\Requests\UserUpdateImageForm $request)
+    public function postUserProfileImage(UserUpdateImageForm $request)
     {
-        $user_repository = new \App\Repositories\UserRepository(auth()->user());
-        $uploadedImage = $request->file('profile_image');
-        $user_repository->updateUserImage($uploadedImage);
+        $user_repository = app()->makeWith(UserRepository::class, ['user'=>auth()->user()]);
+        $user_repository->updateUserImage( $request->file('profile_image') );
 
         return redirect()->back();
         

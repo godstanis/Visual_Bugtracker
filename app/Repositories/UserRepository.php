@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\User;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
+use Mockery\Exception;
 
 class UserRepository
 {
@@ -16,27 +18,33 @@ class UserRepository
         $this->user = $user;
     }
 
-    public function updateUserImage(\Illuminate\Http\UploadedFile $image)
+    /**
+     * @param UploadedFile $image
+     */
+    public function updateUserImage(UploadedFile $image)
     {
 
-        $imageExtension = $image->getClientOriginalExtension();
-        $newImageName = uniqid() . '.' . $imageExtension;
+        $newImageName = uniqid("", false) . '.' . $image->getClientOriginalExtension();
+        $currentUserAvatarName = $this->user->profile_image;
+        $avatarsDirectory = config('images.user_avatar_dir');
+        $defaultAvatarName = config('images.default_user_avatar');
 
-        $oldUserImage = $this->user->profile_image;
         $this->user->profile_image = $newImageName;
 
-        if( $this->user->update() )
-        {
-            define( 'AVATARS_DIRECTORY', config('images.user_avatar_dir') );
-            define( 'DEFAULT_AVATAR_NAME', config('images.default_user_avatar') );
+        try{
+            $this->user->update();
 
             Storage::disk('s3')
-                ->put( AVATARS_DIRECTORY.'/' . $this->user->profile_image, file_get_contents($image) );
+                ->put( $avatarsDirectory .'/' . $this->user->profile_image, file_get_contents($image) );
 
-            if( $oldUserImage !== DEFAULT_AVATAR_NAME){
-                Storage::disk('s3')->delete( AVATARS_DIRECTORY.'/'.$oldUserImage );
+            if( $currentUserAvatarName !== $defaultAvatarName){
+                Storage::disk('s3')->delete( $avatarsDirectory . '/' . $currentUserAvatarName );
             }
         }
+        catch(Exception $e){
+            abort(503, $e->getMessage());
+        }
+
     }
 
 }
