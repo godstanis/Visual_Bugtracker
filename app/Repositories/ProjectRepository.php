@@ -39,7 +39,6 @@ class ProjectRepository
 
             if( $project->delete() and $project->project_access()->delete() )//$projectAccess->delete() )
             {
-                event(new \App\Events\ProjectDeleted($project->id));
                 $response['status'] = true;
             }
 
@@ -56,7 +55,7 @@ class ProjectRepository
         if($uploadedImage)
         {
             $imageExtension = $uploadedImage->getClientOriginalExtension();
-            $newImageName = str_random(24) . uniqid() . '.' . $imageExtension;
+            $newImageName = str_random(24) . uniqid("", false) . '.' . $imageExtension;
 
             $thumbnail_img = $newImageName;
 
@@ -73,8 +72,6 @@ class ProjectRepository
             'creator_user_id' => $data['creator_user_id'],
             'thumbnail_img' => $thumbnail_img,
         ]);
-
-        event(new \App\Events\ProjectCreated($newProject));
 
         $newProjectView = view('bugtracker.project-box', ['project' => $newProject])->render();
 

@@ -13,13 +13,6 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\ProjectDeleted' => [
-            'App\Listeners\DeleteProjectData',
-        ],
-
-        'App\Events\ProjectCreated' => [
-            'App\Listeners\AddCreatorToTeam'
-        ],
 
         'App\Events\UserRegistered' => [
             'App\Listeners\SendActivationEmail'
