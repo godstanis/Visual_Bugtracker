@@ -23,7 +23,7 @@ class BoardsController extends BugtrackerBaseController
     /*
      * Show all boards, assigned to the project
     */
-    public function getProjectBoards(Project $project)
+    public function index(Project $project)
     {
         $boards = $project->boards;
 
@@ -33,7 +33,7 @@ class BoardsController extends BugtrackerBaseController
     /*
      * Create board, and store it in DataBase
     */
-    public function postCreateBoard(\App\Http\Requests\BoardCreateForm $request, Project $project)
+    public function create(\App\Http\Requests\BoardCreateForm $request, Project $project)
     {
 
         $board_repository = $this->board_repository;
@@ -51,7 +51,7 @@ class BoardsController extends BugtrackerBaseController
         
     }
 
-    public function postDeleteBoard(Project $project, Board $board)
+    public function delete(Project $project, Board $board)
     {
 
         $board_repository = $this->board_repository;

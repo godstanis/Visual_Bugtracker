@@ -11,11 +11,12 @@
 
 Route::group(['prefix'=>'bugtracker/projects/{project}/boards', 'middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
 
-    Route::get('', 'BoardsController@getProjectBoards')
+    Route::get('', 'BoardsController@index')
         ->name('project.boards');
-    Route::post('create-board', 'BoardsController@postCreateBoard')
+
+    Route::post('create-board', 'BoardsController@create')
         ->name('project.create_board');
-    Route::post('{board}/delete-board', 'BoardsController@postDeleteBoard')
+    Route::get('{board}/delete-board', 'BoardsController@delete')
         ->name('project.delete_board')->middleware('can:delete,board');
 
 });
