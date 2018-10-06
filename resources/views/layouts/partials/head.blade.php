@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
 
     <link rel="stylesheet" href="{{ asset('bootstrap-social/assets/css/font-awesome.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bootstrap-social/assets/css/docs.css') }}" />
     <link rel="stylesheet" href="{{ asset('bootstrap-social/bootstrap-social.css') }}" />
     @yield('head-styles')
 
