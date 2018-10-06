@@ -16,11 +16,7 @@ class EventServiceProvider extends ServiceProvider
 
         'App\Events\UserRegistered' => [
             'App\Listeners\SendActivationEmail'
-        ],
-
-        'App\Events\UserAvatarChange' => [
-            'App\Listeners\DeleteOldAvatar'
-        ],
+        ]
 
     ];
 
