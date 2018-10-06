@@ -16,17 +16,18 @@ class BoardRepository
         $board->name =  $data['name'];
         $board->created_by_user_id =  $data['created_by_user_id'];
 
-        define('BOARDS_THUMB_DIR', config('images.boards_images_dir'));
+        $boardImageDirectory = config('images.boards_images_dir');
 
         $uploadedImage =  $data['thumb_image'];
+
         if($uploadedImage)
         {
 
-            $newImageName = uniqid() . '.jpg';
+            $newImageName = uniqid("",false) . '.jpg';
 
             $board->thumb_image = $newImageName;
 
-            Storage::disk('s3')->put(BOARDS_THUMB_DIR.'/' . $board->thumb_image, file_get_contents($uploadedImage));
+            Storage::put($boardImageDirectory.'/' . $board->thumb_image, file_get_contents($uploadedImage));
         }
 
         $board->save();
@@ -37,11 +38,11 @@ class BoardRepository
     public function delete(Board $board)
     {
 
-        define('BOARDS_THUMB_DIR', config('images.boards_images_dir'));
+        $boardImageDirectory = config('images.boards_images_dir');
 
         if( $board )
         {
-            Storage::disk('s3')->delete( BOARDS_THUMB_DIR.'/'.$board->thumb_image );
+            Storage::delete( $boardImageDirectory.'/'.$board->thumb_image );
 
             if( $board->delete() )
             {

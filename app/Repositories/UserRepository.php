@@ -34,11 +34,10 @@ class UserRepository
         try{
             $this->user->update();
 
-            Storage::disk('s3')
-                ->put( $avatarsDirectory .'/' . $this->user->profile_image, file_get_contents($image) );
+            Storage::put( $avatarsDirectory .'/' . $this->user->profile_image, file_get_contents($image) );
 
             if( $currentUserAvatarName !== $defaultAvatarName){
-                Storage::disk('s3')->delete( $avatarsDirectory . '/' . $currentUserAvatarName );
+                Storage::delete( $avatarsDirectory . '/' . $currentUserAvatarName );
             }
         }
         catch(Exception $e){

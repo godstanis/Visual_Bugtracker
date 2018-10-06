@@ -27,14 +27,14 @@ class ProjectRepository
     public function delete(Project $project, \App\User $user)
     {
 
-        define('PROJECT_THUMB_DIR', config('images.project_thumb_dir'));
-        define('PROJECT_DEFAULT_IMAGE_NAME', config('images.default_project_thumb'));
+        $projectImageDirectory = config('images.project_thumb_dir');
+        $projectDefaultImageName = config('images.default_project_thumb');
 
         if( $project )
         {
             
-            if( $project->thumbnail_img !== PROJECT_DEFAULT_IMAGE_NAME){
-                Storage::disk('s3')->delete( PROJECT_THUMB_DIR.'/'.$project->thumbnail_img );
+            if( $project->thumbnail_img !== $projectDefaultImageName){
+                Storage::delete( $projectImageDirectory.'/'.$project->thumbnail_img );
             }
 
             if( $project->delete() and $project->project_access()->delete() )//$projectAccess->delete() )
@@ -49,8 +49,8 @@ class ProjectRepository
     public function create($data)
     {
 
-        define('PROJECT_THUMB_DIR', config('images.project_thumb_dir'));
-        define('PROJECT_DEFAULT_IMAGE_NAME', config('images.default_project_thumb'));
+        $projectImageDirectory = config('images.project_thumb_dir');
+        $projectDefaultImageName = config('images.default_project_thumb');
 
         $uploadedImage = $data['project_image'];
         if($uploadedImage)
@@ -60,11 +60,11 @@ class ProjectRepository
 
             $thumbnail_img = $newImageName;
 
-            Storage::disk('s3')->put(PROJECT_THUMB_DIR.'/' . $thumbnail_img, file_get_contents($uploadedImage));
+            Storage::put($projectImageDirectory.'/' . $thumbnail_img, file_get_contents($uploadedImage));
         }
         else
         {
-            $thumbnail_img = PROJECT_DEFAULT_IMAGE_NAME;
+            $thumbnail_img = $projectDefaultImageName;
         }
 
         $newProject = Project::create([
