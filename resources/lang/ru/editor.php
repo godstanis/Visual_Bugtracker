@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'retorn_to_boards' => 'Вернуться к доскам',
+    'return_to_boards' => 'Вернуться к доскам',
 ];

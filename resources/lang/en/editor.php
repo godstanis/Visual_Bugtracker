@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'retorn_to_boards' => 'Return to boards page',
+    'return_to_boards' => 'Return to boards page',
 ];
