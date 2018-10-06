@@ -1,6 +1,6 @@
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container col-md-12">
+    <div class="container col-md-8 col-md-offset-2">
         <div class="navbar-header">
 
             <!-- Collapsed Hamburger -->
