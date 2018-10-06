@@ -15,7 +15,7 @@
         @include('bugtracker.project.partials.board-box')
     @endforeach
 @else
-    <a class="btn btn-info" href="{{route('project.editor', ['project'=>$project, 'board'=>$boards->first()])}}">Editor</a>
+    <a class="btn btn-info" href="{{route('project.editor', ['project'=>$project])}}">Editor</a>
 @endif
 </div>
 

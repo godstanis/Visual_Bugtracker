@@ -17,7 +17,8 @@ Route::group(['prefix'=>'bugtracker/projects/{project}/editor', 'middleware'=>'a
     Route::post('{board}/create-path', 'PathController@savePath')
         ->name('board.create_path');
 
-    Route::get('{board?}', 'EditorController@getEditor')->name('project.editor');
+    Route::get('/', 'EditorController@index')->name('project.editor');
+    Route::get('{board}', 'EditorController@getBoardEditor')->name('project.editor.board');
 
 
 });

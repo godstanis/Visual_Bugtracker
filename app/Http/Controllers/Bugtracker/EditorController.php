@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Bugtracker;
 
+use App\Http\Requests\BoardEditorRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BugtrackerBaseController;
 
@@ -11,27 +12,15 @@ use App\Board;
 
 class EditorController extends BugtrackerBaseController
 {
-    public function getEditor(Request $request, Project $project, Board $board)
+
+    public function index()
     {
-        $boards = $project->boards;
+        echo "<h1>Work in progress</h1>";
+    }
 
-        $current_board = null;
-
-
-        if($board->id !== null)
-        {
-
-
-            if( ! auth()->user()->can('view', $board) )
-            {
-                abort(404);
-            }
-
-
-            $current_board = $board;
-        }
-        
-        return view('bugtracker.editor.main', ['project'=>$project, 'boards'=>$boards, 'current_board'=>$current_board]);
+    public function getBoardEditor(BoardEditorRequest $request, Project $project, Board $board)
+    {
+        return view('bugtracker.editor.main', ['project'=>$project, 'boards'=>$project->boards, 'current_board'=>$board]);
     }
 
 }

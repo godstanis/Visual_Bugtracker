@@ -24,6 +24,6 @@
     
     </div>
     <div class="board-box-open-btn">
-        <a class="btn btn-success" href="{{route('project.editor', ['project'=>$project, 'board'=>$board])}}">@lang('projects.open')</a>
+        <a class="btn btn-success" href="{{route('project.editor.board', ['project'=>$project, 'board'=>$board])}}">@lang('projects.open')</a>
     </div>
 </div>
