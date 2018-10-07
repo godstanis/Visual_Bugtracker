@@ -1,0 +1,11 @@
+.navbar-nav>li>a.profile-image {
+    padding: 10px;
+}
+
+.navbar {
+    box-shadow: 0 0 3px black;
+}
+
+.navbar-fixed-bottom {
+    box-shadow: none;
+}

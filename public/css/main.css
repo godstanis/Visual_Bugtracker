@@ -12,10 +12,6 @@ body{
     padding-top: 60px;
 }
 
-.navbar-nav>li>a.profile-image {
-    padding: 10px;
-}
-
 .btn, .alert{
     border-radius: 0;
 }

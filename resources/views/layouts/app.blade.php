@@ -10,6 +10,8 @@
         
     </div>
 
+    @include('layouts.partials.footer');
+
     <!-- Scripts -->
     <!--<script src="{{ asset('js/app.js') }}"></script>-->
 </body>
