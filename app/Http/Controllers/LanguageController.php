@@ -12,13 +12,9 @@ class LanguageController extends Controller
 {
     public function setLang($lang)
     {
-
         if (array_key_exists($lang, config('languages'))) {
-
-            setcookie ('applocale', $lang, 0, '/', NULL, 0 ); 
-            
+            return redirect()->back()->withCookie('applocale', $lang);
         }
-        return Redirect::back();
-
+        return redirect()->back();
     }
 }

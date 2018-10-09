@@ -5,10 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Cookie;
 
 class Language
 {
@@ -21,19 +17,21 @@ class Language
      */
     public function handle($request, Closure $next)
     {
-        
-        if( isset($_COOKIE['applocale']) and array_key_exists($_COOKIE['applocale'], Config::get('languages')) )
-        {
-            App::setLocale($_COOKIE['applocale']);
-            Carbon::setLocale($_COOKIE['applocale']);
+        $requestedLocale = $request->cookie('applocale');
+        $applocale = config('app.locale'); // default locale
 
-            Session::put('applocale', $_COOKIE['applocale']);
+        if($request->hasCookie('applocale')) {
+            if (array_key_exists($requestedLocale, config('languages'))) {
+                $applocale = $requestedLocale;
+            }
         }
-        else
-        {
-            App::setLocale(Config::get('app.fallback_locale'));
-            Carbon::setLocale(Config::get('app.fallback_locale'));
-        }
+
+        app()->setLocale($applocale);
+        session()->put('applocale', $applocale);
+        Carbon::setLocale($applocale);
+
+        dd($requestedLocale);
+
         return $next($request);
     }
 }
