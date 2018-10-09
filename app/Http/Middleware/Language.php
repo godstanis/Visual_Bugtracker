@@ -30,8 +30,6 @@ class Language
         session()->put('applocale', $applocale);
         Carbon::setLocale($applocale);
 
-        dd($requestedLocale);
-
         return $next($request);
     }
 }
