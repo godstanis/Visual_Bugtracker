@@ -1,7 +1,7 @@
-.issue-badge{
+.issue-badge {
     color: white;
 
-    border-radius: 0px;
+    border-radius: 0;
     text-align: center;
 
     padding: 4px;
@@ -9,54 +9,54 @@
     width: 100%;
 }
 
-.Bug-type{
+.Bug-type {
     background-color: #D74545;
 }
 
-.Task-type{
+.Task-type {
     background-color: #32ABCE;
 }
 
-.Low-priority{
+.Low-priority {
     background-color: #32CE65;
 }
 
-.Medium-priority{
+.Medium-priority {
     background-color: #32ABCE;
 }
 
-.High-priority{
+.High-priority {
     background-color: #D74545;
 }
 
-.table thead, th{
+.table thead, th {
     white-space: nowrap
 }
 
-.table {
+.table  {
     background-color: white;
     color: black;
 }
 
-.table tbody tr td{
+.table tbody tr td {
     transition: 0.1s;
     -webkit-transition: 0.1s;
 }
 
 
-.table{
+.table {
     font-size: 90%;
 }
-.table-issues-mobile{
+.table-issues-mobile {
     text-align: center;
 }
-.table-issues-mobile tr:first-child{
+.table-issues-mobile tr:first-child {
     border-top: 4px solid grey;
 }
-.table-issues-mobile .table-issue-description{
+.table-issues-mobile .table-issue-description {
     text-align: left;
 }
 
-.issue-closed-row{
+.issue-closed-row {
     background-color:#FFE2E2;
 }

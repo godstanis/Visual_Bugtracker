@@ -3,9 +3,15 @@
 }
 
 .navbar {
+    background-image: linear-gradient(to right, #292929, #30303d);
     box-shadow: 0 0 3px black;
 }
 
 .navbar-fixed-bottom {
+    background-image: none;
     box-shadow: none;
+}
+
+.dropdown-menu {
+    border-radius: 0;
 }

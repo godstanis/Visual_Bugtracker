@@ -1,24 +1,24 @@
-.project-navigation-menu-bar{
+.project-navigation-menu-bar {
     margin: 10px 0;
     padding: 0;
 }
 
 
-.project-navigation-menu-bar a{
+.project-navigation-menu-bar a {
     padding: 20px;
 }
 
-@media only screen and (max-width:590px){
-   .project-navigation-menu-bar .navigation-text{
+@media only screen and (max-width:590px) {
+   .project-navigation-menu-bar .navigation-text {
         display: none;
     }
-    .project-navigation-menu-bar a{
+    .project-navigation-menu-bar a {
         padding: 20px;
         font-size: 20px;
     }
 }
 
-.project-creator-badge{
+.project-creator-badge {
     border: 2px solid gray;
     border-radius: 5px;
     padding: 1px;
@@ -31,8 +31,6 @@
 
     color: gray;
 }
-
-
 
 /* Change background color of buttons on hover */
 div.tab button:hover {

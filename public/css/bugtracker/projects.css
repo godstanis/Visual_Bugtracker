@@ -1,11 +1,11 @@
 
-.projects-container{
+.projects-container {
     display: inline-block;
     text-align: center;
 }
 
-.project-box{
-    width: 400px;
+.project-box {
+    width: 350px;
     word-wrap: break-word;
     
     background-color: white;
@@ -14,23 +14,22 @@
 
     position: relative;
     top: 0;
-    
-    margin: 10px;
-    margin-bottom: 40px;
 
-    border: 1px solid lightgray;
+    margin: 10px 10px 40px;
 
-    transition: 0.2s;
-    -webkit-transition: 0.2s;
+    transition: 0.15s;
+    -webkit-transition: 0.15s;
 }
 
-.project-box:hover{
+.project-box:hover {
+    transform: scale(1.02);
     -ms-transform: scale(1.02);
-        transform: scale(1.02);
     -webkit-transform: scale(1.02);
+
+    box-shadow: 10px 10px 10px rgba(0,0,0,0.2);
 }
 
-.project-box-content{
+.project-box-content {
     padding: 10px;
     width:100%;
     height:100%;
@@ -38,65 +37,58 @@
     border-bottom: none;
 }
 
-.project-title{
+.project-title {
     text-align: center;
     width:100%;
 }
-.project-description{
-    height: 180px;
-    width: 180px;
+.project-description {
+    width: 100%;
+    height: 120px;
     overflow-y: auto;
-    text-align: left;
+    text-align: center;
     padding: 4px;
-
-    border: 2px solid #F2F2F2;
-
-    height: 180px;
-
-    margin: 0px;
-
     box-sizing: border-box;
+    font-size:0.9em;
 }
-.project-box-credentials{
+.project-box-credentials {
     display: inline-block;
     vertical-align:top;
+    width:45%;
+
 }
-.project-box-creator{
+.project-box-creator {
     padding: 5px;
 }
 
-.project-title-input{
+.project-title-input {
     text-align: center;
     width:100%;
-    margin: 4px 0;
+    margin: -4px 0;
 }
-.project-description-textarea{
+.project-description-textarea {
     overflow-y: auto;
     resize: none;
+    width: 100%;
 
     display: inline-block;
 }
 
-.project-box-credentials textarea{
-    width: 180px;
-    height: 180px;
+.project-box-credentials textarea {
+    height: 120px;
 }
 
-.project-box-img{
+.project-box-img {
     position: relative;
     overflow: hidden;
 
-    width:180px;
-    height:180px;
+    width:120px;
+    height:120px;
 
     display: inline-block;
-    border: 2px solid lightgrey;
-
     background-color: lightgray;
 
-    border: 2px solid #B7B7B7;
 }
-.project-box-img img{
+.project-box-img img {
     position: absolute;
 
     left: 50%;
@@ -110,18 +102,18 @@
         transform: translate(-50%,-50%);
 }
 
-.project-box-open-btn{
+.project-box-open-btn {
     width: 100%;
     bottom: 34px;
 }
-.project-box-open-btn .btn{
-    border-radius: 0px;
+.project-box-open-btn .btn {
+    border-radius: 0;
     width: 100%;
 
     font-size: 130%;
 }
 
-.project-box-controls{
+.project-box-controls {
     position: absolute;
     right:0;
     margin-top:-10px;
@@ -134,17 +126,17 @@
     -webkit-transition: 0.2s;
 }
 
-.project-box-controls .btn{
-    border-radius: 0px;
+.project-box-controls .btn {
+    border-radius: 0;
 }
 
-.project-box:hover .project-box-controls{
+.project-box:hover .project-box-controls {
     -ms-transform: scale(1);
     -webkit-transform: scale(1);
         transform: scale(1);
 }
 
-.add-project-content{
+.add-project-content {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -162,7 +154,7 @@
     transition: 0.2s;
     -webkit-transition: 0.2s;
 }
-.add-project-content span{
+.add-project-content span {
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
@@ -171,39 +163,39 @@
     -webkit-transition: 0.2s;
 }
 
-.project-box:hover .add-project-content{
-    height: 0px;
+.project-box:hover .add-project-content {
+    height: 0;
 }
-.project-box:hover .add-project-content span{
-    font-size: 0px;
+.project-box:hover .add-project-content span {
+    font-size: 0;
 }
 
 
 
-@media only screen and (max-width:800px){
-    .project-box{
+@media only screen and (max-width:800px) {
+    .project-box {
         width: 70%;
     }
 }
 
-@media only screen and (max-width:600px){
-    .project-box{
+@media only screen and (max-width:600px) {
+    .project-box {
         width: 90%;
     }
 }
 
-@media only screen and (max-width:480px){
+@media only screen and (max-width:480px) {
     
-    .project-box-img{
+    .project-box-img {
         width: 100px;
         height: 100px;
     }
 
-    .project-description{
+    .project-description {
         height: 100px;
     }
 
-    .project-box-credentials textarea{
+    .project-box-credentials textarea {
         height: 100px;
     }
 }

@@ -1,28 +1,28 @@
-.issue-discussion-box{
+.issue-discussion-box {
     border: 1px solid lightgray;
     padding: 10px;
     margin-bottom: 10px;
     background-color: #F7F7F7;
 }
 
-.issue-discussion-box .issue-discussion-text{
+.issue-discussion-box .issue-discussion-text {
     background-color: white;
     padding: 10px;
     display: block;
 }
 
-.issue-discussion-credentials{
+.issue-discussion-credentials {
     border-top: 1px solid lightgray;
     display: block;
 
     margin: 5px;
 }
 
-.issue-discussion-credentials div{
+.issue-discussion-credentials div {
     display: inline-block;
 }
 
-.issue-discussion-credentials .issue-discussion-user{
+.issue-discussion-credentials .issue-discussion-user {
     position: relative;
     right:0;
 }

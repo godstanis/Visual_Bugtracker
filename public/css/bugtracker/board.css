@@ -1,13 +1,13 @@
-.boards-container{
+.boards-container {
     text-align: center;
 }
-.board-box .board-box-url{
+.board-box .board-box-url {
     height: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.board-box .board-box-url:hover{
+.board-box .board-box-url:hover {
     border: 1px solid lightgray;
     display: block;
     height: auto;
@@ -17,7 +17,7 @@
 
 }
 
-.board-box{
+.board-box {
     width: 400px;
     word-wrap: break-word;
     
@@ -27,24 +27,22 @@
 
     position: relative;
     top: 0;
-    
-    margin: 10px;
-    margin-bottom: 40px;
 
-    //box-shadow: 0 0 10px gray;
-    border: 1px solid lightgray;
-    
-    transition: 0.2s;
-    -webkit-transition: 0.2s;
+    margin: 10px 10px 40px;
+
+    transition: 0.15s;
+    -webkit-transition: 0.15s;
 }
 
-.board-box:hover{
+.board-box:hover {
+    transform: scale(1.02);
     -ms-transform: scale(1.02);
-        transform: scale(1.02);
     -webkit-transform: scale(1.02);
+
+    box-shadow: 10px 10px 10px rgba(0,0,0,0.2);
 }
 
-.board-box-content{
+.board-box-content {
     padding: 10px;
     width:100%;
     height:100%;
@@ -52,36 +50,36 @@
     border-bottom: none;
 }
 
-.board-title{
+.board-title {
     text-align: center;
     width:100%;
 }
 
-.board-box-credentials{
+.board-box-credentials {
     width:100%;
 }
-.board-box-creator{
+.board-box-creator {
     padding: 5px;
 }
 
-.board-title-input{
+.board-title-input {
     text-align: center;
     width:100%;
     margin: 4px 0;
 }
-.board-description-textarea{
+.board-description-textarea {
     overflow-y: auto;
     resize: none;
 
     display: inline-block;
 }
 
-.board-box-credentials textarea{
+.board-box-credentials textarea {
     width: 180px;
     height: 180px;
 }
 
-.board-box-img{
+.board-box-img {
     position: relative;
     overflow: hidden;
 
@@ -94,7 +92,7 @@
 
     background-color: lightgray;
 }
-.board-box-img img{
+.board-box-img img {
     position: absolute;
 
     left: 50%;
@@ -103,23 +101,23 @@
     height: 100%;
     width: auto;
 
-    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
-        transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
 }
 
-.board-box-open-btn{
+.board-box-open-btn {
     width: 100%;
     bottom: 34px;
 }
-.board-box-open-btn .btn{
-    border-radius: 0px;
+.board-box-open-btn .btn {
+    border-radius: 0;
     width: 100%;
 
     font-size: 130%;
 }
 
-.board-box-controls{
+.board-box-controls {
     position: absolute;
     right:0;
     margin-top:-10px;
@@ -132,17 +130,17 @@
     -webkit-transition: 0.2s;
 }
 
-.board-box-controls .btn{
-    border-radius: 0px;
+.board-box-controls .btn {
+    border-radius: 0;
 }
 
-.board-box:hover .board-box-controls{
+.board-box:hover .board-box-controls {
     -ms-transform: scale(1);
     -webkit-transform: scale(1);
         transform: scale(1);
 }
 
-.add-board-content{
+.add-board-content {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -160,45 +158,45 @@
     transition: 0.2s;
     -webkit-transition: 0.2s;
 }
-.add-board-content span{
+.add-board-content span {
     display: inline-block;
 
     transition: 0.2s;
     -webkit-transition: 0.2s;
 }
 
-.board-box:hover .add-board-content{
-    height: 0px;
+.board-box:hover .add-board-content {
+    height: 0;
 }
-.board-box:hover .add-board-content span{
-    font-size: 0px;
+.board-box:hover .add-board-content span {
+    font-size: 0;
 }
 
 
-@media only screen and (max-width:800px){
+@media only screen and (max-width:800px) {
     .board-box{
         width: 70%;
     }
 }
 
-@media only screen and (max-width:600px){
+@media only screen and (max-width:600px) {
     .board-box{
         width: 90%;
     }
 }
 
-@media only screen and (max-width:480px){
+@media only screen and (max-width:480px) {
     
-    .board-box-img{
+    .board-box-img {
         width: 80%;
         height: 130px;
     }
 
-    .board-description{
+    .board-description {
         height: 100px;
     }
 
-    .board-box-credentials textarea{
+    .board-box-credentials textarea {
         height: 100px;
     }
 }
