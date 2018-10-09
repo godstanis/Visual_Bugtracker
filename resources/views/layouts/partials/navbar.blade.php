@@ -49,7 +49,7 @@
                             </li>
                             <li role="separator" class="divider"></li>
                             <li>
-                                <a href="{{route('user.settings', ['user'=>Auth::user()])}}"><span class="glyphicon glyphicon-cog"></span> @lang('auth.settings')</a>
+                                <a href="{{route('user.settings')}}"><span class="glyphicon glyphicon-cog"></span> @lang('auth.settings')</a>
                             </li>
                             <li>
                                 <a href="{{ route('logout') }}"

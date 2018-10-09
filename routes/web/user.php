@@ -15,7 +15,7 @@ Route::get('account-activation/{token}', 'Auth\ActivationController@activate')->
 
 Route::group(['prefix'=>'user', 'middleware'=>'auth'], function(){
 
-    Route::get('{user}/settings', 'User\UserController@getUserSettings')->name('user.settings');
+    Route::get('/settings', 'User\UserController@getUserSettings')->name('user.settings');
 
     Route::post('', 'User\UserController@postUserProfileImage')->name('user.update');
 
