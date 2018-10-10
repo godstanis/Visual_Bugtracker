@@ -23,5 +23,5 @@ abstract class FileUploadContract
      * @param string|null $oldName Defines a file name to be deleted/stashed.
      * @return mixed
      */
-    public abstract function upload(UploadedFile $file, string $newName, string $oldName = null);
+    public abstract function upload(UploadedFile $file, string $newName, string $oldName = null): void;
 }
