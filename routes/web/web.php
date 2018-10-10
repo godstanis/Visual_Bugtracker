@@ -20,7 +20,3 @@ Route::get('/', 'HomeController@getHomePage')->name('home');
  */
 Route::get('lang/{lang}', ['uses'=>'LanguageController@setLang'])->name('lang.set');
 Route::post('/pusher-auth', 'PusherAuthController@authorizeBoardChannel')->middleware('auth');
-
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});
