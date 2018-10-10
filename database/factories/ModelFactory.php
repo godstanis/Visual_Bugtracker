@@ -20,7 +20,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker, array $param
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
-        'activated' => true,
+        'profile_image' => config('images.default_user_avatar'),
+        'activated' => false,
     ];
 });
 

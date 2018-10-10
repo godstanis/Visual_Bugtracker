@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Project;
 use App\Observers\ProjectObserver;
+use App\Repositories\UserRepository;
+use App\Services\FileUpload\AvatarUploadService;
+use App\Services\FileUpload\FileUploadContract;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,7 +32,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        
+        app()->when(UserRepository::class)->needs(FileUploadContract::class)
+            ->give(function() {
+                return new AvatarUploadService(config('images.user_avatar_dir'));
+            });
 
     }
 }

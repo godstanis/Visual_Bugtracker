@@ -138,9 +138,10 @@ class UserTest extends TestCase
                 'profile_image' => $newProfileImage
             ]);
 
-        $this->assertNotEquals($oldUserProfileImage, $newProfileImage);
+        $this->assertNotEquals($oldUserProfileImage, $newProfileImage->getBasename());
 
         $imagePath = config('images.user_avatar_dir') . '/' . $authenticatedUser->profile_image;
+
         Storage::disk('s3')->assertExists($imagePath);
 
     }
