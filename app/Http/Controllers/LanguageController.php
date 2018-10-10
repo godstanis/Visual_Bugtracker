@@ -12,6 +12,6 @@ class LanguageController extends Controller
 {
     public function setLang($lang)
     {
-            return redirect()->back()->withCookie('applocale', $lang);
+        return redirect()->back()->withCookie('applocale', $lang);
     }
 }
