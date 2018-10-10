@@ -13,15 +13,21 @@ class AvatarUploadService extends FileUploadContract
 
     /**
      * AvatarUploadContract constructor.
-     * @param $basePath
+     * @param string $basePath
      */
-    public function __construct($basePath)
+    public function __construct(string $basePath)
     {
         parent::__construct($basePath);
         $this->defaultAvatarName = config('images.default_user_avatar');
     }
 
-    public function upload(UploadedFile $file, string $newName, string $oldName = null)
+    /**
+     * @param UploadedFile $file
+     * @param string $newName
+     * @param string|null $oldName
+     * @return void
+     */
+    public function upload(UploadedFile $file, string $newName, string $oldName = null) :void
     {
         $uploadedImage = (new Image)->make($file)->resize(150,150);
 
