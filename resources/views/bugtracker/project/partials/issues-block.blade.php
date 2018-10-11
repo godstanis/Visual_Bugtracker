@@ -45,7 +45,7 @@
             <span class="btn-group issue-control-block">
             
                 <div class="btn-group">
-                  <a href="{{ route('project.issue.discussion', ['issue'=>$issue->id, 'project'=>$project->id]) }}" class="btn btn-default"><span class="glyphicon glyphicon-comment"></span> Open</a>
+                  <a href="{{ route('project.issue.discussion', ['issue'=>$issue, 'project'=>$project]) }}" class="btn btn-default"><span class="glyphicon glyphicon-comment"></span> Open</a>
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
@@ -58,7 +58,7 @@
                     </li>
                     <li>
                         @can('delete', $issue)
-                        <a href="{{ route('project.issue.delete', ['issue'=>$issue->id, 'project'=>$issue->project->id]) }}" class="delete-issue-btn" data-token="{{csrf_token()}}" ><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                        <a href="{{ route('project.issue.delete', ['issue'=>$issue, 'project'=>$issue->project]) }}" class="delete-issue-btn" data-token="{{csrf_token()}}" ><span class="glyphicon glyphicon-trash"></span> Delete</a>
                         @endcan
                     </li>
 

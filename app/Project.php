@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class Project extends Model
 {
 
-    protected $fillable = ['name', 'description', 'thumbnail_img', 'creator_user_id'];
+    protected $fillable = ['name', 'description', 'thumbnail_img', 'creator_user_id', 'website_url'];
 
     public function creator()
     {

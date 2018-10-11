@@ -22,7 +22,7 @@ $(document).ready(function() {
         var input_val = $(e.target).val();
         console.log (input_val);
 
-        var url = "{{route('project.team.search', ['project_id'=>$project->id, 'search_query'=>'query_string'])}}";
+        var url = "{{route('project.team.search', ['project'=>$project, 'search_query'=>'query_string'])}}";
 
         url = url.replace('query_string', input_val);
 

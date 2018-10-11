@@ -9,7 +9,7 @@
             <h4 class="modal-title">@lang('projects.issue_create')</h4>
         </div>
 
-        <form action="{{ route('project.issue.create', ['project_id'=>$project->id]) }}" method="POST" class="create-issue-form">
+        <form action="{{ route('project.issue.create', compact("project")) }}" method="POST" class="create-issue-form">
         <div class="modal-body">
             
                 <input class="form-control" type="text" name="title" placeholder="@lang('projects.issue_title')">

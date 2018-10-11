@@ -83,17 +83,26 @@ class RouteServiceProvider extends ServiceProvider
     {
 
         Route::group([
+            'prefix' => 'tracker',
             'middleware' => 'web',
             'namespace' => $this->namespace,
         ], function ($router) {
             // Bugtracker routes list
-            require base_path('routes/web/bugtracker/project.php');
-            require base_path('routes/web/bugtracker/project/board.php');
-            require base_path('routes/web/bugtracker/project/editor.php');
-            require base_path('routes/web/bugtracker/project/issue.php');
-            require base_path('routes/web/bugtracker/project/settings.php');
-            require base_path('routes/web/bugtracker/project/team.php');
+            require base_path('routes/web/bugtracker/projects.php');
+            Route::group([
+                'prefix' => 'project'
+            ], function ($router) {
+                // Bugtracker routes list
+                require base_path('routes/web/bugtracker/project/board.php');
+                require base_path('routes/web/bugtracker/project/editor.php');
+                require base_path('routes/web/bugtracker/project/issue.php');
+                require base_path('routes/web/bugtracker/project/settings.php');
+                require base_path('routes/web/bugtracker/project/team.php');
+            });
         });
+
+
+
 
     }
 

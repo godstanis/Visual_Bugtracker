@@ -9,7 +9,7 @@
 |
 */
 
-Route::group(['prefix'=>'bugtracker/projects/{project}/editor', 'middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
+Route::group(['prefix'=>'{project}/editor', 'middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
 
 
     Route::post('{board}/delete-path', 'PathController@deletePath')

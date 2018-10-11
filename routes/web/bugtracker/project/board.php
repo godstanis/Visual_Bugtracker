@@ -9,7 +9,7 @@
 |
 */
 
-Route::group(['prefix'=>'bugtracker/projects/{project}/boards', 'middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
+Route::group(['prefix'=>'{project}/boards', 'middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
 
     Route::get('', 'BoardsController@index')
         ->name('project.boards');

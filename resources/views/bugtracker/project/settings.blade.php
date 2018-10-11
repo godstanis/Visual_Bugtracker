@@ -19,7 +19,7 @@
 
             </div>
             <div class="image-input-block">
-                <input name="project_image" type="file" id="image-input" >
+                <input name="thumbnail_image" type="file" id="image-input" >
                 <label for="image-input"><span class="glyphicon glyphicon-picture"></span> @lang('custom.choose_image_file')</label>
             </div>
         </div>
@@ -28,11 +28,11 @@
 
         <br>
         <label for="project-name">Name:</label>
-        <input id="project-name" class="form-control" type="text" name="project_name" placeholder="@lang('projects.name_placeholder')" value="{{$project->name}}">
+        <input id="project-name" class="form-control" type="text" name="name" placeholder="@lang('projects.name_placeholder')" value="{{$project->name}}">
         <label for="project-description">Description:</label>
-        <textarea id="project-description" name="project_description" class="project-description-textarea form-control" type="text" placeholder="@lang('projects.description_placeholder')" required>{{$project->description}}</textarea>
+        <textarea id="project-description" name="description" class="project-description-textarea form-control" type="text" placeholder="@lang('projects.description_placeholder')" required>{{$project->description}}</textarea>
         <hr>
-        <input id="project-url" class="form-control" type="text" name="project_url" placeholder="website url" value="{{$project->website_url}}">
+        <input id="project-url" class="form-control" type="text" name="website_url" placeholder="website url" value="{{$project->website_url}}">
         <br>
         <button class="btn btn-success">Save</button>
     </form>

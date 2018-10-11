@@ -10,7 +10,7 @@
                 
             </div>
 
-            <form action="{{route('project.create_board', ['project'=>$project])}}" method="POST" class="create-board-form" enctype="multipart/form-data">
+            <form action="{{route('project.create_board', compact("project"))}}" method="POST" class="create-board-form" enctype="multipart/form-data">
             <div class="modal-body">
                 
                     <input name="board_image" type="file" class="form-control" >

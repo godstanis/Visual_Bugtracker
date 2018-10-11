@@ -9,7 +9,7 @@
 |
 */
 
-Route::group(['prefix'=>'bugtracker', 'middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
+Route::group(['middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
 
     Route::group(['prefix'=>'projects'], function(){
 
@@ -20,7 +20,7 @@ Route::group(['prefix'=>'bugtracker', 'middleware'=>'auth', 'namespace'=>'Bugtra
 
     });
 
-    Route::group(['prefix'=>'projects/{project}', 'middleware'=>'can:view,project'], function(){
+    Route::group(['prefix'=>'project/{project}', 'middleware'=>'can:view,project'], function(){
 
         Route::get('', 'ProjectsController@getProjectById')
             ->name('bugtracker.project');
