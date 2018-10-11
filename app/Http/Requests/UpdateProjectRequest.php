@@ -24,10 +24,10 @@ class UpdateProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'project_name' => 'string|required|max:25|min:3',
-            'project_description' => 'string|max:1000|min:3',
-            'project_url' => 'sometimes|nullable|url',
-            'project_image' => 'image|nullable'
+            'name' => 'string|required|max:25|min:3',
+            'description' => 'string|max:1000|min:3',
+            'website_url' => 'sometimes|nullable|url',
+            'thumbnail_image' => 'image|nullable'
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Bugtracker;
 
+use App\Http\Requests\CreateProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BugtrackerBaseController;
 
@@ -52,7 +54,7 @@ class ProjectsController extends BugtrackerBaseController
     /*
      * Create new project, and store it in DataBase
     */
-    public function postCreateProject(\App\Http\Requests\CreateProjectRequest $request)
+    public function postCreateProject(CreateProjectRequest $request)
     {
 
         $data = [
@@ -80,25 +82,29 @@ class ProjectsController extends BugtrackerBaseController
 
     }
 
+    /**
+     * Renders project settings page.
+     *
+     * @param Project $project
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getSettingsPage(Project $project)
     {
         return view('bugtracker.project.settings', ['project'=>$project]);
     }
 
-    /*
-     * Update project properties, and save it in DataBase
-    */
-    public function postUpdateProject(\App\Http\Requests\UpdateProjectRequest $request, Project $project)
+    /**
+     * Updates project properties.
+     *
+     * @param UpdateProjectRequest $request
+     * @param Project $project
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postUpdateProject(UpdateProjectRequest $request, Project $project)
     {
-
-        $project->name = $request->project_name;
-        $project->description = $request->project_description;
-        $project->website_url = $request->project_url;
-
-        $project->update();
+        $project->update($request->all());
 
         return redirect()->back();
-
     }
 
 }
