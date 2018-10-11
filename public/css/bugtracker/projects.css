@@ -15,10 +15,15 @@
     position: relative;
     top: 0;
 
-    margin: 10px 10px 40px;
+    margin: 10px;
 
     transition: 0.15s;
     -webkit-transition: 0.15s;
+}
+
+.create-project-box .project-box-img {
+    width: 90px;
+    height: 90px;
 }
 
 .project-box:hover {

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Bugtracker;
 
+use App\Http\Requests\AddMemberRequest;
+use App\Http\Requests\RemoveMemberRequest;
+use App\Repositories\TeamRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BugtrackerBaseController;
 
@@ -14,7 +17,7 @@ class TeamController extends BugtrackerBaseController
 
     protected $team_repository;
 
-    public function __construct(\App\Repositories\TeamRepository $repository)
+    public function __construct(TeamRepository $repository)
     {
         $this->team_repository = $repository;
     }
@@ -26,13 +29,13 @@ class TeamController extends BugtrackerBaseController
     {
         $project_access = $project->project_access()->get();
 
-        return view('bugtracker.project.team', ['project_access' => $project_access, 'project'=>$project]);
+        return view('bugtracker.project.team', compact('project_access', 'project'));
     }
 
     /*
      * Add existing user to the project, if not exists
     */
-    public function postAddMember(\App\Http\Requests\AddMemberRequest $request, Project $project, User $user)
+    public function postAddMember(AddMemberRequest $request, Project $project, User $user)
     {
 
         $username = $request->user_name;
@@ -62,7 +65,7 @@ class TeamController extends BugtrackerBaseController
     /*
      * Remove user, assigned to the given project
     */
-    public function postRemoveMember(\App\Http\Requests\RemoveMemberRequest $request, Project $project, User $user)
+    public function postRemoveMember(RemoveMemberRequest $request, Project $project, User $user)
     {
 
         $this->team_repository->delete($user, $project);

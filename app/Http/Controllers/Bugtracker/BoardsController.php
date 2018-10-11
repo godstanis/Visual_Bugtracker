@@ -27,7 +27,7 @@ class BoardsController extends BugtrackerBaseController
     {
         $boards = $project->boards;
 
-        return view('bugtracker.project.boards', ['boards' => $boards, 'project'=>$project] );
+        return view('bugtracker.project.boards', compact('boards', 'project'));
     }
 
     /*

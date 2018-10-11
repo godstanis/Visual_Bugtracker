@@ -17,6 +17,6 @@ class ActivityController extends BugtrackerBaseController
     {
         $activities = $project->activities;
         
-        return view('bugtracker.project.activity', ['activities'=>$activities, 'project'=>$project]);
+        return view('bugtracker.project.activity', compact('activities', 'project'));
     }
 }

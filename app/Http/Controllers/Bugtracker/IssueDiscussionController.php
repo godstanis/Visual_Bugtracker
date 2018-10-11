@@ -14,7 +14,7 @@ class IssueDiscussionController extends BugtrackerBaseController
     {
         $discussion = $issue->discussion;
 
-        return view('bugtracker.project.issue.discussion', ['discussion'=>$discussion, 'issue'=>$issue, 'project'=>$project]);
+        return view('bugtracker.project.issue.discussion', compact('discussion','issue', 'project'));
     }
 
     public function createMessage(Request $request, Project $project, Issue $issue)

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Bugtracker;
 
-use App\Http\Requests\CreateProjectRequest;
-use App\Http\Requests\UpdateProjectRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\BugtrackerBaseController;
 
-use App\Repositories\ProjectRepository;
+use App\Http\Requests\CreateProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 
+use App\Repositories\ProjectRepository;
 use App\Project;
+use Illuminate\Http\Request;
 
 class ProjectsController extends BugtrackerBaseController
 {
@@ -47,8 +47,7 @@ class ProjectsController extends BugtrackerBaseController
     */
     public function getProjectById(Project $project)
     {
-        return redirect()->route('project.issues', ['project' => $project]);
-        
+        return redirect()->route('project.issues', compact('project'));
     }
 
     /*
@@ -88,9 +87,9 @@ class ProjectsController extends BugtrackerBaseController
      * @param Project $project
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getSettingsPage(Project $project)
+    public function getSettingsPage(Request $request, Project $project)
     {
-        return view('bugtracker.project.settings', ['project'=>$project]);
+        return view('bugtracker.project.settings', compact('project'));
     }
 
     /**
