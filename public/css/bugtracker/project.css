@@ -3,15 +3,11 @@
     padding: 0;
 }
 
-
 .project-navigation-menu-bar a {
-    padding: 20px;
+    padding: 10px;
 }
 
 @media only screen and (max-width:590px) {
-   .project-navigation-menu-bar .navigation-text {
-        display: none;
-    }
     .project-navigation-menu-bar a {
         padding: 20px;
         font-size: 20px;

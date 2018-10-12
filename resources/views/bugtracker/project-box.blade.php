@@ -27,6 +27,17 @@
             <img width="20px" src="{{ $project->creator->imageLink() }}" alt="">
         </span>
     </div>
+    <div class="project-info">
+        <span class="small text-muted" title="Project boards count" >
+            {{count($project->boards)}}
+            <span class="glyphicon glyphicon-blackboard"></span>
+        </span>
+        &nbsp;
+        <span class="small text-muted" title="Project issues count">
+            {{count($project->issues)}}
+            <span class="glyphicon glyphicon-remove-circle"></span>
+        </span>
+    </div>
     <div class="project-box-open-btn">
         <a class="btn btn-success" href="{{ route('bugtracker.project', compact("project")) }}"><span class="glyphicon glyphicon-folder-open"></span>&nbsp; @lang('projects.open')</a>
     </div>
