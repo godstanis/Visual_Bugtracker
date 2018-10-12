@@ -1,32 +1,63 @@
+.issue-data-block {
+    padding: 5px 0 0 0;
+    border-bottom: 1px solid lightgray;
+}
+
+.issue-row {
+    background-color: #ffffff;
+    padding: 10px;
+    border-top: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+}
+
+.issue-row:hover {
+    background-color: #F6F8FA;
+}
+
+.issue-row .label{
+    background-color:#adadad;
+    font-size: 0.6em;
+    margin-left: 5px;
+}
+
+.issue-row .title-link {
+    font-size: 1.2em;
+    padding-right: 5px;
+    color: #505665;
+}
+
 .issue-badge {
-    color: white;
+    color: #ffffff;
 
     border-radius: 0;
     text-align: center;
-
-    padding: 4px;
-
+    padding: 1px 5px;
     width: 100%;
+
+    box-sizing: border-box;
+
+    border-bottom: 1px solid white;
 }
 
 .Bug-type {
-    background-color: #D74545;
+    background-color: #e86e68;
 }
 
 .Task-type {
-    background-color: #32ABCE;
+    background-color: #61b7ce;
 }
 
 .Low-priority {
-    background-color: #32CE65;
+    background-color: #5dce7a;
 }
 
 .Medium-priority {
-    background-color: #32ABCE;
+    background-color: #61b7ce;
 }
 
 .High-priority {
-    background-color: #D74545;
+    background-color: #e86e68;
 }
 
 .table thead, th {

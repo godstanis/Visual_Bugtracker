@@ -11,7 +11,7 @@
 @section('project-content')
 
 {!! Breadcrumbs::render('issues', $project) !!}
-    <div class="issue-controls pull-right">
+    <div class="issue-controls">
         @if(!app('request')->input('closed_visible'))
         <a class="btn btn-success" href="{{ route('project.issues', ['project' => $project, 'closed_visible'=>true]) }}"><span class="glyphicon glyphicon-eye-open"></span> Show closed</a>
         @else
@@ -20,7 +20,7 @@
     </div>
 @if(!$issues->isEmpty())
     <div class="issues-block">
-        @include('bugtracker.project.partials.issues-block')
+        @include('bugtracker.project.partials.issues')
     </div>
 @else
     <div class="alert alert-info">There is no issues yet, add one!</div>

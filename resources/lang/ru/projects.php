@@ -26,6 +26,7 @@ return [
     'issue_created_at' => 'Создана',
     'issue_updated_at' => 'Обновлена',
     'issue_controls' => 'Управление',
+    'issue_created_when' => 'Создано :when пользователем ',
 
     'issue_discussion' => 'Обсуждение задачи ":id"',
 
