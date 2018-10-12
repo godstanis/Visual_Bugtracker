@@ -12,8 +12,8 @@
             </button>
 
             <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/') }}" style="padding:0px">
-                <img src="{{ url('/images/bugwall-logo.svg') }}" onerror="{{ url('/images/bugwall-logo.png') }}" alt="BugWall" style="width:160px; height:50px; padding: 8px; box-sizing: border-box">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                <img src="{{ url('/images/logo-icon.svg') }}" onerror="{{ url('/images/logo-icon.png') }}" alt="BugWall">
             </a>
         </div>
 
@@ -66,8 +66,9 @@
                         </ul>
                     </li>
                 @endif
+                <!--
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <a href="#" class="dropdown-toggle language-dropdown-toggle" data-toggle="dropdown">
                         <img width="18px" src="{{ asset('images/language_icons/'.App::getLocale().'.png') }}" alt="{{ Config::get('languages')[App::getLocale()] }}">
                     </a>
                     <ul class="dropdown-menu">
@@ -83,6 +84,7 @@
                         @endforeach
                     </ul>
                 </li>
+                -->
             </ul>
         </div>
     </div>

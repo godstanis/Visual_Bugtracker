@@ -39,6 +39,7 @@ body {
 }
 .panel .panel-heading {
     background-color: #22B573;
+    background-image: linear-gradient(to right, #5cb85c, #65db65);
     border-radius: 0;
     color: white;
 }

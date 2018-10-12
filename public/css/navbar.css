@@ -15,3 +15,18 @@
 .dropdown-menu {
     border-radius: 0;
 }
+
+.navbar-brand {
+    padding:0px
+}
+
+.navbar-brand img {
+    //width:160px;
+    height:50px;
+    padding: 12px;
+    box-sizing: border-box
+}
+
+.language-dropdown-toggle img{
+    padding: 1px;
+}
