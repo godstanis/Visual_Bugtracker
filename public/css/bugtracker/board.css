@@ -18,7 +18,7 @@
 }
 
 .board-box {
-    width: 400px;
+    width: 250px;
     word-wrap: break-word;
     
     background-color: white;
@@ -83,13 +83,10 @@
     position: relative;
     overflow: hidden;
 
-    width:80%;
-    height:180px;
-    
+    width:180px;
+    height:120px;
+
     display: inline-block;
-
-    border: 2px solid lightgrey;
-
     background-color: lightgray;
 }
 .board-box-img img {

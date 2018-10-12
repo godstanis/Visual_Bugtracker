@@ -1,12 +1,14 @@
 <div class="project-box project-box-view">
     <div class="project-box-content">
         <div class="project-box-controls pull-right btn-group">
-            <!--<button class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>-->
             @can('delete', $project)
-            <form class="delete-project-form" action="{{route('bugtracker.delete_project', compact("project"))}}" method="POST">
-                <button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
-                <input type="hidden" name="_token" value="{{csrf_token()}}">
-            </form>
+                <div>
+                    <a style="margin-right: -4px;" href="{{route('project.settings', compact('project'))}}" title="Edit project" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <form style="display:inline-block; margin:0" class="delete-project-form" action="{{route('bugtracker.delete_project', compact("project"))}}" method="POST">
+                        <button class="btn btn-danger btn-sm" title="Delete project"><span class="glyphicon glyphicon-trash"></span></button>
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                    </form>
+                </div>
             @endcan
         </div>
         <h4 class="project-title">{{$project->name}}</h4>
