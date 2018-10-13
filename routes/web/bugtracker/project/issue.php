@@ -16,7 +16,7 @@ Route::group(['prefix'=>'{project}/issues', 'middleware'=>'auth', 'namespace'=>'
     Route::post('create-issue', 'IssuesController@postCreateIssue')
         ->name('project.issue.create');
 
-    Route::post('delete_issue/{issue}', 'IssuesController@postDeleteIssue')
+    Route::get('delete_issue/{issue}', 'IssuesController@getDeleteIssue')
         ->name('project.issue.delete')->middleware('can:delete,issue');
     Route::post('close_issue/{issue}', 'IssuesController@closeIssue')
         ->name('project.issue.close')->middleware('can:delete,issue');

@@ -22,9 +22,13 @@ class IssuesController extends BugtrackerBaseController
         $this->issue_repository = $repository;
     }
 
-    /*
-     * Show all issues, assigned to current project
-    */
+    /**
+     * Show all issues, assigned to the current project.
+     *
+     * @param Request $request
+     * @param Project $project
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getProjectIssues(Request $request, Project $project)
     {
 
@@ -41,7 +45,7 @@ class IssuesController extends BugtrackerBaseController
     }
 
     /**
-     * Create new issue, and store it
+     * Create new issue, and store it.
      *
      * @param CreateIssueRequest $request
      * @param Project $project
@@ -54,16 +58,11 @@ class IssuesController extends BugtrackerBaseController
     /*
      * Delete existing issue
     */
-    public function postDeleteIssue(Project $project, Issue $issue)
+    public function getDeleteIssue(Project $project, Issue $issue)
     {
+        $this->issue_repository->delete($issue);
 
-        $issue_repository = new IssueRepository;
-
-        $issue_repository->delete($issue);
-
-        $response = ['status' => true];
-        
-        return json_encode( $response );
+        return redirect()->back();
     }
 
     public function closeIssue(Project $project, Issue $issue)

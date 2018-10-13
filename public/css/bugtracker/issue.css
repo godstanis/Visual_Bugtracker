@@ -27,6 +27,10 @@
     color: #505665;
 }
 
+.issue-row .delete-link {
+    color: #e86e68;
+}
+
 .issue-badge {
     color: #ffffff;
 

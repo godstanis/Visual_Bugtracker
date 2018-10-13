@@ -32,6 +32,7 @@ return [
 
     //Issue modal
     'issue_create' => 'Создать задачу',
+    'issue_delete' => 'Удалить',
     'issue_add' => 'Добавить',
 
     //Boards
