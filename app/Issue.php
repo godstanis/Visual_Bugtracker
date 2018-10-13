@@ -41,8 +41,23 @@ class Issue extends Model
         return $this->hasMany('App\IssueDiscussion', 'issue_id', 'id');
     }
 
+    /*
+     * Accessors
+     * More info: https://laravel.com/docs/eloquent-mutators
+     */
+
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->diffForHumans();
+    }
+
+    /*
+     * Scopes
+     * More info: https://laravel.com/docs/eloquent#local-scopes
+     */
+
+    public function scopeGetOrdered($query, $columnName = 'created_at', $orderType = 'DESC')
+    {
+        return $query->orderBy($columnName,$orderType);
     }
 }
