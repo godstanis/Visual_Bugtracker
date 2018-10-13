@@ -55,16 +55,11 @@ class ProjectsController extends BugtrackerBaseController
     */
     public function postCreateProject(CreateProjectRequest $request)
     {
+        $newProject = $this->project_repository->create($request->all());
 
-        $data = [
-            'name' => $request->project_name,
-            'description' => $request->project_description,
-            'creator_user_id' => auth()->user()->id,
-            'project_image' => $request->file('project_image'),
-        ];
-        
-        return $this->project_repository->create($data);
-      
+        if($request->ajax()) {
+            return view('bugtracker.project-box', ['project' => $newProject])->render();
+        }
     }
 
 

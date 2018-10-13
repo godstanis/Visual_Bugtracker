@@ -4,10 +4,26 @@ namespace App\Repositories;
 
 use App\Project;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use App\Services\FileUpload\FileUploadContract;
 
 class ProjectRepository
 {
+    protected $uploadService;
+
+    /**
+     * ProjectRepository constructor.
+     * @param Project $user
+     * @param FileUploadContract $uploadService
+     */
+    public function __construct(Project $project, FileUploadContract $uploadService)
+    {
+        $this->project = $project;
+
+        $this->uploadService = $uploadService;
+    }
+
     public function all()
     {
         return Project::all();
@@ -32,50 +48,39 @@ class ProjectRepository
 
         if( $project )
         {
-            
-            if( $project->thumbnail_img !== $projectDefaultImageName){
+            if( $project->thumbnail_img !== $projectDefaultImageName) {
                 Storage::delete( $projectImageDirectory.'/'.$project->thumbnail_img );
             }
-
-            if( $project->delete() and $project->project_access()->delete() )//$projectAccess->delete() )
-            {
+            if( $project->delete() ) {
                 $response['status'] = true;
             }
 
         }
     }
 
-    public function create($data)
+    /**
+     * Creates a project.
+     *
+     * @param $request  array
+     * @return Project
+     */
+    public function create($request)
     {
+        $defaultImageName = config('images.default_project_thumb');
 
-        $projectImageDirectory = config('images.project_thumb_dir');
-        $projectDefaultImageName = config('images.default_project_thumb');
+        $projectImage = &$request['thumbnail_img'] ?? false;
 
-        $uploadedImage = $data['project_image'];
-        if($uploadedImage)
-        {
-            $imageExtension = $uploadedImage->getClientOriginalExtension();
-            $newImageName = str_random(24) . uniqid("", false) . '.' . $imageExtension;
-
-            $thumbnail_img = $newImageName;
-
-            Storage::put($projectImageDirectory.'/' . $thumbnail_img, file_get_contents($uploadedImage));
-        }
-        else
-        {
-            $thumbnail_img = $projectDefaultImageName;
+        if( $projectImage !== false ) {
+            $newImageName = $this->uploadService->upload($projectImage);
+            $projectImage = $newImageName;
+        } else {
+            $projectImage = $defaultImageName;
         }
 
-        $newProject = Project::create([
-            'name' => $data['name'],
-            'description' => $data['description'],
-            'creator_user_id' => $data['creator_user_id'],
-            'thumbnail_img' => $thumbnail_img,
-        ]);
+        $project = new Project($request);
+        $project->save();
 
-        $newProjectView = view('bugtracker.project-box', ['project' => $newProject])->render();
-
-        return $newProjectView;
+        return $project;
     }
 
     public function update()

@@ -27,7 +27,7 @@
             <div class="project-box-content">
                 <div class="add-project-content" tabindex="1"><span>+</span></div>
                 <div class="create-form-input-block">
-                    <input name="project_name" class="project-title-input form-control" type="text" placeholder="@lang('projects.name_placeholder')" required>
+                    <input name="name" class="project-title-input form-control" type="text" placeholder="@lang('projects.name_placeholder')" required>
                     <div class="help-block project_name"></div>
                     
                 </div>
@@ -38,14 +38,14 @@
                         <img class="image-update" src="{{ asset('images\default_project_thumb.jpg') }}" alt="">
                     </div>
                     <div class="image-input-block">
-                        <input name="project_image" type="file" id="image-input" >
+                        <input name="thumbnail_img" type="file" id="image-input" >
                         <label for="image-input"><span class="glyphicon glyphicon-picture"></span> @lang('custom.choose_image_file')</label>
                     </div>
                     
                 </div>
 
                 <div class="project-box-credentials">
-                    <textarea name="project_description" class="project-description-textarea form-control" type="text" placeholder="@lang('projects.description_placeholder')" required></textarea>
+                    <textarea name="description" class="project-description-textarea form-control" type="text" placeholder="@lang('projects.description_placeholder')" required></textarea>
                     
                 </div>
                 <div class="help-block project_description"></div>
