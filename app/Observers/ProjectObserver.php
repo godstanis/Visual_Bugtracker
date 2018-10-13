@@ -9,6 +9,18 @@ class ProjectObserver
 {
 
     /**
+     * Handle the Project "creating" event and create
+     * according project access for creator.
+     *
+     * @param  Project  $project
+     * @return void
+     */
+    public function creating(Project $project)
+    {
+        $project->creator_user_id = auth()->user()->id;
+    }
+
+    /**
      * Handle the Project "created" event and create
      * according project access for creator.
      *

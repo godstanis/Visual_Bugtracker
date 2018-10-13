@@ -7,7 +7,7 @@ Use App\Issue;
 class IssueObserver
 {
     /**
-     * Listen to the Issue created event and apply issue creator.
+     * Listen to the Issue creating event and apply issue creator.
      *
      * @param  Issue  $issue
      * @return void
