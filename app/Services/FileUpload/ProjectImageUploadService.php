@@ -1,15 +1,14 @@
 <?php
 
-
 namespace App\Services\FileUpload;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager as Image;
 
-class AvatarUploadService extends FileUploadContract
+class ProjectImageUploadService extends FileUploadContract
 {
-    protected $defaultAvatarName;
+    protected $defaultProjectImageName;
 
     /**
      * AvatarUploadContract constructor.
@@ -18,7 +17,7 @@ class AvatarUploadService extends FileUploadContract
     public function __construct(string $basePath)
     {
         parent::__construct($basePath);
-        $this->defaultAvatarName = config('images.default_user_avatar');
+        $this->defaultProjectImageName = config('images.default_project_thumb');
     }
 
     /**
@@ -34,19 +33,7 @@ class AvatarUploadService extends FileUploadContract
             $newName = str_random(24) . uniqid("", false) . '.' . $imageExtension;
         }
 
-        $uploadedImage = (new Image)->make($file)->resize(150,150);
-
-        $avatarsDirectory = $this->basePath;
-        $defaultAvatarName = $this->defaultAvatarName;
-
-        Storage::put(
-            $avatarsDirectory .'/' . $newName,
-            (string)$uploadedImage->stream()
-        ); // save new avatar
-
-        if( $oldName !== $defaultAvatarName && $oldName !== null){
-            Storage::delete( $avatarsDirectory . '/' . $oldName ); // delete old avatar
-        }
+        Storage::put($this->basePath.'/' . $newName, file_get_contents($file));
 
         return $newName;
     }
