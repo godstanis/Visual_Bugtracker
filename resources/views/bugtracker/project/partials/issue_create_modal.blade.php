@@ -29,10 +29,10 @@
                     <option value="3">High</option>
                 </select>
                 <div class="help-block priority_id"></div>
-                <select class="form-control" name="assigned_to_user_name" id="">
+                <select class="form-control" name="assigned_to_user_id" id="">
                     <option hidden selected>@lang('projects.issue_assigned_to')</option>
                     @foreach($project->team()->get() as $member)
-                        <option value="{{ $member->user->name }}">{{ $member->user->name }}</option>
+                        <option value="{{ $member->user->id }}">{{ $member->user->name }}</option>
                     @endforeach
                 </select>
                 <div class="help-block assigned_to_user_name"></div>

@@ -2,11 +2,15 @@
 
 namespace App\Providers;
 
+use App\Issue;
 use App\Project;
+use App\Observers\IssueObserver;
 use App\Observers\ProjectObserver;
+
 use App\Repositories\UserRepository;
 use App\Services\FileUpload\AvatarUploadService;
 use App\Services\FileUpload\FileUploadContract;
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Project::observe(ProjectObserver::class);
+        Issue::observe(IssueObserver::class);
     }
 
     /**
