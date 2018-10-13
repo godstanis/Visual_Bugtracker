@@ -11,7 +11,7 @@ return [
     'create' => 'Создать',
     'name_placeholder' => 'Название моего проекта',
     'description_placeholder' => 'Описание моего проекта',
-    'created_by' => 'Создан пользователем',
+    'created_by' => 'Начал',
     'creator_is' => 'Создатель',
 
     //Issues
@@ -26,7 +26,7 @@ return [
     'issue_created_at' => 'Создана',
     'issue_updated_at' => 'Обновлена',
     'issue_controls' => 'Управление',
-    'issue_created_when' => 'Создано :when пользователем ',
+    'issue_created_when' => 'Создано :when участником ',
 
     'issue_discussion' => 'Обсуждение задачи ":id"',
 
@@ -36,7 +36,7 @@ return [
 
     //Boards
     'boards' => 'Доски',
-    'board_created_by' => 'Создана пользователем',
+    'board_created_by' => 'Создал',
 
     //Activity
     'activity' => 'Активность',

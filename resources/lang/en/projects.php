@@ -11,7 +11,7 @@ return [
     'create' => 'Create',
     'name_placeholder' => 'My new project name',
     'description_placeholder' => 'My project description',
-    'created_by' => 'Created by',
+    'created_by' => 'Started by',
     'creator_is' => 'Creator is',
 
     //Issues
