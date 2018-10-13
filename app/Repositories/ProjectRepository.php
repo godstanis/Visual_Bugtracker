@@ -20,18 +20,18 @@ class ProjectRepository
     public function __construct(Project $project, FileUploadContract $uploadService)
     {
         $this->project = $project;
-
         $this->uploadService = $uploadService;
     }
 
-    public function all()
-    {
-        return Project::all();
-    }
-
+    /**
+     * Returns projects user has access to.
+     *
+     * @param $project_access_array
+     * @return array|\Illuminate\Support\Collection
+     */
     public function getByAccessArray($project_access_array)
     {
-        $projects = [];
+        $projects = collect([]);
 
         foreach ($project_access_array as $access) {
             $projects[] = $access->project;
@@ -40,21 +40,21 @@ class ProjectRepository
         return $projects;
     }
 
-    public function delete(Project $project, \App\User $user)
+    /**
+     * Deletes project with it's image.
+     *
+     * @param Project $project
+     * @param \App\User $user
+     */
+    public function delete(Project $project)
     {
-
         $projectImageDirectory = config('images.project_thumb_dir');
         $projectDefaultImageName = config('images.default_project_thumb');
 
-        if( $project )
-        {
-            if( $project->thumbnail_img !== $projectDefaultImageName) {
+        if( $project ) {
+            if( $project->thumbnail_img !== $projectDefaultImageName && $project->delete()) {
                 Storage::delete( $projectImageDirectory.'/'.$project->thumbnail_img );
             }
-            if( $project->delete() ) {
-                $response['status'] = true;
-            }
-
         }
     }
 
