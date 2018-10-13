@@ -25,7 +25,7 @@ class AvatarUploadService extends FileUploadContract
      * @param UploadedFile $file
      * @param string $newName
      * @param string|null $oldName
-     * @return string
+     * @return string  $newName
      */
     public function upload(UploadedFile $file, string $newName = null, string $oldName = null) :string
     {
