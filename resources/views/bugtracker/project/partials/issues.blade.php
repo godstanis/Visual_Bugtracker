@@ -7,7 +7,9 @@
                         <span><b>{{ $issue->title }}</b></span>
                     </a>
                     @can('delete', $issue)
-                        <a class="delete-link" href="{{ route('project.issue.delete', ['issue'=>$issue, 'project'=>$issue->project]) }}"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a class="delete-link" href="{{ route('project.issue.delete', ['issue'=>$issue, 'project'=>$issue->project]) }}">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
                     @endcan
                     @if(count($issue->discussion)>0)
                         <span class="text-muted label label-default">
