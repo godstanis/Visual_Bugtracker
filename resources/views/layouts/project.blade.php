@@ -25,11 +25,11 @@
         <a class="btn btn-bg btn-default open-tab-btn" href="{{ route('project.team', ['project' => $project]) }}"><span class="glyphicon glyphicon-user"></span> <span class="navigation-text">@lang('projects.team')</span></a>
 
     </li>
+    @can('update', $project)
     <li>
-        @can('delete', $project)
             <a class="btn btn-bg btn-default open-tab-btn" href="{{ route('project.settings', ['project' => $project]) }}"><span class="glyphicon glyphicon-cog"></span> <span class="navigation-text">@lang('projects.settings')</span></a>
-        @endcan
     </li>
+    @endcan
 </ul>
 
 <div class="container project-tab-container col-md-12">
