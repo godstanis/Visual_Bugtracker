@@ -55,31 +55,45 @@ class IssuesController extends BugtrackerBaseController
         $project->issues()->create($request->all());
     }
 
-    /*
-     * Delete existing issue
-    */
+    /**
+     * Delete existing issue.
+     *
+     * @param Project $project
+     * @param Issue $issue
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function getDeleteIssue(Project $project, Issue $issue)
     {
-        $this->issue_repository->delete($issue);
+        $issue->delete($issue);
 
         return redirect()->back();
     }
 
+    /**
+     * Close existing issue.
+     *
+     * @param Project $project
+     * @param Issue $issue
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function closeIssue(Project $project, Issue $issue)
     {
-        $issue->closed = true;
-        $issue->update();
-
+        $issue->close();
         session()->flash('message', 'Issue closed!');
 
         return redirect()->back();
     }
 
+    /**
+     * Open existing issue.
+     *
+     * @param Project $project
+     * @param Issue $issue
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function openIssue(Project $project, Issue $issue)
     {
-        $issue->closed = false;
-        $issue->update();
-
+        $issue->open();
         session()->flash('message', 'Issue re-opened!');
 
         return redirect()->back();

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Issue extends Model
 {
     protected $fillable = [
-        'title', 'project_id', 'description', 'type_id', 'priority_id', 'created_by_user_id', 'closed_by_user_id', 'assigned_to_user_id', 'path_id'
+        'title', 'project_id', 'description', 'closed', 'type_id', 'priority_id', 'created_by_user_id', 'closed_by_user_id', 'assigned_to_user_id', 'path_id'
     ];
 
     public function type()
@@ -39,6 +39,18 @@ class Issue extends Model
     public function discussion()
     {
         return $this->hasMany('App\IssueDiscussion', 'issue_id', 'id');
+    }
+
+    public function close()
+    {
+        $this->closed = true;
+        return $this->update();
+    }
+
+    public function open()
+    {
+        $this->closed = false;
+        return $this->update();
     }
 
     /*
