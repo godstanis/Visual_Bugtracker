@@ -178,6 +178,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\PusherServiceProvider::class,
+        App\Providers\ComposerServiceProvider::class,
         /*
          * BreadCrumbs Service Provider
          */

@@ -18,15 +18,16 @@
                 <div class="help-block description"></div>
                 <select class="form-control" name="type_id" id="">
                     <option hidden selected>@lang('projects.issue_type')</option>
-                    <option value="1">Bug</option>
-                    <option value="2">Task</option>
+                    @foreach($issueType as $type)
+                        <option value="{{$type->id}}">{{$type->title}}</option>
+                    @endforeach
                 </select>
                 <div class="help-block type_id"></div>
                 <select class="form-control" name="priority_id" id="">
                     <option hidden selected>@lang('projects.issue_priority')</option>
-                    <option value="1">Low</option>
-                    <option value="2">Medium</option>
-                    <option value="3">High</option>
+                    @foreach($issuePriority as $priority)
+                        <option value="{{$priority->id}}">{{$priority->title}}</option>
+                    @endforeach
                 </select>
                 <div class="help-block priority_id"></div>
                 <select class="form-control" name="assigned_to_user_id" id="">

@@ -5,7 +5,7 @@
     </a>
 
     <ul class="dropdown-menu" role="menu">
-        @foreach(auth()->user()->project_access as $project_access)
+        @foreach(auth()->user()->project_access->load('project') as $project_access)
             <li>
                 <a href="{{ route('bugtracker.project', ['project'=>$project_access->project]) }}"><span class="glyphicon glyphicon-file"></span>
                     <span>{{$project_access->project->name}}</span>
