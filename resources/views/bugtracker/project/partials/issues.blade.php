@@ -36,8 +36,8 @@
                     <span class="">#{{ $issue->id }}</span>
 
                     @lang('projects.issue_created_when', ['when'=>$issue->created_at])
-                    <a href="{{ route('user', ['user_name'=>$issue->assignedUser->name]) }}">
-                        <span>@</span>{{ $issue->assignedUser->name }}
+                    <a href="{{ route('user', ['user_name'=>$issue->creator->name]) }}">
+                        <span>@</span>{{ $issue->creator->name }}
                     </a>
                 </div>
             </div>
