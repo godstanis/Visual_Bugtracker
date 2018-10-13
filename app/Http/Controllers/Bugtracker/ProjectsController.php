@@ -68,12 +68,7 @@ class ProjectsController extends BugtrackerBaseController
     */
     public function postDeleteProject(Project $project)
     {
-        
         $this->project_repository->delete($project, auth()->user());
-
-        $response = ['status' => true];
-        return json_encode($response);
-
     }
 
     /**

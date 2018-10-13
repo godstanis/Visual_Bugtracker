@@ -68,7 +68,10 @@ class ProjectRepository
     {
         $defaultImageName = config('images.default_project_thumb');
 
-        $projectImage = &$request['thumbnail_img'] ?? false;
+        if( ! isset( $request['thumbnail_img'] ) ) {
+            $request['thumbnail_img'] = false;
+        }
+        $projectImage = &$request['thumbnail_img'];
 
         if( $projectImage !== false ) {
             $newImageName = $this->uploadService->upload($projectImage);
