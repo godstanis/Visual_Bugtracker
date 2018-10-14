@@ -13,6 +13,7 @@ class IssueDiscussionController extends BugtrackerBaseController
     public function getDiscussion(Project $project, Issue $issue)
     {
         $discussion = $issue->discussion;
+        $discussion->load('creator');
 
         return view('bugtracker.project.issue.discussion', compact('discussion','issue', 'project'));
     }
