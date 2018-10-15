@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Bugtracker;
 
+use App\Http\Requests\CreateIssueDiscussionRequest;
 use App\Issue;
 use App\Project;
 use App\IssueDiscussion;
@@ -18,18 +19,9 @@ class IssueDiscussionController extends BugtrackerBaseController
         return view('bugtracker.project.issue.discussion', compact('discussion','issue', 'project'));
     }
 
-    public function createMessage(Request $request, Project $project, Issue $issue)
-    {   
-        $this->validate($request, [
-            'message_text' => 'required|string|min:3|max:1000'
-        ]);
-        $discussion = IssueDiscussion::create([
-            'issue_id' => $issue->id,
-            'user_id' => auth()->user()->id,
-            'text' => $request->message_text,
-        ]);
-
-        $discussion->save();
+    public function createMessage(CreateIssueDiscussionRequest $request, Project $project, Issue $issue)
+    {
+        $issue->discussion()->create($request->all());
 
         return redirect()->back();
     }

@@ -1,6 +1,6 @@
 <form class="issue-message-form" action="{{route('project.issue.discussion.create', compact('project', 'issue'))}}" method="POST">
     <div class="form-group{{ $errors->has('message_text') ? ' has-error' : '' }}">
-        <textarea class="form-control" name="message_text" placeholder="Message" rows="3" style="border:none"></textarea>
+        <textarea class="form-control" name="text" placeholder="Message" rows="3" style="border:none"></textarea>
         @if ($errors->has('message_text'))
             <span class="help-block">
                 <strong>{{ $errors->first('message_text') }}</strong>

@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Board;
 use App\Issue;
+use App\IssueDiscussion;
+use App\Observers\IssueDiscussionObserver;
 use App\Project;
 
 use App\Repositories\BoardRepository;
@@ -37,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
         Project::observe(ProjectObserver::class);
         Issue::observe(IssueObserver::class);
         Board::observe(BoardObserver::class);
+        IssueDiscussion::observe(IssueDiscussionObserver::class);
     }
 
     /**
