@@ -21,31 +21,18 @@ class PathController extends Controller
 
     public function savePath(Request $request, Project $project, Board $board)
     {
+        $path = $board->paths()->create($request->all());
 
-        $data = [
-            'board_id' => $board->id,
-            'created_by_user_id' => auth()->user()->id,
-            'path_slug' => uniqid('path_'),
-            'path_data' => $request->path_data,
-            'stroke_color' => $request->stroke_color,
-            'stroke_width' => $request->stroke_width,
-        ];
+        if($request->ajax()) {
+            $response = [ 'path_slug' => $path->path_slug ];
 
-        $this->path_repository->save($data);
-
-        $response = [
-            'path_slug' => $data['path_slug'],
-        ];
-        
-        return json_encode($response);
-
-
-
+            return json_encode($response);
+        }
     }
 
     public function deletePath(Request $request, Project $project, Board $board)
     {
-        $this->path_repository->deleteBySlug($request->path_slug);
+        $board->paths()->where(['path_slug'=>$request->path_slug])->first()->delete();
     }
 
 }

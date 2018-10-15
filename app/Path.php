@@ -15,6 +15,11 @@ class Path extends Model
         return $this->belongsTo('\App\Board', 'board_id', 'id');
     }
 
+    public function getRouteKeyName()
+    {
+        return 'path_slug';
+    }
+
     public function decodedJsonPath()
     {
         $path = [

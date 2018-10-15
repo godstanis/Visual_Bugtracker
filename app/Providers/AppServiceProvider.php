@@ -6,6 +6,8 @@ use App\Board;
 use App\Issue;
 use App\IssueDiscussion;
 use App\Observers\IssueDiscussionObserver;
+use App\Observers\PathObserver;
+use App\Path;
 use App\Project;
 
 use App\Repositories\BoardRepository;
@@ -40,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
         Issue::observe(IssueObserver::class);
         Board::observe(BoardObserver::class);
         IssueDiscussion::observe(IssueDiscussionObserver::class);
+        Path::observe(PathObserver::class);
     }
 
     /**
