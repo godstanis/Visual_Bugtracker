@@ -11,6 +11,14 @@ class ProjectPolicy
 {
     use HandlesAuthorization;
 
+    private $projectAccess;
+
+    public function __construct(ProjectAccess $projectAccess)
+    {
+
+        $this->projectAccess = $projectAccess;
+    }
+
     /**
      * Determine whether the user can view the project.
      *
@@ -23,20 +31,12 @@ class ProjectPolicy
 
         $userIsCreator = ( $user->id === $project->creator_user_id );
 
-        $project_access = ProjectAccess::where([
+        $hasAccess = $this->projectAccess->where([
             ['user_id', $user->id],
             ['project_id', $project->id]
         ])->exists();
-        
 
-        if($userIsCreator || $project_access)
-        {
-            return true;
-        }
-        
-        return false;
-
-
+        return $userIsCreator || $hasAccess;
     }
 
     /**
@@ -59,14 +59,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project)
     {
-
-        //return $user->id === $project->creator_user_id;
-        if($this->creator($user, $project))
-        {
-            return true;
-        }
-
-        return false;
+        return $this->creator($user, $project);
     }
 
     /**
@@ -78,18 +71,18 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project)
     {
-
-        //return $user->id === $project->creator_user_id;
-        if($this->creator($user, $project))
-        {
-            return true;
-        }
-
-        return false;
+        return $this->creator($user, $project);
     }
 
+    /**
+     * Is user created the project.
+     *
+     * @param User $user
+     * @param Project $project
+     * @return bool
+     */
     public function creator(User $user, Project $project)
     {
-        return $user->id === $project->creator_user_id;
+        return $project->creator()->id === $user->id;
     }
 }
