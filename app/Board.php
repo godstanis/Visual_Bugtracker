@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Board extends Model
 {
+    protected $fillable = ['name', 'project_id', 'thumb_image', 'created_by_user_id'];
 
     public function creator()
     {

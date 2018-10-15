@@ -3,54 +3,57 @@
 namespace App\Repositories;
 
 use App\Board;
+use App\Project;
 
+use App\Services\FileUpload\FileUploadContract;
+
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+
 
 class BoardRepository
 {
-    public function create($data)
+    protected $board;
+    protected $uploadService;
+
+    /**
+     * ProjectRepository constructor.
+     *
+     * @param Board $board
+     * @param FileUploadContract $uploadService
+     */
+    public function __construct(Board $board, FileUploadContract $uploadService)
     {
-        $board = new Board();
-
-        $board->project_id = $data['project_id'];
-        $board->name =  $data['name'];
-        $board->created_by_user_id =  $data['created_by_user_id'];
-
-        $boardImageDirectory = config('images.boards_images_dir');
-
-        $uploadedImage =  $data['thumb_image'];
-
-        if($uploadedImage)
-        {
-
-            $newImageName = uniqid("",false) . '.jpg';
-
-            $board->thumb_image = $newImageName;
-
-            Storage::put($boardImageDirectory.'/' . $board->thumb_image, file_get_contents($uploadedImage));
-        }
-
-        $board->save();
-
-        return $board;
+        $this->board = $board;
+        $this->uploadService = $uploadService;
     }
 
-    public function delete(Board $board)
+    /**
+     * Creates project.
+     *
+     * @param Project $project
+     * @param $request
+     * @return Model
+     */
+    public function create(Project $project, $request): Model
     {
+        $boardImage = &$request['thumb_image'];
 
+        $newImageName = $this->uploadService->upload($boardImage);
+        $boardImage = $newImageName;
+
+        return $project->boards()->create($request);
+    }
+
+    public function delete(Board $board): ?bool
+    {
         $boardImageDirectory = config('images.boards_images_dir');
 
-        if( $board )
-        {
+        if( $board ) {
             Storage::delete( $boardImageDirectory.'/'.$board->thumb_image );
-
-            if( $board->delete() )
-            {
-                //event(new \App\Events\BoardDeleted($board->id));
-                //$response['status'] = true;
+            if( $board->delete() ) {
                 return true;
             }
-
         }
     }
 

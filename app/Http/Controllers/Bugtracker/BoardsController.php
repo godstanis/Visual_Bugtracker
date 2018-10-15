@@ -15,14 +15,22 @@ class BoardsController extends BugtrackerBaseController
 
     protected $board_repository;
 
+    /**
+     * BoardsController constructor.
+     *
+     * @param BoardRepository $repository
+     */
     public function __construct(BoardRepository $repository)
     {
         $this->board_repository = $repository;
     }
 
-    /*
-     * Show all boards, assigned to the project
-    */
+    /**
+     * Show all boards, assigned to the project.
+     *
+     * @param Project $project
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Project $project)
     {
         $boards = $project->boards;
@@ -30,33 +38,30 @@ class BoardsController extends BugtrackerBaseController
         return view('bugtracker.project.boards', compact('boards', 'project'));
     }
 
-    /*
-     * Create board, and store it in DataBase
-    */
+    /**
+     * Create board, and store it in DataBase.
+     *
+     * @param \App\Http\Requests\BoardCreateForm $request
+     * @param Project $project
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create(\App\Http\Requests\BoardCreateForm $request, Project $project)
     {
+        $board = $this->board_repository->create($project, $request->all());
 
-        $board_repository = $this->board_repository;
-
-        $data = [
-            'project_id' => $project->id,
-            'name' => 'My board',
-            'created_by_user_id' => auth()->user()->id,
-            'thumb_image' => $request->file('board_image'),
-        ];
-
-        $board = $board_repository->create($data);
-
-        return view('bugtracker.project.partials.board-box', compact('board','project'));
-        
+        return view('bugtracker.editor.partials.board-box', compact('board','project'));
     }
 
+    /**
+     * Delete board.
+     *
+     * @param Project $project
+     * @param Board $board
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete(Project $project, Board $board)
     {
-
-        $board_repository = $this->board_repository;
-        
-        $board_repository->delete($board);
+        $this->board_repository->delete($board);
 
         return redirect()->back();
     }

@@ -26,7 +26,7 @@ class BoardCreateForm extends FormRequest
         
         return [
             'project' => 'exists:projects,id',
-            'board_image' => 'required|image',
+            'thumb_image' => 'required|image',
         ];
 
     }

@@ -1,25 +1,22 @@
 
 $(document).ready(function() {
 
-    var BoardModule = {
+    let BoardModule = {
         create_board_form: undefined,
-        delete_board_form: undefined,
+        delete_board_btn: undefined,
         init: function(create_board_form, delete_board_form){
             this.create_board_form = create_board_form;
-            //this.delete_board_form = delete_board_form;
+            this.delete_board_btn = delete_board_form;
         },
         bindEvents: function(){
-            this.create_board_form.submit(this.createBoard.bind(this));
-            //this.delete_board_form.click(this.deleteBoard.bind(this));
-
+            $(this.create_board_form).submit(this.createBoard.bind(this));
+            $(document).on("click", this.delete_board_btn, this.deleteBoard.bind(this));
         },
         createBoard: function(e){
 
             e.preventDefault();
-
-            var form = $(e.target);
-
-            var formData = new FormData(form.get(0));
+            let form = $(e.target);
+            let formData = new FormData(form.get(0));
             
             $.ajax({
                 type: "POST",
@@ -31,18 +28,17 @@ $(document).ready(function() {
                     $('.help-block').text('');
                 },
                 success: function(boardbox){
-                    form.closest('.board-box').before(boardbox);
-                    form.closest('.board-box').hide();
+                    $('#boards-block').children().last('.board-box').after(boardbox);
                 },
                 error: function(data){
-                    var response = JSON.parse(data.responseText);
+                    let response = JSON.parse(data.responseText);
 
                     form.parent().addClass('has-error');
 
-                    for(var key in response){
-                        var fields = response[key];
+                    for(let key in response){
+                        let fields = response[key];
                         
-                        for(var field in fields){
+                        for(let field in fields){
                             $('.'+key).append(fields[field]);
                         }
                     }
@@ -51,9 +47,10 @@ $(document).ready(function() {
 
         },
         deleteBoard: function(e){
+            console.log('delete-pressed');
             e.preventDefault();
 
-            var url = $(e.target).attr('href');
+            let url = $(e.target).attr('href');
 
             if(url === undefined){ // if clicked on icon inside <a>
                 url = $(e.target).closest('a').attr('href');
@@ -63,14 +60,14 @@ $(document).ready(function() {
                 type: "GET",
                 url: url,
                 success: function(response){
-                    $(e.target).closest('tr').hide();
+                    console.log('success');
+                    $(e.target).closest('.board-box').hide();
                 }
             });
         },        
     };
 
-    BoardModule.init( $('.create-board-form') , $('.issue-control-block a.delete-issue-btn') );
-
+    BoardModule.init( '.create-board-form', '#boards-block a.delete-board' );
     BoardModule.bindEvents();
 
     console.log('board module loaded');

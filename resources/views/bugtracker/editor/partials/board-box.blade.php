@@ -1,12 +1,11 @@
-<div class="board-box {{$board->id == $current_board->id ? 'active-board' : 'text'}}">
+<div class="board-box {{isset($current_board)?($board->id == $current_board->id ? 'active-board' : 'text'):""}}">
     <div class="board-box-content">
         <div class="board-box-controls pull-right btn-group">
             <!--<button class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>-->
 
-            <form class="delete-board-form" action="{{route('project.delete_board', ['board'=>$board, 'project'=>$project])}}" method="POST">
-                <button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
-                {{csrf_field()}}
-            </form>
+            <a class="delete-board btn btn-danger btn-sm" href="{{route('project.delete_board', ['board'=>$board, 'project'=>$project])}}">
+                <span class="glyphicon glyphicon-trash"></span>
+            </a>
 
         </div>
         <h4 class="board-title board-box-title">{{ $board->name }}</h4>

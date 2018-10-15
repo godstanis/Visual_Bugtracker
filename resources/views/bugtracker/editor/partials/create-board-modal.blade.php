@@ -11,17 +11,15 @@
             </div>
 
             <form action="{{route('project.create_board', compact("project"))}}" method="POST" class="create-board-form" enctype="multipart/form-data">
-            <div class="modal-body">
-                
-                    <input name="board_image" type="file" class="form-control" >
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                
-            </div>
-            <div class="modal-footer">
-                
-                <button class="btn btn-success">@lang('custom.save')</button>
-            </div>
-            
+                <div class="modal-body">
+                        <input type="text" name="name" class="form-control" placeholder="Board name">
+                        <div class="help-block name"></div>
+                        <input type="file" name="thumb_image" class="form-control" >
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success">@lang('custom.save')</button>
+                </div>
             </form>
         </div>
     </div>
