@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Bugtracker;
 
+use App\Http\Requests\BoardCreateForm;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BugtrackerBaseController;
 
@@ -41,15 +42,19 @@ class BoardsController extends BugtrackerBaseController
     /**
      * Create board, and store it in DataBase.
      *
-     * @param \App\Http\Requests\BoardCreateForm $request
+     * @param BoardCreateForm $request
      * @param Project $project
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create(\App\Http\Requests\BoardCreateForm $request, Project $project)
+    public function create(BoardCreateForm $request, Project $project)
     {
         $board = $this->board_repository->create($project, $request->all());
 
-        return view('bugtracker.editor.partials.board-box', compact('board','project'));
+        if($request->ajax()) {
+            return view('bugtracker.editor.partials.board-box', compact('board','project'));
+        }
+
+        return redirect()->back();
     }
 
     /**

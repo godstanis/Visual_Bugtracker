@@ -13,11 +13,6 @@ use App\Board;
 class EditorController extends BugtrackerBaseController
 {
 
-    public function index()
-    {
-        echo "<h1>Work in progress</h1>";
-    }
-
     public function getBoardEditor(BoardEditorRequest $request, Project $project, Board $board)
     {
         return view('bugtracker.editor.main', ['project'=>$project, 'boards'=>$project->boards, 'current_board'=>$board]);
