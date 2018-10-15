@@ -33,7 +33,9 @@ class ProjectImageUploadService extends FileUploadContract
             $newName = str_random(24) . uniqid("", false) . '.' . $imageExtension;
         }
 
-        Storage::put($this->basePath.'/' . $newName, file_get_contents($file));
+        $uploadedImage = (new Image)->make($file)->resize(150,150);
+
+        Storage::put($this->basePath.'/' . $newName, (string)$uploadedImage->stream());
 
         return $newName;
     }
