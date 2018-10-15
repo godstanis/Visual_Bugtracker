@@ -12,8 +12,6 @@ class PathPolicy
 
     public function delete(User $user, Path $path)
     {
-        $isCreator = $user->id === $path->created_by_user_id;
-
-        return $isCreator;
+        return $path->creator->id === $user->id;
     }
 }

@@ -10,6 +10,11 @@ class Path extends Model
         'board_id', 'created_by_user_id', 'path_slug', 'stroke_color', 'stroke_width', 'path_data', 'deleted'
     ];
 
+    public function creator()
+    {
+        return $this->hasOne('App\User', 'id', 'created_by_user_id');
+    }
+
     public function board()
     {
         return $this->belongsTo('\App\Board', 'board_id', 'id');
