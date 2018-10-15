@@ -13,7 +13,7 @@
 
 
     <div class="span2 text-center">
-        <img class="image-update" src="{{$profileImagePath}}" width="124px" height="124px">
+        <img class="image-update" src="{{$user->imageLink()}}" width="124px" height="124px">
     </div>
 
     <form action="{{ route('user.update') }}" method="post" enctype="multipart/form-data">
@@ -26,7 +26,7 @@
     </form>
     
     <div class="span8">
-        <h5>Email: {{$userEmail}}</h5>
+        <h5>Email: {{$user->email}}</h5>
     </div>
 
 

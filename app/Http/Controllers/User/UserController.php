@@ -14,26 +14,14 @@ class UserController extends Controller
 
     public function getUserPage(User $user)
     {
-        $data = [
-            'userName' => $user->name,
-            'userEmail' => $user->email,
-            'profileImagePath' => $user->imageLink(),
-        ];
-
-        return view('user.one', $data);
-
+        return view('user.one', compact('user'));
     }
 
     public function getUserSettings()
     {
-        $data = [
-            'userName' => auth()->user()->name,
-            'userEmail' => auth()->user()->email,
-            'profileImagePath' => auth()->user()->imageLink(),
-        ];
+        $user = auth()->user();
         
-        return view('user.settings', $data);
-
+        return view('user.settings', compact('user'));
     }
 
     public function postUserProfileImage(UserUpdateImageForm $request)
@@ -42,6 +30,5 @@ class UserController extends Controller
         $user_repository->updateUserImage( $request->file('profile_image') );
 
         return redirect()->back();
-        
     }
 }
