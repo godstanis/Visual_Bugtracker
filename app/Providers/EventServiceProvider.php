@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use App\Events\UserRegistered;
+use App\Listeners\SendActivationEmail;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -14,8 +16,8 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
 
-        'App\Events\UserRegistered' => [
-            'App\Listeners\SendActivationEmail'
+        UserRegistered::class => [
+            SendActivationEmail::class
         ]
 
     ];
