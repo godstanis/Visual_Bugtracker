@@ -13,9 +13,9 @@
 {!! Breadcrumbs::render('issues', $project) !!}
     <div class="issue-controls">
         @if(!app('request')->input('closed_visible'))
-        <a class="btn btn-success" href="{{ route('project.issues', ['project' => $project, 'closed_visible'=>true]) }}"><span class="glyphicon glyphicon-eye-open"></span> Show closed</a>
+            <a class="btn btn-success" href="{{ route('project.issues', ['project' => $project, 'closed_visible'=>true]) }}"><span class="glyphicon glyphicon-eye-open"></span> Show closed</a>
         @else
-        <a class="btn btn-danger" href="{{ route('project.issues', ['project' => $project, 'closed_visible'=>false]) }}"><span class="glyphicon glyphicon-eye-close"></span> Hide closed</a>
+            <a class="btn btn-danger" href="{{ route('project.issues', ['project' => $project, 'closed_visible'=>false]) }}"><span class="glyphicon glyphicon-eye-close"></span> Hide closed</a>
         @endif
     </div>
 @if(!$issues->isEmpty())
