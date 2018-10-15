@@ -52,7 +52,7 @@ class ProjectRepository
         $projectDefaultImageName = config('images.default_project_thumb');
 
         if( $project ) {
-            if( $project->thumbnail_img !== $projectDefaultImageName && $project->delete()) {
+            if( $project->delete() && $project->thumbnail_img !== $projectDefaultImageName) {
                 Storage::delete( $projectImageDirectory.'/'.$project->thumbnail_img );
             }
         }
