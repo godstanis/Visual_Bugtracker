@@ -29,7 +29,7 @@ class ProjectPolicy
     public function view(User $user, Project $project)
     {
 
-        $userIsCreator = ( $user->id === $project->creator_user_id );
+        $userIsCreator = ( $user->id === $project->creator->id );
 
         $hasAccess = $this->projectAccess->where([
             ['user_id', $user->id],
@@ -83,6 +83,6 @@ class ProjectPolicy
      */
     public function creator(User $user, Project $project)
     {
-        return $project->creator()->id === $user->id;
+        return $project->creator->id === $user->id;
     }
 }
