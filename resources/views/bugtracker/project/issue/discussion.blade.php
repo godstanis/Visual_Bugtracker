@@ -22,8 +22,8 @@
     @endif
 @endcan
 
-<h2>
-    <span style="display:inline-block">
+<h2 class="heading">
+    <span>
         <span>{{$issue->title}}.</span>
         <span class="text-muted small">#{{ $issue->id }}</span>
         @can('delete', $issue)
@@ -34,7 +34,7 @@
     </span>
 </h2>
 <div style="background:white; border: 1px solid lightgray">
-    <div class="heading" style="background-color:#F6F8FA; padding:10px; border-bottom: 1px solid lightgray">
+    <div class="issue-creation-details">
         <div class="small text-muted">
             @lang('projects.issue_created_when', ['when'=>$issue->created_at])
             <a href="{{ route('user', ['user_name'=>$issue->creator->name]) }}">
@@ -53,9 +53,9 @@
             </span>
         </div>
     </div>
-    <div class="issue-body" style="padding:10px">
+    <div class="issue-body">
         <div>
-            <p style="border: 0; background-color: transparent;">{{$issue->description}}</p>
+            <p>{{$issue->description}}</p>
         </div>
     </div>
 </div>

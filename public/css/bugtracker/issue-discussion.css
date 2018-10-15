@@ -5,11 +5,11 @@
     background-color: #F7F7F7;
 }
 
-.issue-discussion-box .issue-discussion-text {
-    background-color: white;
-    padding: 10px;
-    display: block;
-}
+    .issue-discussion-box .issue-discussion-text {
+        background-color: white;
+        padding: 10px;
+        display: block;
+    }
 
 .issue-discussion-credentials {
     border-top: 1px solid lightgray;
@@ -18,11 +18,43 @@
     margin: 5px;
 }
 
-.issue-discussion-credentials div {
-    display: inline-block;
+    .issue-discussion-credentials div {
+        display: inline-block;
+    }
+
+    .issue-discussion-credentials .issue-discussion-user {
+        position: relative;
+        right:0;
+    }
+
+.heading span{
+    display:inline-block
 }
 
-.issue-discussion-credentials .issue-discussion-user {
-    position: relative;
-    right:0;
+.issue-creation-details {
+    background-color:#F6F8FA;
+    padding:10px;
+    border-bottom: 1px solid lightgray;
 }
+
+.issue-body {
+    padding:10px;
+}
+
+    .issue-body p{
+        border: 0;
+        background-color: transparent;
+    }
+
+
+.issue-message-form .form-group{
+    margin: 0;
+}
+
+.issue-message-form .message-form-controls{
+    height:30px
+}
+
+    .issue-message-form .message-form-controls button{
+        float: right;
+    }
