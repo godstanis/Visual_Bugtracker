@@ -15,9 +15,8 @@ Route::group(['prefix'=>'{project}/team', 'middleware'=>'auth', 'namespace'=>'Bu
         ->name('project.team');
     Route::post('add-member', 'TeamController@postAddMember')
         ->name('project.team.add')->middleware('can:delete,project');
-    Route::post('delete-member/{user}', 'TeamController@postRemoveMember')
+    Route::get('remove-member/{user}', 'TeamController@getRemoveMember')
         ->name('project.team.remove')->middleware('can:delete,project');
-    // TODO: GET->POST
     Route::get('search-member', 'TeamController@searchUser')
         ->name('project.team.search')->middleware('can:delete,project');
 

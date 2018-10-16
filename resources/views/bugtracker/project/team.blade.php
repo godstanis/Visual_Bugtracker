@@ -117,14 +117,10 @@ $(document).ready(function() {
                 <div class="project-creator-badge" title="Project creator"><b>@lang('projects.team_creator_badge')</b></div>
             @else
                 @can('delete', $project)
-                <form class="member-delete-form" action="{{ route('project.team.remove', ['project'=>$project, 'user'=>$member]) }}" method="POST">
+                <form class="member-delete-form" action="{{ route('project.team.remove', ['project'=>$project, 'user'=>$member]) }}" method="GET">
                 <button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                 </form>
-                <!--
-                    <a href="{{ route('project.team.remove', ['project'=>$project, 'user'=>$member]) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
-                    -->
-                    
                 @endcan
             @endif
         </td>

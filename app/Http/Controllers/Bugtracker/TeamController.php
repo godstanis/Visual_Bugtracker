@@ -22,60 +22,72 @@ class TeamController extends BugtrackerBaseController
         $this->team_repository = $repository;
     }
 
-    /*
-     * Show all project members
-    */
-    public function getAllTeamMembers(Project $project)
+    /**
+     * Show all project members.
+     *
+     * @param Request $request
+     * @param Project $project
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
+     */
+    public function getAllTeamMembers(Request $request, Project $project)
     {
         $members = $project->members;
+
+        if($request->ajax()) {
+            return json_encode($members);
+        }
 
         return view('bugtracker.project.team', compact('members', 'project'));
     }
 
-    /*
-     * Add existing user to the project, if not exists
-    */
+    /**
+     * Add existing user to the project, if not exists.
+     *
+     * @param AddMemberRequest $request
+     * @param Project $project
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postAddMember(AddMemberRequest $request, Project $project, User $user)
     {
+        $newMember = $user->where('name', $request->user_name)->first();
+        $alreadyMember = $project->members->contains($newMember);
 
-        $username = $request->user_name;
-        $user = User::where('name', '=', $username)->first();
-
-        $project_access_exists = ProjectAccess::where([
-            ['user_id', '=', $user->id],
-            ['project_id', '=', $project->id]
-        ])->exists();
-
-        if( $project_access_exists )
-        {
-            return redirect()->back();
+        if(! $alreadyMember) {
+            $project->members()->attach($newMember);
         }
 
-        $data = [
-            'user_id' => $user->id,
-            'project_id' => $project->id
-        ];
-
-        $this->team_repository->add($data);
-
         return redirect()->back();
-
     }
 
-    /*
-     * Remove user, assigned to the given project
-    */
-    public function postRemoveMember(RemoveMemberRequest $request, Project $project, User $user)
+    /**
+     * Remove user, assigned to the given project.
+     *
+     * @param RemoveMemberRequest $request
+     * @param Project $project
+     * @param User $user
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function getRemoveMember(RemoveMemberRequest $request, Project $project, User $user)
     {
+        $project->members()->detach($user);
 
-        $this->team_repository->delete($user, $project);
+        if($request->ajax()) {
+            return response("", 200);
+        }
 
         return redirect()->back();
     }
 
-    /*
-     * Search all users which match the given query
-    */
+    /**
+     * Dirty method to search all users which match the given query.
+     *
+     * TODO: #6 Issue, team management improvements.
+     *
+     * @param Request $request
+     * @param Project $project
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function searchUser(Request $request, Project $project)
     {
         $this->validate($request, [
@@ -93,9 +105,11 @@ class TeamController extends BugtrackerBaseController
 
         $jsonObj = json_encode($foundNames);
 
-        return response($jsonObj, 200)
-            ->header('Content-Type', 'application/json');
+        if($request->ajax()) {
+            return response($jsonObj, 200)->header('Content-Type', 'application/json');
+        }
 
+        return response($jsonObj, 200);
     }
 
 }
