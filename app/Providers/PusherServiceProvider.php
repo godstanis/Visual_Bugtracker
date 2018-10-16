@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Pusher\Pusher;
 
 class PusherServiceProvider extends ServiceProvider
 {
@@ -23,11 +24,9 @@ class PusherServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        
         app()->bind('Pusher', function(){
             $data = config('broadcasting.connections.pusher');
-
-            return new \Pusher($data['key'], $data['secret'], $data['app_id'], $data['options']);
+            return new Pusher($data['key'], $data['secret'], $data['app_id'], $data['options']);
         });
         
         app()->bind('AbstractChannel', function($app, $parameters){
