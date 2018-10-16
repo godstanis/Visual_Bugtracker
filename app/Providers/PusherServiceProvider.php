@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Custom\Pusher\Channels\BoardChannel;
 use Illuminate\Support\ServiceProvider;
 use Pusher\Pusher;
 
@@ -30,7 +31,7 @@ class PusherServiceProvider extends ServiceProvider
         });
         
         app()->bind('AbstractChannel', function($app, $parameters){
-            return new \App\Custom\Pusher\Channels\BoardChannel($parameters['channel_name']);
+            return new BoardChannel($parameters['channel_name']);
         });
     }
 }
