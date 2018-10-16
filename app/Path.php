@@ -33,7 +33,7 @@ class Path extends Model
      */
     public function creator()
     {
-        return $this->hasOne('App\User', 'id', 'created_by_user_id');
+        return $this->hasOne(User::class, 'id', 'created_by_user_id');
     }
 
     /**
@@ -43,7 +43,7 @@ class Path extends Model
      */
     public function board()
     {
-        return $this->belongsTo('\App\Board', 'board_id', 'id');
+        return $this->belongsTo(Board::class, 'board_id', 'id');
     }
 
     /**

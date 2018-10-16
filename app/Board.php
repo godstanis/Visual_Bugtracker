@@ -11,29 +11,29 @@ class Board extends Model
 
     public function creator()
     {
-        return $this->hasOne('App\User', 'id', 'created_by_user_id');
+        return $this->hasOne(User::class, 'id', 'created_by_user_id');
     }
 
     public function project()
     {
-        return $this->hasOne('App\Project', 'id', 'project_id');
+        return $this->hasOne(Project::class, 'id', 'project_id');
     }
 
     public function paths()
     {
-        return $this->hasMany('App\Path', 'board_id', 'id');
+        return $this->hasMany(Path::class, 'board_id', 'id');
     }
 
     /**
      * Return messages, left on the board.
      *
-     * TODO: #1 Issue, programm the board message logic.
+     * TODO: #1 Issue, program the board message logic.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function messages()
     {
-        return $this->hasMany('\App\BoardMessage', 'board_id', 'id');
+        return $this->hasMany(BoardMessage::class, 'board_id', 'id');
     }
 
     /**

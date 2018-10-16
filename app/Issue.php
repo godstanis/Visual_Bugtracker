@@ -18,7 +18,7 @@ class Issue extends Model
      */
     public function type()
     {
-        return $this->hasOne('App\IssueType', 'id', 'type_id');
+        return $this->hasOne(IssueType::class, 'id', 'type_id');
     }
 
     /**
@@ -28,7 +28,7 @@ class Issue extends Model
      */
     public function priority()
     {
-        return $this->hasOne('App\IssuePriority', 'id', 'priority_id');
+        return $this->hasOne(IssuePriority::class, 'id', 'priority_id');
     }
 
     /**
@@ -38,7 +38,7 @@ class Issue extends Model
      */
     public function creator()
     {
-        return $this->hasOne('App\User', 'id', 'created_by_user_id');
+        return $this->hasOne(User::class, 'id', 'created_by_user_id');
     }
 
     /**
@@ -50,7 +50,7 @@ class Issue extends Model
      */
     public function assignedUser()
     {
-        return $this->hasOne('App\User', 'id', 'assigned_to_user_id');
+        return $this->hasOne(User::class, 'id', 'assigned_to_user_id');
     }
 
     /**
@@ -60,7 +60,7 @@ class Issue extends Model
      */
     public function project()
     {
-        return $this->hasOne('App\Project', 'id', 'project_id');
+        return $this->hasOne(Project::class, 'id', 'project_id');
     }
 
     /**
@@ -70,7 +70,7 @@ class Issue extends Model
      */
     public function discussion()
     {
-        return $this->hasMany('App\IssueDiscussion', 'issue_id', 'id');
+        return $this->hasMany(IssueDiscussion::class, 'issue_id', 'id');
     }
 
     /**
@@ -78,7 +78,7 @@ class Issue extends Model
      *
      * @return bool
      */
-    public function close()
+    public function close(): bool
     {
         $this->closed = true;
         return $this->update();
@@ -89,7 +89,7 @@ class Issue extends Model
      *
      * @return bool
      */
-    public function open()
+    public function open(): bool
     {
         $this->closed = false;
         return $this->update();
@@ -106,7 +106,7 @@ class Issue extends Model
      * @param $value
      * @return string
      */
-    public function getCreatedAtAttribute($value)
+    public function getCreatedAtAttribute($value): string
     {
         return Carbon::parse($value)->diffForHumans();
     }

@@ -18,6 +18,6 @@ class BoardMessage extends Model
 
     public function board()
     {
-        return $this->belongsTo('\App\Board', 'board_id', 'id');
+        return $this->belongsTo(Board::class, 'board_id', 'id');
     }
 }

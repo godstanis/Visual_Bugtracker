@@ -22,7 +22,7 @@ class IssueDiscussion extends Model
      */
     public function issue()
     {
-        return $this->hasOne('\App\Issue', 'id', 'issue_id');
+        return $this->hasOne(Issue::class, 'id', 'issue_id');
     }
 
     /**
@@ -32,6 +32,6 @@ class IssueDiscussion extends Model
      */
     public function creator()
     {
-        return $this->hasOne('\App\User', 'id', 'user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }
