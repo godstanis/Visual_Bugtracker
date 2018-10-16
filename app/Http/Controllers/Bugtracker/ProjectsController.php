@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateProjectRequest;
 
 use App\Repositories\ProjectRepository;
 use App\Project;
+use function Aws\recursive_dir_iterator;
 use Illuminate\Http\Request;
 
 class ProjectsController extends BugtrackerBaseController
@@ -60,15 +61,23 @@ class ProjectsController extends BugtrackerBaseController
         if($request->ajax()) {
             return view('bugtracker.project-box', ['project' => $newProject])->render();
         }
+
+        return redirect()->back();
     }
 
 
     /*
      * Delete existing project
     */
-    public function postDeleteProject(Project $project)
+    public function postDeleteProject(Request $request, Project $project)
     {
         $this->project_repository->delete($project, auth()->user());
+
+        if($request->ajax()) {
+            return response("", 200);
+        }
+
+        return redirect()->back();
     }
 
     /**

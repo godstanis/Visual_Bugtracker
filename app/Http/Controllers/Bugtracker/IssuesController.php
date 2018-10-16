@@ -55,18 +55,29 @@ class IssuesController extends BugtrackerBaseController
     public function postCreateIssue(CreateIssueRequest $request, Project $project)
     {
         $project->issues()->create($request->all());
+
+        if($request->ajax()) {
+            return response("", 200);
+        }
+
+        return redirect()->back();
     }
 
     /**
      * Delete existing issue.
      *
+     * @param Request $request
      * @param Project $project
      * @param Issue $issue
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function getDeleteIssue(Project $project, Issue $issue)
+    public function getDeleteIssue(Request $request, Project $project, Issue $issue)
     {
         $issue->delete($issue);
+
+        if($request->ajax()) {
+            return response("", 200);
+        }
 
         return redirect()->back();
     }
@@ -74,14 +85,19 @@ class IssuesController extends BugtrackerBaseController
     /**
      * Close existing issue.
      *
+     * @param Request $request
      * @param Project $project
      * @param Issue $issue
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function closeIssue(Project $project, Issue $issue)
+    public function closeIssue(Request $request, Project $project, Issue $issue)
     {
         $issue->close();
         session()->flash('message', 'Issue closed!');
+
+        if($request->ajax()) {
+            return response("", 200);
+        }
 
         return redirect()->back();
     }
@@ -89,14 +105,19 @@ class IssuesController extends BugtrackerBaseController
     /**
      * Open existing issue.
      *
+     * @param Request $request
      * @param Project $project
      * @param Issue $issue
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function openIssue(Project $project, Issue $issue)
+    public function openIssue(Request $request, Project $project, Issue $issue)
     {
         $issue->open();
         session()->flash('message', 'Issue re-opened!');
+
+        if($request->ajax()) {
+            return response("", 200);
+        }
 
         return redirect()->back();
     }

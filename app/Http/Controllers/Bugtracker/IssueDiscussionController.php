@@ -23,6 +23,10 @@ class IssueDiscussionController extends BugtrackerBaseController
     {
         $issue->discussion()->create($request->all());
 
+        if($request->ajax()) {
+            return response("", 200);
+        }
+
         return redirect()->back();
     }
 

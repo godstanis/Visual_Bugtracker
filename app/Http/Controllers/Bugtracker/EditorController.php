@@ -13,6 +13,14 @@ use App\Board;
 class EditorController extends BugtrackerBaseController
 {
 
+    /**
+     * Return the editor page.
+     *
+     * @param BoardEditorRequest $request
+     * @param Project $project
+     * @param Board $board
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getBoardEditor(BoardEditorRequest $request, Project $project, Board $board)
     {
         return view('bugtracker.editor.main', ['project'=>$project, 'boards'=>$project->boards, 'current_board'=>$board]);

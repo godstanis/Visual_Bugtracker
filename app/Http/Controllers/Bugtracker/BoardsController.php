@@ -60,13 +60,18 @@ class BoardsController extends BugtrackerBaseController
     /**
      * Delete board.
      *
+     * @param Request $request
      * @param Project $project
      * @param Board $board
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete(Project $project, Board $board)
+    public function delete(Request $request, Project $project, Board $board)
     {
         $this->board_repository->delete($board);
+
+        if($request->ajax()) {
+            return response("", 200);
+        }
 
         return redirect()->back();
     }
