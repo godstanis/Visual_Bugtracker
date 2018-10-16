@@ -14,14 +14,6 @@ use App\Repositories\IssueRepository;
 
 class IssuesController extends BugtrackerBaseController
 {
-
-    public $issue_repository;
-
-    public function __construct(IssueRepository $repository)
-    {
-        $this->issue_repository = $repository;
-    }
-
     /**
      * Show all issues, assigned to the current project.
      *

@@ -14,14 +14,6 @@ use App\ProjectAccess;
 
 class TeamController extends BugtrackerBaseController
 {
-
-    protected $team_repository;
-
-    public function __construct(TeamRepository $repository)
-    {
-        $this->team_repository = $repository;
-    }
-
     /**
      * Show all project members.
      *
