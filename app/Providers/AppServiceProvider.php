@@ -23,6 +23,7 @@ use App\Services\FileUpload\AvatarUploadService;
 use App\Services\FileUpload\BoardImageUploadService;
 use App\Services\FileUpload\ProjectImageUploadService;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
@@ -38,6 +39,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Paginator::useBootstrapThree();
+
         Project::observe(ProjectObserver::class);
         Issue::observe(IssueObserver::class);
         Board::observe(BoardObserver::class);
