@@ -59,7 +59,7 @@ class BasicLoginTest extends TestCase
 
         $response->assertStatus(302);
 
-        $this->seeIsAuthenticatedAs($validUser);
+        $this->assertAuthenticatedAs($validUser);
     }
 
     /**
@@ -84,7 +84,7 @@ class BasicLoginTest extends TestCase
         $response->assertStatus(302)
             ->assertSessionHas('warning');
 
-        $this->dontSeeIsAuthenticated();
+        $this->assertGuest();
     }
 
     /**
@@ -109,7 +109,7 @@ class BasicLoginTest extends TestCase
         $response->assertStatus(302)
             ->assertSessionHasErrors();
 
-        $this->dontSeeIsAuthenticated();
+        $this->assertGuest();
     }
 
     /**
@@ -130,7 +130,7 @@ class BasicLoginTest extends TestCase
 
         $response->assertStatus(302);
 
-        $this->dontSeeIsAuthenticated();
+        $this->assertGuest();
     }
 
     /**
@@ -147,6 +147,6 @@ class BasicLoginTest extends TestCase
 
         $response->assertStatus(302);
 
-        $this->dontSeeIsAuthenticated();
+        $this->assertGuest();
     }
 }
