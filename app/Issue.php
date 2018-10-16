@@ -11,42 +11,84 @@ class Issue extends Model
         'title', 'project_id', 'description', 'closed', 'type_id', 'priority_id', 'created_by_user_id', 'closed_by_user_id', 'assigned_to_user_id', 'path_id'
     ];
 
+    /**
+     * Returns the type of the issue.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function type()
     {
         return $this->hasOne('App\IssueType', 'id', 'type_id');
     }
 
+    /**
+     * Returns the priority of the issue.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function priority()
     {
         return $this->hasOne('App\IssuePriority', 'id', 'priority_id');
     }
 
+    /**
+     * Returns the user, created the issue.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function creator()
     {
         return $this->hasOne('App\User', 'id', 'created_by_user_id');
     }
 
+    /**
+     * Returns the user, assigned to the issue.
+     *
+     * TODO: #4 Issue, mass assignment should be implemented.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function assignedUser()
     {
         return $this->hasOne('App\User', 'id', 'assigned_to_user_id');
     }
 
+    /**
+     * Returns the project, where issue is created.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function project()
     {
         return $this->hasOne('App\Project', 'id', 'project_id');
     }
 
+    /**
+     * Returns messages left in issue discussion.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function discussion()
     {
         return $this->hasMany('App\IssueDiscussion', 'issue_id', 'id');
     }
 
+    /**
+     * Closes the Issue.
+     *
+     * @return bool
+     */
     public function close()
     {
         $this->closed = true;
         return $this->update();
     }
 
+    /**
+     * Opens the Issue.
+     *
+     * @return bool
+     */
     public function open()
     {
         $this->closed = false;
@@ -54,20 +96,31 @@ class Issue extends Model
     }
 
     /*
-     * Accessors
+     * --- Accessors
      * More info: https://laravel.com/docs/eloquent-mutators
+     * Carbon documentation: https://carbon.nesbot.com/docs/
      */
-
+    /**
+     * Parses timestamp to user-friendly time string.
+     *
+     * @param $value
+     * @return string
+     */
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->diffForHumans();
     }
 
-    /*
-     * Scopes
+    /**
+     * --- Scopes
      * More info: https://laravel.com/docs/eloquent#local-scopes
      */
-
+    /**
+     * @param $query
+     * @param string $columnName
+     * @param string $orderType
+     * @return mixed
+     */
     public function scopeGetOrdered($query, $columnName = 'created_at', $orderType = 'DESC')
     {
         return $query->orderBy($columnName,$orderType);

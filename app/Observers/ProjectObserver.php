@@ -47,7 +47,7 @@ class ProjectObserver
      */
     public function deleting(Project $project)
     {
-        $project->project_access()->delete();
+        $project->members()->detach();
         $project->issues()->delete();
         $project->boards()->delete();
         $project->activities()->delete();

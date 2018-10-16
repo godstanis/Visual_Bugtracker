@@ -15,9 +15,9 @@ class BoardPolicy
      *
      * @param  \App\User  $user
      * @param  \App\Board  $board
-     * @return mixed
+     * @return bool
      */
-    public function view(User $user, Board $board)
+    public function view(User $user, Board $board): bool
     {
         return $user->can('view', $board->project);
     }
@@ -26,9 +26,9 @@ class BoardPolicy
      * Determine whether the user can create boards.
      *
      * @param  \App\User  $user
-     * @return mixed
+     * @return bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return true;
     }
@@ -38,9 +38,9 @@ class BoardPolicy
      *
      * @param  \App\User  $user
      * @param  \App\Board  $board
-     * @return mixed
+     * @return bool
      */
-    public function update(User $user, Board $board)
+    public function update(User $user, Board $board): bool
     {
         return true;
     }
@@ -50,9 +50,9 @@ class BoardPolicy
      *
      * @param  \App\User  $user
      * @param  \App\Board  $board
-     * @return mixed
+     * @return bool
      */
-    public function delete(User $user, Board $board)
+    public function delete(User $user, Board $board): bool
     {
         return $user->id === $board->created_by_user_id;
     }

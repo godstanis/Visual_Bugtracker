@@ -105,29 +105,31 @@ $(document).ready(function() {
 
 <table class="table">
     <tbody>
-    @foreach($project_access as $access)
+
+    @foreach($members as $member)
       <tr>
         <td>
-            <a href="{{ route('user', ['user_name'=>$access->user->name]) }}">
-                <span>@</span>{{ $access->user->name }}
-                <img class="user-profile-image" src="{{ $access->user->imageLink() }}" alt="" width="20px"></a>
+            <a href="{{ route('user', ['user_name'=>$member->name]) }}">
+                <span>@</span>{{ $member->name }}
+                <img class="user-profile-image" src="{{ $member->imageLink() }}" alt="" width="20px"></a>
             </a>
-            @if($access->user->can('delete', $project))
+            @if($member->can('delete', $project))
                 <div class="project-creator-badge" title="Project creator"><b>@lang('projects.team_creator_badge')</b></div>
             @else
                 @can('delete', $project)
-                <form class="member-delete-form" action="{{ route('project.team.remove', ['project'=>$project, 'user'=>$access->user]) }}" method="POST">
+                <form class="member-delete-form" action="{{ route('project.team.remove', ['project'=>$project, 'user'=>$member]) }}" method="POST">
                 <button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                 </form>
                 <!--
-                    <a href="{{ route('project.team.remove', ['project'=>$project, 'user'=>$access->user]) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
+                    <a href="{{ route('project.team.remove', ['project'=>$project, 'user'=>$member]) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                     -->
                     
                 @endcan
             @endif
         </td>
       </tr>
+
     @endforeach
     </tbody>
 </table>

@@ -7,45 +7,71 @@ use Illuminate\Support\Facades\Storage;
 
 class Project extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'description', 'thumbnail_img', 'creator_user_id', 'website_url'
+    ];
 
-    protected $fillable = ['name', 'description', 'thumbnail_img', 'creator_user_id', 'website_url'];
-
+    /**
+     * Returns user, created the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function creator()
     {
-        return $this->hasOne('App\User', 'id', 'creator_user_id');
+        return $this->hasOne(User::class, 'id', 'creator_user_id');
     }
 
-    public function team()
+    /**
+     * Returns all users, taking part in the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function members()
     {
-        return $this->hasMany('App\ProjectAccess', 'project_id', 'id');
+        return $this->belongsToMany(User::class, 'project_access');
     }
 
+    /**
+     * Returns all activities, related to the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function activities()
     {
-        return $this->hasMany('App\Activity', 'project_id', 'id');
+        return $this->hasMany(Activity::class, 'project_id', 'id');
     }
 
+    /**
+     * Returns boards, related to the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function boards()
     {
-        return $this->hasMany('App\Board', 'project_id', 'id');
+        return $this->hasMany(Board::class, 'project_id', 'id');
     }
 
+    /**
+     * Returns issues, related to the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function issues()
     {
-        return $this->hasMany('App\Issue', 'project_id', 'id');
+        return $this->hasMany(Issue::class, 'project_id', 'id');
     }
 
-    public function project_access()
-    {
-        return $this->hasMany('App\ProjectAccess', 'project_id', 'id');
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'id';
-    }
-
-    public function thumbnailUrl()
+    /**
+     * Returns thumbnail image, related to the project.
+     *
+     * @return string Project thumbnail image link.
+     */
+    public function thumbnailUrl(): string
     {
         $imagePath = config('images.project_thumb_dir') . '/' . $this->thumbnail_img;
         return Storage::disk('s3')->url($imagePath);

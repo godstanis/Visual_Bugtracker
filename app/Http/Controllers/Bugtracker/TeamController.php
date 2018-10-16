@@ -27,9 +27,9 @@ class TeamController extends BugtrackerBaseController
     */
     public function getAllTeamMembers(Project $project)
     {
-        $project_access = $project->project_access()->get();
+        $members = $project->members;
 
-        return view('bugtracker.project.team', compact('project_access', 'project'));
+        return view('bugtracker.project.team', compact('members', 'project'));
     }
 
     /*

@@ -6,7 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Illuminate\Support\Facades\Storage;
-use Laravel\Scout\Searchable;
+use App\Project;
+use App\ProjectAccess;
 
 class User extends Authenticatable
 {
@@ -30,17 +31,32 @@ class User extends Authenticatable
         'password', 'remember_token', 'activated'
     ];
 
-    public function project_access()
-    {
-        return $this->hasMany('App\ProjectAccess', 'user_id', 'id');
-    }
-
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
     public function getRouteKeyName()
     {
         return 'name';
     }
 
-    public function imageLink()
+    /**
+     * Return projects user has access to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_access');
+    }
+
+    /**
+     * Returns user avatar image link.
+     *
+     * @return string User profile image link.
+     */
+    public function imageLink(): string
     {
         $imagePath = config('images.user_avatar_dir') . '/' . $this->profile_image;
         return Storage::disk('s3')->url($imagePath);

@@ -15,7 +15,6 @@ class ProjectPolicy
 
     public function __construct(ProjectAccess $projectAccess)
     {
-
         $this->projectAccess = $projectAccess;
     }
 
@@ -24,28 +23,20 @@ class ProjectPolicy
      *
      * @param  \App\User  $user
      * @param  \App\Project  $project
-     * @return mixed
+     * @return bool
      */
-    public function view(User $user, Project $project)
+    public function view(User $user, Project $project): bool
     {
-
-        $userIsCreator = ( $user->id === $project->creator->id );
-
-        $hasAccess = $this->projectAccess->where([
-            ['user_id', $user->id],
-            ['project_id', $project->id]
-        ])->exists();
-
-        return $userIsCreator || $hasAccess;
+        return $project->members->contains($user);
     }
 
     /**
      * Determine whether the user can create projects.
      *
      * @param  \App\User  $user
-     * @return mixed
+     * @return bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return true;
     }
@@ -55,9 +46,9 @@ class ProjectPolicy
      *
      * @param  \App\User  $user
      * @param  \App\Project  $project
-     * @return mixed
+     * @return bool
      */
-    public function update(User $user, Project $project)
+    public function update(User $user, Project $project): bool
     {
         return $this->creator($user, $project);
     }
@@ -67,9 +58,9 @@ class ProjectPolicy
      *
      * @param  \App\User  $user
      * @param  \App\Project  $project
-     * @return mixed
+     * @return bool
      */
-    public function delete(User $user, Project $project)
+    public function delete(User $user, Project $project): bool
     {
         return $this->creator($user, $project);
     }
@@ -81,7 +72,7 @@ class ProjectPolicy
      * @param Project $project
      * @return bool
      */
-    public function creator(User $user, Project $project)
+    public function creator(User $user, Project $project): bool
     {
         return $project->creator->id === $user->id;
     }

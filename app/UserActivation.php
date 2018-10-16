@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserActivation extends Model
 {
-
     public $timestamps = false;
 
     public function user()

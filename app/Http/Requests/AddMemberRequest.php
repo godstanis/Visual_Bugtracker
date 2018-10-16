@@ -13,7 +13,6 @@ class AddMemberRequest extends FormRequest
      */
     public function authorize()
     {
-
         return true;
     }
 

@@ -13,12 +13,7 @@ class RemoveMemberRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = $this->user;
-        $project = $this->project;
-
-        $project_access = $user->project_access->where('project_id', $project->id)->first();
-
-        return $project_access !== null;
+        return auth()->user()->can('delete', $project);
     }
 
     public function rules()

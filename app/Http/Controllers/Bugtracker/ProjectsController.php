@@ -37,7 +37,7 @@ class ProjectsController extends BugtrackerBaseController
     */
     public function getAvailableProjects()
     {
-        $projects = $this->project_repository->getByAccessArray(auth()->user()->project_access);
+        $projects = auth()->user()->projects;
 
         return view('bugtracker.projects', ['projects'=>$projects]);
     }

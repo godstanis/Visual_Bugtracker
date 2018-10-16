@@ -16,9 +16,9 @@ class IssuesPolicy
      *
      * @param  \App\User  $user
      * @param  \App\Issue  $issue
-     * @return mixed
+     * @return bool
      */
-    public function view(User $user, Issue $issue)
+    public function view(User $user, Issue $issue): bool
     {
         return true;
     }
@@ -26,10 +26,11 @@ class IssuesPolicy
     /**
      * Determine whether the user can create issues.
      *
-     * @param  \App\User  $user
-     * @return mixed
+     * @param  \App\User $user
+     * @param Issue $issue
+     * @return bool
      */
-    public function create(User $user, Issue $issue)
+    public function create(User $user, Issue $issue): bool
     {
         return true;
     }
@@ -39,9 +40,9 @@ class IssuesPolicy
      *
      * @param  \App\User  $user
      * @param  \App\Issue  $issue
-     * @return mixed
+     * @return bool
      */
-    public function update(User $user, Issue $issue)
+    public function update(User $user, Issue $issue): bool
     {
         
         return $this->delete($user, $issue);
@@ -52,9 +53,9 @@ class IssuesPolicy
      *
      * @param  \App\User  $user
      * @param  \App\Issue  $issue
-     * @return mixed
+     * @return bool
      */
-    public function delete(User $user, Issue $issue)
+    public function delete(User $user, Issue $issue): bool
     {
 
         $project = $issue->project;

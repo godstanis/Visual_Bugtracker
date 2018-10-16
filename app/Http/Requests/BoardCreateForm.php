@@ -23,11 +23,9 @@ class BoardCreateForm extends FormRequest
      */
     public function rules()
     {
-        
         return [
             'project' => 'exists:projects,id',
             'thumb_image' => 'required|image',
         ];
-
     }
 }

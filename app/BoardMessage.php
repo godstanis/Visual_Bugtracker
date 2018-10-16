@@ -4,6 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class BoardMessage
+ *
+ * TODO: #1 Issue, programm the board message logic.
+ *
+ * @package App
+ */
 class BoardMessage extends Model
 {
 

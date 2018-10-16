@@ -13,15 +13,10 @@ class BoardEditorRequest extends FormRequest
      */
     public function authorize()
     {
-        $project = $this->project;
-        $project_boards = $project->boards;
+        $hasBoards = $this->project->boards->count();
+        $relationIsValid = $this->project->boards->contains($this->board);
 
-        $requestedBoard = $this->board;
-
-        $hasBoards = $project_boards->count();
-        $relationIsValid = $project_boards->contains($requestedBoard);
-
-        return $hasBoards && $relationIsValid && auth()->user()->can('view', $requestedBoard);
+        return $hasBoards && $relationIsValid && auth()->user()->can('view', $this->board);
     }
 
     /**

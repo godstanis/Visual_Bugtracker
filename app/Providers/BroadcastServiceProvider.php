@@ -15,12 +15,6 @@ class BroadcastServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Pusher authorization is extended to PusherAuthController.php
-        /*
-        Broadcast::routes();
 
-        //require base_path('routes/channels.php');
-
-        */
     }
 }

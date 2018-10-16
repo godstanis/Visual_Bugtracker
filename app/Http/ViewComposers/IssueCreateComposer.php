@@ -12,7 +12,7 @@ class IssueCreateComposer
     private $issueType;
     private $issuePriority;
 
-    function __construct(IssueType $issueType, IssuePriority $issuePriority)
+    public function __construct(IssueType $issueType, IssuePriority $issuePriority)
     {
 
         $this->issueType = $issueType;
@@ -25,9 +25,11 @@ class IssueCreateComposer
      * @param  View  $view
      * @return void
      */
-    public function compose(View $view)
+    public function compose(View $view): void
     {
+        /** @noinspection StaticInvocationViaThisInspection */
         $issueType = $this->issueType->all();
+        /** @noinspection StaticInvocationViaThisInspection */
         $issuePriority = $this->issuePriority->all();
         $view->with(compact('issueType', 'issuePriority'));
     }

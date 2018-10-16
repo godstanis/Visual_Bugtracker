@@ -24,17 +24,38 @@ class Board extends Model
         return $this->hasMany('App\Path', 'board_id', 'id');
     }
 
+    /**
+     * Return messages, left on the board.
+     *
+     * TODO: #1 Issue, programm the board message logic.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function messages()
     {
         return $this->hasMany('\App\BoardMessage', 'board_id', 'id');
     }
 
-    public function sourceImageUrl()
+    /**
+     * Returns actual board image (for the editor).
+     *
+     * @return string Board main image for editor
+     */
+    public function sourceImageUrl(): string
     {
         $imagePath = config('images.boards_images_dir') . '/' . $this->thumb_image;
         return Storage::disk('s3')->url($imagePath);
     }
 
+    /**
+     * Dirty way to return a json representation
+     * for the frontend js code.
+     *
+     * TODO: Decouple json logic from a model.
+     *
+     * @deprecated
+     * @return array
+     */
     public function getAllJsonPaths()
     {
         $json_paths = [];

@@ -10,7 +10,14 @@ class PathPolicy
 {
     use HandlesAuthorization;
 
-    public function delete(User $user, Path $path)
+    /**
+     * Determine whether the user can delete the path.
+     *
+     * @param User $user
+     * @param Path $path
+     * @return bool
+     */
+    public function delete(User $user, Path $path): bool
     {
         return $path->creator->id === $user->id;
     }

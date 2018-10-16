@@ -4,6 +4,11 @@ namespace App\Services\FileUpload;
 
 use Illuminate\Http\UploadedFile;
 
+/**
+ * Class FileUploadContract is used to unify a file upload process.
+ *
+ * @package App\Services\FileUpload
+ */
 abstract class FileUploadContract
 {
     protected $basePath;
@@ -21,7 +26,7 @@ abstract class FileUploadContract
      * @param UploadedFile $file
      * @param string $newName
      * @param string|null $oldName Defines a file name to be deleted/stashed.
-     * @return string  $newName
+     * @return string $newName
      */
     public abstract function upload(UploadedFile $file, string $newName = null, string $oldName = null): string;
 }

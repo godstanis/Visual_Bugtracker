@@ -5,10 +5,10 @@
     </a>
 
     <ul class="dropdown-menu" role="menu">
-        @foreach(auth()->user()->project_access->load('project') as $project_access)
+        @foreach(auth()->user()->projects as $project)
             <li>
-                <a href="{{ route('bugtracker.project', ['project'=>$project_access->project]) }}"><span class="glyphicon glyphicon-file"></span>
-                    <span>{{$project_access->project->name}}</span>
+                <a href="{{ route('bugtracker.project', ['project'=>$project]) }}"><span class="glyphicon glyphicon-file"></span>
+                    <span>{{$project->name}}</span>
                 </a>
             </li>
         @endforeach
