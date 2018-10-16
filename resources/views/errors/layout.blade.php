@@ -1,5 +1,5 @@
 
-@extends('layouts.app')
+@extends('layouts.no-navbar')
 
 @section('head-styles')
 <style>
