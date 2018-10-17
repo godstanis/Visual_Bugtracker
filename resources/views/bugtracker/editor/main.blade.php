@@ -64,28 +64,30 @@
 </body>
 
 <script>
-/*
-    Components initialization.
-*/
-drawSVG.initElementById('svg-area');
-svgEditor.init('svg-work-area', 'svg-area', 'bg-element');
+    /*
+        Components initialization.
+    */
+    drawSVG.initElementById('svg-area');
+    svgEditor.init('svg-work-area', 'svg-area', 'bg-element');
 </script>
 
 <script>
 
-    var editor_page_data = {
-        delete_path_link: "{{route('board.delete_path', ['project'=>$project, 'board'=>$current_board])}}",
-        create_path_link: "{{route('board.create_path', ['project'=>$project, 'board'=>$current_board])}}"
-        
+    let editor_page_data = {
+        board_id: "{{$current_board->id}}",
+        project_id: "{{$project->id}}",
+        delete_path_link:"{{route('board.delete_path', ['project'=>$project, 'board'=>$current_board]) }}",
+        create_path_link: "{{route('board.create_path', ['project'=>$project, 'board'=>$current_board])}}",
+        board_paths_link: "{{route('board.paths', ['project'=>$project, 'board'=>$current_board])}}"
     };
 
     @if($current_board !== null)
-    editor_page_data.current_board_id = {{$current_board->id}};
+        let image = document.getElementById('bg-element-image').src;
+        svgEditor.initImage(image);
 
-    var image = document.getElementById('bg-element-image').src;
-    svgEditor.initImage(image);
-    dataConstructor.drawElementsFromJSON(drawSVG, '{!! $current_board->getAllJsonPaths() !!}');
-
+        $.getJSON(editor_page_data.board_paths_link, function(data){
+            dataConstructor.drawElementsFromJSON(drawSVG, data);
+        });
     @endif
 
 </script>

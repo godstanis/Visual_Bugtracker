@@ -1,12 +1,12 @@
 
 $(document).ready(function() {
 
-    var ProjectsModule = (function(){
+    let ProjectsModule = (function(){
         
-        var $project_box_delete = $(".delete-project-form");
-        var delete_selector = ".delete-project-form";
-        var $project_box_create = $(".create-project-form");
-        var $projects_container = $(".projects-container");
+        let $project_box_delete = $(".delete-project-form");
+        let delete_selector = ".delete-project-form";
+        let $project_box_create = $(".create-project-form");
+        let $projects_container = $(".projects-container");
 
         // Bind the events
         $projects_container.on('submit', delete_selector, deleteProject);
@@ -15,10 +15,10 @@ $(document).ready(function() {
         
 
         function createProject(e){
-            var form = $(e.target);
+            let form = $(e.target);
             e.preventDefault();
 
-            var formData = new FormData(form.get(0));
+            let formData = new FormData(form.get(0));
 
             console.log(form.get(0));
 
@@ -38,14 +38,14 @@ $(document).ready(function() {
 
                 },
                 error: function(response){
-                    var response = JSON.parse(response.responseText);
+                    let response = JSON.parse(response.responseText);
 
                     form.parent().addClass('has-error');
 
-                    for(var key in response){
-                        var fields = response[key];
+                    for(let key in response){
+                        let fields = response[key];
                         
-                        for(var field in fields){
+                        for(let field in fields){
                             $('.'+key).append(fields[field]);
                         }
                     }
@@ -61,15 +61,15 @@ $(document).ready(function() {
             
             e.preventDefault();
 
-            var form = $(e.target);
+            let form = $(e.target);
 
             if(!confirm('Are you sure? This action will delet all project information!'))
                 {
                     return false;
                 }
 
-            var form = $(e.target);
-            //var formData = new FormData(form.get(0));
+            let form = $(e.target);
+            //let formData = new FormData(form.get(0));
 
             $.ajax({
                     type: "POST",
@@ -77,7 +77,7 @@ $(document).ready(function() {
                     data: form.serialize(),
                     success: function(data)
                     {
-                        //var response = JSON.parse(data);
+                        //let response = JSON.parse(data);
                         console.log(data);
 
                         form.closest('.project-box').hide();

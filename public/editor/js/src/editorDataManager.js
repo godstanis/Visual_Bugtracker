@@ -1,9 +1,9 @@
-var editorDataManager = (function(){
+let editorDataManager = (function(){
 
     function savePath(element)
     {
         //console.log(element);
-        var path_json = dataConstructor.createObjectFromPath(element);
+        let path_json = dataConstructor.createObjectFromPath(element);
         
         $.ajax({
             type: "POST",

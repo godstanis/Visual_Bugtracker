@@ -1,10 +1,10 @@
 (function(){
 
-    var drawModule = (function(){
-        var svg_area = undefined;
-        var editor_area = undefined;
+    let drawModule = (function(){
+        let svg_area = undefined;
+        let editor_area = undefined;
 
-        var itemId = null;
+        let itemId = null;
 
         function init(svgArea, editorArea)
         {
@@ -42,7 +42,7 @@
             });
         };
 
-        var drawStatus = {
+        let drawStatus = {
             isDrawing: false,
             fX: 0,
             fY: 0,
@@ -53,7 +53,7 @@
         function mouseMoveEvent(e)
         {
             if(drawStatus.isDrawing){
-                var curPos = svgEditor.getCurPos(e);
+                let curPos = svgEditor.getCurPos(e);
                 drawStatus.lX = curPos.x;
                 drawStatus.lY = curPos.y;
 
@@ -71,13 +71,13 @@
 
                 drawStatus.isDrawing = true;
 
-                var curPos = svgEditor.getCurPos(e);
+                let curPos = svgEditor.getCurPos(e);
                 drawStatus.fX = curPos.x;
                 drawStatus.fY = curPos.y;
 
                 itemId = (+ new Date()).toString(); // generate random unique id for figure
                 
-                var drawable = ['rectangle', 'arrow', 'line', 'ellipse'];
+                let drawable = ['rectangle', 'arrow', 'line', 'ellipse'];
 
                 if( drawable.indexOf(selectedItem) != -1 ){
                     drawSVG.createElement(itemId);
@@ -91,13 +91,13 @@
             if (e.button === 0){ // draw only if left-mouse-button is pressed
                 drawStatus.isDrawing = false;
 
-                var supported_for_save = ['path'];
+                let supported_for_save = ['path'];
 
-                var element = document.getElementById(itemId);
+                let element = document.getElementById(itemId);
 
                 if( element && supported_for_save.indexOf(element.tagName) != -1)
                 {
-                    var d_exists = ( element.getAttribute('d') != null );
+                    let d_exists = ( element.getAttribute('d') != null );
 
                     if(d_exists){
 
@@ -113,10 +113,10 @@
 
         function touchMoveEvent(e)
         {
-            var e_touch = e.originalEvent.touches[0];
+            let e_touch = e.originalEvent.touches[0];
 
             if(drawStatus.isDrawing){
-                var curPos = svgEditor.getCurPos(e_touch);
+                let curPos = svgEditor.getCurPos(e_touch);
                 drawStatus.lX = curPos.x;
                 drawStatus.lY = curPos.y;
 
@@ -128,13 +128,13 @@
         {
             drawStatus.isDrawing = true;
 
-            var curPos = svgEditor.getCurPos(e.originalEvent.touches[0]);
+            let curPos = svgEditor.getCurPos(e.originalEvent.touches[0]);
             drawStatus.fX = curPos.x;
             drawStatus.fY = curPos.y;
 
             itemId = (+ new Date()).toString(); // generate random unique id for figure
             
-            var drawable = ['rectangle', 'arrow', 'line', 'ellipse'];
+            let drawable = ['rectangle', 'arrow', 'line', 'ellipse'];
 
             if( drawable.indexOf(selectedItem) != -1 ){
                 drawSVG.createElement(itemId);
@@ -145,13 +145,13 @@
         {
             drawStatus.isDrawing = false;
 
-            var supported_for_save = ['path'];
+            let supported_for_save = ['path'];
 
-            var element = document.getElementById(itemId);
+            let element = document.getElementById(itemId);
 
             if( element && supported_for_save.indexOf(element.tagName) != -1)
             {
-                var d_exists = ( element.getAttribute('d') != null );
+                let d_exists = ( element.getAttribute('d') != null );
 
                 if(d_exists){
                     dataConstructor.storeElement(element);

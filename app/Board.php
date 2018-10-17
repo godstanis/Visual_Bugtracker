@@ -47,24 +47,4 @@ class Board extends Model
         return Storage::disk('s3')->url($imagePath);
     }
 
-    /**
-     * Dirty way to return a json representation
-     * for the frontend js code.
-     *
-     * TODO: Decouple json logic from a model.
-     *
-     * @deprecated
-     * @return array
-     */
-    public function getAllJsonPaths()
-    {
-        $json_paths = [];
-
-        foreach($this->paths as $path)
-        {
-            $json_paths[$path->path_slug] = $path->decodedJsonPath();
-        }
-
-        return json_encode($json_paths);
-    }
 }

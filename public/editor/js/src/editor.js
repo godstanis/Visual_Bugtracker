@@ -6,11 +6,11 @@
     $('#svg-area').click(function(e){
 
         if(selectedItem == 'marker'){
-            var x = svgEditor.getCurPos(e).x;
-            var y = svgEditor.getCurPos(e).y;
+            let x = svgEditor.getCurPos(e).x;
+            let y = svgEditor.getCurPos(e).y;
 
             $('#create-marker-form').remove();
-            var markable_elements = ['path']; // elements you can mark with message
+            let markable_elements = ['path']; // elements you can mark with message
 
             if( markable_elements.indexOf(e.target.tagName) == -1 )
             {
@@ -23,26 +23,26 @@
 
             
             
-            var form = document.createElement("form");
+            let form = document.createElement("form");
             form.setAttribute('method',"post");
             form.setAttribute('action',"#");
             form.setAttribute('style','transform: translate('+(x)+'px,'+(y)+'px);');
             form.setAttribute('id','create-marker-form');
 
-            var input_group = document.createElement("div");
+            let input_group = document.createElement("div");
             input_group.setAttribute('class', 'input-group');
 
 
-            var input = document.createElement("input"); //input element, text
+            let input = document.createElement("input"); //input element, text
             input.setAttribute('type',"text");
             input.setAttribute('name',"path_message");
             input.setAttribute('class',"form-control");
             input.setAttribute('placeholder',"Comment title");
 
-            var span_input_group = document.createElement("span");
+            let span_input_group = document.createElement("span");
             span_input_group.setAttribute('class', 'input-group-btn');
 
-            var submit_btn = document.createElement("input"); //input element, Submit button
+            let submit_btn = document.createElement("input"); //input element, Submit button
             submit_btn.setAttribute('type',"submit");
             submit_btn.setAttribute('value',"Ok");
             submit_btn.setAttribute('class',"btn btn-success");
@@ -53,11 +53,11 @@
             input_group.appendChild(span_input_group);
 
 
-            var task_checkbox = document.createElement("input");
+            let task_checkbox = document.createElement("input");
             task_checkbox.setAttribute('type', 'checkbox');
             task_checkbox.setAttribute('name', 'add_task');
             task_checkbox.setAttribute('value', 'add_task');
-            var checkbox_title = document.createTextNode('Not working secret feature');
+            let checkbox_title = document.createTextNode('Not working secret feature');
 
 
             form.appendChild(input_group);
@@ -77,9 +77,9 @@
         }
     });
 
-    var markerModule = (function(){
-        var form = undefined;
-        var target_path = undefined;
+    let markerModule = (function(){
+        let form = undefined;
+        let target_path = undefined;
         function init(form_element, target){
             form = form_element;
             target_path = target;
@@ -94,16 +94,16 @@
         };
 
         function bindSubmitEvent(e){
-            var form_e = e.target;
-            var $form = $(e.target);
+            let form_e = e.target;
+            let $form = $(e.target);
             e.preventDefault();
 
-            var add_task = form_e.add_task.checked;
-            var message_text = form_e.path_message.value;
+            let add_task = form_e.add_task.checked;
+            let message_text = form_e.path_message.value;
 
             if(add_task)
             {
-                var $create_issue_modal = $("#create-issue-modal");
+                let $create_issue_modal = $("#create-issue-modal");
                 $create_issue_modal.modal();
 
                 $create_issue_modal.find('input[name=title]').val(message_text);
@@ -153,7 +153,7 @@
         Stroke width slider event
     */
     $('#stroke-width-range').on("input", function() {
-        var strokeRange = $('#stroke-width-range').val();
+        let strokeRange = $('#stroke-width-range').val();
         $('#stroke-width-output').text(strokeRange);
         drawSVG.setWidth(strokeRange+'px');
     });

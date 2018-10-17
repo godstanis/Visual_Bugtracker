@@ -8,11 +8,11 @@
     - now you are ready to go, more info on https://github.com/Stasgar/draw.swg.js
 */
 
-var drawSVG = (function(){
+let drawSVG = (function(){
 
-    var element = ""; //<svg> id property
-    var strokeWidth = '4px';
-    var strokeColor = '#00FF00';
+    let element = ""; //<svg> id property
+    let strokeWidth = '4px';
+    let strokeColor = '#00FF00';
 
     function initElementById(svg_element){
         element = document.getElementById(svg_element);
@@ -37,8 +37,8 @@ var drawSVG = (function(){
     };
 
     function deleteObject(obj_id){
-        var deletable = ['path'];//deletable object tags
-        var element = document.getElementById(obj_id);
+        let deletable = ['path'];//deletable object tags
+        let element = document.getElementById(obj_id);
 
         if(deletable.indexOf(element.tagName) != -1)
         {
@@ -49,7 +49,7 @@ var drawSVG = (function(){
     function createElement(id){
         PathHelper.itemId = id; // Change PathHelper itemId
  
-        var newPath = HTMLhelper.createPath(id, strokeWidth, strokeColor);
+        let newPath = HTMLhelper.createPath(id, strokeWidth, strokeColor);
 
         element.appendChild(newPath);
     };
@@ -89,17 +89,17 @@ var drawSVG = (function(){
 
                 createManage(itemId);
 
-                var step = 2*Math.PI/40;  // drawing frequency
-                var cx = fX; 
-                var cy = fY;
-                var rx = Math.abs(fX-lX)/2;
-                var ry = Math.abs(fY-lY)/2;
+                let step = 2*Math.PI/40;  // drawing frequency
+                let cx = fX;
+                let cy = fY;
+                let rx = Math.abs(fX-lX)/2;
+                let ry = Math.abs(fY-lY)/2;
 
                 //Ellipse drawing algorithm
-                for(var theta=0;  theta < 2*Math.PI;  theta+=step)
+                for(let theta=0;  theta < 2*Math.PI;  theta+=step)
                 { 
-                    var x = cx + rx*Math.cos(theta) - (fX-lX)/2;
-                    var y = cy - ry*Math.sin(theta) - (fY-lY)/2;  
+                    let x = cx + rx*Math.cos(theta) - (fX-lX)/2;
+                    let y = cy - ry*Math.sin(theta) - (fY-lY)/2;
                     if(theta == 0)
                     {
                         PathHelper.moveTo(x, y);
@@ -121,7 +121,7 @@ var drawSVG = (function(){
                 PathHelper.lineTo(lX, lY);
                 
                 // Arrow tip vector points
-                var arrowTipPoints = {
+                let arrowTipPoints = {
                     "x":{"1":0,"2":30,"3":0},
                     "y":{"1":-10,"2":0,"3":10}
                 };
@@ -130,12 +130,12 @@ var drawSVG = (function(){
                 function drawRotated(arr, angle) 
                 {
                     
-                    for(var i=1; i<=3; i++){
-                        var x2 = arrowTipPoints["x"][i];
-                        var y2 = arrowTipPoints["y"][i];
+                    for(let i=1; i<=3; i++){
+                        let x2 = arrowTipPoints["x"][i];
+                        let y2 = arrowTipPoints["y"][i];
 
-                        var newX = x2*Math.cos(angle) - y2*Math.sin(angle);
-                        var newY = x2*Math.sin(angle) + y2*Math.cos(angle);
+                        let newX = x2*Math.cos(angle) - y2*Math.sin(angle);
+                        let newY = x2*Math.sin(angle) + y2*Math.cos(angle);
 
                         PathHelper.lineTo(lX+parseFloat(newX), lY+parseFloat(newY) );
                     }
@@ -146,11 +146,11 @@ var drawSVG = (function(){
                 //Returns the current line angle in rads
                 function getCurrentLineAngle()
                 {
-                    var angle_rad = Math.atan( (lY - fY) / (lX - fX) );
+                    let angle_rad = Math.atan( (lY - fY) / (lX - fX) );
 
                     if(lX < fX)
                     {
-                        var degree = -90;
+                        let degree = -90;
                         angle_rad-=degree-1.1;
                     }
 
@@ -158,7 +158,7 @@ var drawSVG = (function(){
                 }
 
                 // Finnaly draws the arrow tip
-                var distance = Math.sqrt(Math.pow(lX-fX,2)+Math.pow(lY-fY,2));
+                let distance = Math.sqrt(Math.pow(lX-fX,2)+Math.pow(lY-fY,2));
 
                 if(distance > 0)
                     drawRotated(arrowTipPoints, getCurrentLineAngle());
@@ -167,7 +167,7 @@ var drawSVG = (function(){
         }
     };
 
-    var linerH = null; //buffer for closure
+    let linerH = null; //buffer for closure
     function drawLineH(itemId, X, Y, time_between_lines_ticks){
         if(linerH === null){
             linerH = drawLineFactoryH();
@@ -180,23 +180,23 @@ var drawSVG = (function(){
         You can read more about closures on https://www.w3schools.com/js/js_function_closures.asp
     */
     function drawLineFactoryH() {
-        var prevX = 0;
-        var prevY = 0;
+        let prevX = 0;
+        let prevY = 0;
 
         //Decrease to draw lines more often; increase to draw lines less often.
         //Greater numbers will produce 'low poly' line effect.
-        var LINE_POLY_LENGTH = 10;
+        let LINE_POLY_LENGTH = 10;
         function drawLineH(itemId, X, Y, line_poly_length) {
             if(line_poly_length === undefined){
                 line_poly_length = LINE_POLY_LENGTH;
             }
 
-            var path = document.getElementById(itemId);
+            let path = document.getElementById(itemId);
             if (path.getAttribute('d')) {
-                var a = prevX - X;
-                var b = prevY - Y;
+                let a = prevX - X;
+                let b = prevY - Y;
 
-                var distance = Math.sqrt( a*a + b*b );
+                let distance = Math.sqrt( a*a + b*b );
 
                 if(distance <= line_poly_length){
                     return true
@@ -236,7 +236,7 @@ var drawSVG = (function(){
     /*
         HTMLhelper is used to provide easy html implementation of base objects.
     */
-    var HTMLhelper = {
+    let HTMLhelper = {
 
         createPath: function(id, strokeWidth, strokeColor, fill){
             if(strokeWidth === undefined){
@@ -249,7 +249,7 @@ var drawSVG = (function(){
                 fill = "none";
             }
             
-            var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+            let newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
             newPath.setAttributeNS(null, "id", id);
             newPath.setAttributeNS(null, "stroke", strokeColor);
             newPath.setAttributeNS(null, "stroke-width", strokeWidth);
@@ -260,7 +260,7 @@ var drawSVG = (function(){
         },
     };
 
-    var PathHelper = {
+    let PathHelper = {
         itemId:false,
 
         //Moves 'virtual brush' to the provided coordinates. If not used - 'virtual brush' will start from (0;0)
@@ -268,7 +268,7 @@ var drawSVG = (function(){
             if(itemId === undefined){
                 itemId = this.itemId;
             }
-            var path = document.getElementById(itemId);
+            let path = document.getElementById(itemId);
             path.setAttribute('d', "M"+X.toString()+","+Y.toString());
             return this;
         },
@@ -278,7 +278,7 @@ var drawSVG = (function(){
             if(itemId === undefined){
                 itemId = this.itemId;
             }
-            var path = document.getElementById(itemId);
+            let path = document.getElementById(itemId);
             path.setAttribute('d', path.getAttribute('d') + "L"+X.toString()+","+Y.toString());
             return this;
         },
@@ -288,7 +288,7 @@ var drawSVG = (function(){
             if(itemId === undefined){
                 itemId = this.itemId;
             }
-            var path = document.getElementById(itemId);
+            let path = document.getElementById(itemId);
             path.setAttribute('d', path.getAttribute('d') + "z");
         },
 

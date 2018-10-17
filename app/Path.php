@@ -46,26 +46,4 @@ class Path extends Model
         return $this->belongsTo(Board::class, 'board_id', 'id');
     }
 
-    /**
-     * Dirty way to return a json representation
-     * for the frontend js code.
-     *
-     * TODO: Decouple json logic from a model.
-     *
-     * @deprecated
-     * @return array
-     */
-    public function decodedJsonPath()
-    {
-        $path = [
-            'path_slug'=>$this->path_slug,
-            'stroke'=>$this->stroke_color,
-            'stroke-width'=>$this->stroke_width,
-            'd'=>$this->path_data
-            
-        ];
-        //$json_path_decoded = json_decode($this->path_json_obj);
-
-        return $path;
-    }
 }

@@ -1,12 +1,12 @@
 (function(){
    
-    var board_id = editor_page_data.current_board_id;
+    let board_id = editor_page_data.board_id;
 
     console.log ('board_'+board_id);
     Echo.private('board_'+board_id).listen('.userCreatedPath', function(message){
         console.log ('someone created path');
-        var path_json = message.path_json;
-        var itemId = path_json.path_slug;
+        let path_json = message.path_json;
+        let itemId = path_json.path_slug;
         
         drawSVG.createElement(itemId);
         element = document.getElementById(itemId);
@@ -17,8 +17,8 @@
     Echo.private('board_'+board_id).listen('.userDeletedPath', function(message){
         console.log ('someone deleted path');
 
-        var path_json = message.path_json;
-        var itemId = path_json.path_slug;
+        let path_json = message.path_json;
+        let itemId = path_json.path_slug;
 
         drawSVG.deleteObject(itemId);
         dataConstructor.removeElement(itemId);

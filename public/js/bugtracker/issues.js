@@ -1,7 +1,7 @@
 
 $(document).ready(function() {
 
-    var IssueModule = {
+    let IssueModule = {
         create_issue_form: undefined,
         delete_issue_btn: undefined,
         init: function(create_issue_form, delete_issue_btn){
@@ -16,7 +16,7 @@ $(document).ready(function() {
         createIssue: function(e){
             e.preventDefault();
 
-            var form = $(e.target);
+            let form = $(e.target);
 
             $.ajax({
                 type: "POST",
@@ -30,14 +30,14 @@ $(document).ready(function() {
                     location.reload();
                 },
                 error: function(data){
-                    var response = JSON.parse(data.responseText);
+                    let response = JSON.parse(data.responseText);
 
                     form.parent().addClass('has-error');
 
-                    for(var key in response){
-                        var fields = response[key];
+                    for(let key in response){
+                        let fields = response[key];
                         
-                        for(var field in fields){
+                        for(let field in fields){
                             $('.'+key).append(fields[field]);
                         }
                     }
@@ -47,8 +47,8 @@ $(document).ready(function() {
         deleteIssue: function(e){
             e.preventDefault();
 
-            var url = $(e.target).attr('href');
-            var token = $(e.target).attr('data-token');
+            let url = $(e.target).attr('href');
+            let token = $(e.target).attr('data-token');
 
             if(url === undefined){ // if clicked on icon inside <a>
                 url = $(e.target).closest('a').attr('href');

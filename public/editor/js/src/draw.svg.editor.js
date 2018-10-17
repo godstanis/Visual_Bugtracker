@@ -1,14 +1,14 @@
 
-var svgEditor = (function(){
+let svgEditor = (function(){
     console.log('Editor initialized');
-    var workAreaElement= ""; // element, affected by scaling/translating
-    var backgroundElement= "";
-    var svgElement= "";
-    var coordScale= 1;
-    var maxScale= 2;
-    var minScale= 0.3;
-    var curX = 0;
-    var curY = 0;
+    let workAreaElement= ""; // element, affected by scaling/translating
+    let backgroundElement= "";
+    let svgElement= "";
+    let coordScale= 1;
+    let maxScale= 2;
+    let minScale= 0.3;
+    let curX = 0;
+    let curY = 0;
 
     function init(workAreaId, svgElementId, backgroundElementId){ 
         workAreaElement = document.getElementById(workAreaId);
@@ -30,13 +30,13 @@ var svgEditor = (function(){
     };
 
     function center(){
-        var windowCenterX = window.innerWidth / 2;
-        var windowCenterY = window.innerHeight / 2;
+        let windowCenterX = window.innerWidth / 2;
+        let windowCenterY = window.innerHeight / 2;
 
-        var svgRect = svgElement.getBoundingClientRect();
+        let svgRect = svgElement.getBoundingClientRect();
 
-        var currentSvgCenterX = (svgRect.width / 2) / coordScale;
-        var currentSvgCenterY = (svgRect.height / 2) / coordScale;
+        let currentSvgCenterX = (svgRect.width / 2) / coordScale;
+        let currentSvgCenterY = (svgRect.height / 2) / coordScale;
 
         curX = windowCenterX - currentSvgCenterX;
         curY = windowCenterY - currentSvgCenterY;
@@ -52,7 +52,7 @@ var svgEditor = (function(){
     };
     function scale(in_scale){
 
-        var scale = parseFloat(in_scale.toFixed(2));
+        let scale = parseFloat(in_scale.toFixed(2));
 
         if (( minScale <= in_scale ) && ( in_scale <= maxScale )){
             coordScale = in_scale
@@ -64,8 +64,8 @@ var svgEditor = (function(){
     };
     function updateTransform()
     {
-        var translate = "translate(" + curX + "px," + curY + "px)";
-        var scale = "scale("+coordScale+")";
+        let translate = "translate(" + curX + "px," + curY + "px)";
+        let scale = "scale("+coordScale+")";
 
         workAreaElement.style.transform = translate+scale;
     };
@@ -84,12 +84,12 @@ var svgEditor = (function(){
     function initImage( image_path )
     {
 
-        var bgImg = backgroundElement.getElementsByTagName('img')[0];
+        let bgImg = backgroundElement.getElementsByTagName('img')[0];
 
         function initImgSizing(){
             
-            var imageWidth = bgImg.offsetWidth;
-            var imageHeight = bgImg.offsetHeight;
+            let imageWidth = bgImg.offsetWidth;
+            let imageHeight = bgImg.offsetHeight;
 
             svgElement.style['width'] = imageWidth+'px';
             svgElement.style['height'] = imageHeight+'px';
@@ -111,7 +111,7 @@ var svgEditor = (function(){
         };
     };
     function getOffset(element){ //Service method, providing current information about <svg> relative position
-        var box = element.getBoundingClientRect();
+        let box = element.getBoundingClientRect();
         return {
             top: box.top + pageYOffset,
             left: box.left + pageXOffset
@@ -121,9 +121,9 @@ var svgEditor = (function(){
         if(scale === undefined){
             scale = coordScale;
         }
-        var svg = workAreaElement;
-        var x = e.pageX - getOffset(svg).left;
-        var y = e.pageY - getOffset(svg).top;
+        let svg = workAreaElement;
+        let x = e.pageX - getOffset(svg).left;
+        let y = e.pageY - getOffset(svg).top;
         return {
             x: Math.round(x*1/scale),
             y: Math.round(y*1/scale)

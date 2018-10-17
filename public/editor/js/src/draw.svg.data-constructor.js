@@ -45,10 +45,11 @@ var dataConstructor = (function(){
     /*
         Draws the on-screen elements with drawSVG using JSON
     */
-    function drawElementsFromJSON(drawSVG, json_string)
+    function drawElementsFromJSON(drawSVG, json_obj_arr)
     {
+        json_obj_arr = JSON.stringify(json_obj_arr);
 
-        var obj = this.generateObject(json_string);
+        var obj = this.generateObject(json_obj_arr);
 
         for(var id in obj)
         {

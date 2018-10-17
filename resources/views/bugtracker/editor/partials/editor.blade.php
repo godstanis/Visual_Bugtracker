@@ -2,20 +2,6 @@
     <i class="sprite sprite-zoom-in zoom-btn zoom-svg-in" title="Zoom-in"></i>
     <i class="sprite sprite-zoom-out zoom-btn zoom-svg-out" title="Zoom-out"></i>
 </div>
-
-<div class="json-management-panel" style="display:none">
-    <button id="generateJson">Generate JSON</button>
-
-    <div id="generate_json_block">
-        <button>Generate from JSON</button>
-
-        <div id="json_input_block">
-            <textarea name="json_input" id="json_input" cols="30" rows="10"></textarea>
-            <button id="generateFromJson">Generate</button>
-        </div>
-    </div>
-</div>
-
 <div class="control-panel">
 
     <div class="radio-tab" id="select-item-form">

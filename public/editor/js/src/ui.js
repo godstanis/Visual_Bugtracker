@@ -14,13 +14,13 @@ $('#editor-tab-btn').click(function(){
     $('#screenshotBoard').hide();
 });
 
-var selectedItem = $('input[name=item]:checked', '#select-item-form').val();
+let selectedItem = $('input[name=item]:checked', '#select-item-form').val();
 
 $('#select-item-form').change(function(){
     selectedItem = $('input[name=item]:checked', '#select-item-form').val();
 });
 
 $('.jscolor').change(function(e){
-    var strokeColor = $(e.target).val();
+    let strokeColor = $(e.target).val();
     drawSVG.setColor('#'+strokeColor);
 });

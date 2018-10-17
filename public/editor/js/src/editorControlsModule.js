@@ -1,9 +1,9 @@
 (function(){
-    var editorControlsModule = (function(){
+    let editorControlsModule = (function(){
 
-        var svg_area = undefined;
-        var editor_area = undefined;
-        var svg_elements = undefined;
+        let svg_area = undefined;
+        let editor_area = undefined;
+        let svg_elements = undefined;
 
         function init(svgArea, editorArea, svgElements)
         {
@@ -70,7 +70,7 @@
             });
         };
 
-        var dragStatus = {
+        let dragStatus = {
             isDragging: false,
             editorX: 0,
             editorY: 0,
@@ -92,7 +92,7 @@
 
         function mouseDownEvent(e)
         {
-            var actionIsDrag = (e.button === 1) || (selectedItem == "drag");
+            let actionIsDrag = (e.button === 1) || (selectedItem == "drag");
 
             if( actionIsDrag ){
                 dragStatus.isDragging = true;
@@ -112,13 +112,13 @@
 
         function mouseWheelZoomEvent(e)
         {
-            var scaleSize = e.deltaY * 0.1;
+            let scaleSize = e.deltaY * 0.1;
             svgEditor.scale( svgEditor.coordScale() + scaleSize );
         };
 
         function touchMoveEvent(e)
         {
-            var e_touch = e.originalEvent.touches[0];
+            let e_touch = e.originalEvent.touches[0];
 
             if(dragStatus.isDragging)
             {
@@ -131,9 +131,9 @@
 
         function touchDownEvent(e)
         {
-            var e_touch = e.originalEvent.touches[0];
+            let e_touch = e.originalEvent.touches[0];
 
-            var actionIsDrag = (selectedItem == "drag");
+            let actionIsDrag = (selectedItem == "drag");
             if( actionIsDrag ){
                 dragStatus.isDragging = true;
             }
@@ -161,7 +161,7 @@
         {
             if(selectedItem == 'eraser'){
 
-                var deletable = ['path']; // deletable object tags
+                let deletable = ['path']; // deletable object tags
 
                 if(deletable.indexOf(e.target.tagName) != -1 && confirm('Are you sure?'))
                 {
