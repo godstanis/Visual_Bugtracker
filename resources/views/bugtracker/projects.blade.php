@@ -1,4 +1,4 @@
-@extends('layouts.bugtracker')
+@extends('layouts.app')
 
 @section('head-styles')
 <link rel="stylesheet" href="{{ asset('css/bugtracker/projects.css') }}" />
