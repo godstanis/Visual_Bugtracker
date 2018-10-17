@@ -78,6 +78,7 @@ class BoardsController extends BugtrackerBaseController
 
     public function paths(Request $request, Project $project, Board $board)
     {
+        $board->paths->load('creator');
         return new \App\Http\Resources\PathCollection($board->paths);
     }
 
