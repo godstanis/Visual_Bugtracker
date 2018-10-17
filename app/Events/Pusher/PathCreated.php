@@ -26,7 +26,8 @@ class PathCreated implements ShouldBroadcastNow
     public function __construct(\App\Path $path)
     {
         $this->path = $path;
-        $this->path_json = $path->decodedJsonPath();
+
+        $this->path_json = (new \App\Http\Resources\PathResource($path))->toArray((new \Illuminate\Http\Request()));
     }
 
     /**

@@ -16,10 +16,10 @@ class PathCollection extends ResourceCollection
     public function toArray($request)
     {
         self::withoutWrapping(); // {"data":[...]} wrapping remove for this response.
-        $data = [];
+        $paths = [];
 
         foreach ($this->collection as $path) {
-            $data[$path->path_slug] = [
+            $paths[$path->path_slug] = [
                 'stroke'=>$path->stroke_color,
                 'stroke-width'=>$path->stroke_width,
                 'd'=>$path->path_data,
@@ -29,6 +29,6 @@ class PathCollection extends ResourceCollection
             ];
         }
 
-        return $data;
+        return $paths;
     }
 }

@@ -11,7 +11,6 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-
 class PathDeleted implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
@@ -27,7 +26,7 @@ class PathDeleted implements ShouldBroadcastNow
     public function __construct(\App\Path $path)
     {
         $this->board = $path->board;
-        $this->path_json = $path->decodedJsonPath();
+        $this->path_json = (new \App\Http\Resources\PathResource($path))->toArray((new \Illuminate\Http\Request()));
     }
 
     /**
