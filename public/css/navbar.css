@@ -1,14 +1,14 @@
-body {
-    /* Margin bottom by footer height */
+.content {
     margin-bottom: 60px;
 }
 
 @media only screen and (max-width:600px) {
-    body {
-        /* Margin bottom by footer height */
-        margin-bottom: 80px;
+    .content {
+        margin-bottom: 100px;
     }
 }
+
+
 
 #footer {
     position: absolute;

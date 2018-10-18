@@ -1,6 +1,7 @@
 
 .projects-container {
     display: inline-block;
+    text-align: center;
 }
 
 .project-box {
@@ -21,8 +22,9 @@
 }
 
 .project-box .project-info {
-    padding-left:10px;
-    cursor:default;
+    text-align: left;
+    padding-left: 10px;
+    cursor: default;
 }
 
 .create-project-box .project-box-img {
