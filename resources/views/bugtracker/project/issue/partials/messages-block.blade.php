@@ -7,7 +7,7 @@
             <div class="issue-discussion-created-at">
                 {{ $post->created_at->diffForHumans() }}
             </div>
-            <div class="issue-discussion-user pull-right">
+            <div class="issue-discussion-user">
                 <a href="{{ route('user', ['user_name'=>$post->creator->name]) }}">
                     <span>@</span>{{ $post->creator->name }}
                     <img src="{{ $post->creator->imageLink() }}" alt="" width="20px">
