@@ -23,6 +23,8 @@ use App\Services\FileUpload\AvatarUploadService;
 use App\Services\FileUpload\BoardImageUploadService;
 use App\Services\FileUpload\ProjectImageUploadService;
 
+use App\Services\User\AbstractUserActivationService;
+use App\Services\User\UserActivationService;
 use App\Services\User\UserService;
 use App\Services\User\AbstractUserService;
 use App\User;
@@ -58,16 +60,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        /*
+         * User services
+         */
         app()->bind(AbstractUserService::class, function($app, $parameters) {
             return app()->makeWith(UserService::class, $parameters);
         });
-
         app()->when(UserService::class)->needs(AbstractFileUploadService::class)
             ->give(function() {
                 return new AvatarUploadService(config('images.user_avatar_dir'));
             });
+        // UserActivationService
+        app()->bind(AbstractUserActivationService::class, function($app, $parameters) {
+            return app()->makeWith(UserActivationService::class, $parameters);
+        });
 
-
+        /*
+         * Repositories
+         */
         app()->when(ProjectRepository::class)->needs(AbstractFileUploadService::class)
             ->give(function() {
                 return new ProjectImageUploadService(config('images.project_thumb_dir'));

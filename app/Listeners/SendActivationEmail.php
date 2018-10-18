@@ -3,21 +3,25 @@
 namespace App\Listeners;
 
 use App\Events\UserRegistered;
+use App\Services\User\AbstractUserActivationService;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use App\Repositories\UserActivationRepository;
-
 class SendActivationEmail //implements ShouldQueue
 {
+    /**
+     * @var AbstractUserActivationService
+     */
+    private $userActivationService;
+
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(AbstractUserActivationService $userActivationService)
     {
-        //
+        $this->userActivationService = $userActivationService;
     }
 
     /**
@@ -30,9 +34,8 @@ class SendActivationEmail //implements ShouldQueue
     {
         $user = $event->user;
 
-        $user_activation_repository = new UserActivationRepository();
-        $user_activation_token = $user_activation_repository->generateToken($user);
+        $userActivationToken = app()->makeWith(AbstractUserActivationService::class, ['user'=>$user])->createToken();
 
-        \Mail::to($user)->send(new \App\Mail\UserRegistered($user, $user_activation_token));
+        \Mail::to($user)->send(new \App\Mail\UserRegistered($user, $userActivationToken));
     }
 }

@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'activated'
     ];
 
     /**
@@ -28,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'activated'
+        'password', 'remember_token'
     ];
 
     /**
@@ -39,6 +39,18 @@ class User extends Authenticatable
     public function getRouteKeyName()
     {
         return 'name';
+    }
+
+    /**
+     * Set account activation status by flag value (or true).
+     *
+     * @param bool $flag
+     * @return bool
+     */
+    public function activateAccount($flag = true): bool
+    {
+        $this->activated = $flag;
+        return $this->update();
     }
 
     /**
