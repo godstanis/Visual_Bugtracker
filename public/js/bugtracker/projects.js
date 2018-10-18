@@ -67,8 +67,6 @@ $(document).ready(function() {
                 {
                     return false;
                 }
-
-            let form = $(e.target);
             //let formData = new FormData(form.get(0));
 
             $.ajax({
