@@ -24,7 +24,7 @@ use App\Services\FileUpload\BoardImageUploadService;
 use App\Services\FileUpload\ProjectImageUploadService;
 
 use App\Services\User\UserService;
-use App\Services\User\UserServiceContract;
+use App\Services\User\AbstractUserService;
 use App\User;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
@@ -58,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        app()->bind(UserServiceContract::class, function($app, $parameters) {
+        app()->bind(AbstractUserService::class, function($app, $parameters) {
             return app()->makeWith(UserService::class, $parameters);
         });
 

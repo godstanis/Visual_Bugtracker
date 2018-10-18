@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Requests\UserUpdateImageForm;
-use App\Services\User\UserServiceContract;
+use App\Services\User\AbstractUserService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function postUserProfileImage(UserUpdateImageForm $request)
     {
-        $userService = app()->makeWith(UserServiceContract::class, ['user'=>auth()->user()]);
+        $userService = app()->makeWith(AbstractUserService::class, ['user'=>auth()->user()]);
         $userService->updateUserImage( $request->file('profile_image') );
 
         return redirect()->back();

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\UploadedFile;
 use Mockery\Exception;
 
-class UserService extends UserServiceContract
+class UserService extends AbstractUserService
 {
     protected $user;
     protected $uploadService;

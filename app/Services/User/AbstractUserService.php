@@ -7,7 +7,7 @@ use App\User;
 use App\Services\FileUpload\FileUploadContract;
 use Illuminate\Http\UploadedFile;
 
-abstract class UserServiceContract
+abstract class AbstractUserService
 {
     protected $user;
     protected $uploadService;
