@@ -11,11 +11,11 @@ use App\Observers\PathObserver;
 use App\Path;
 use App\Project;
 
-use App\Repositories\BoardRepository;
-use App\Repositories\ProjectRepository;
-
-use App\Observers\BoardObserver;
 use App\Observers\IssueObserver;
+
+use App\Observers\Board\BoardObserver;
+use App\Observers\Board\BoardImageObserver;
+
 use App\Observers\Project\ProjectObserver;
 use App\Observers\Project\ProjectImageObserver;
 
@@ -31,7 +31,6 @@ use App\Services\User\AbstractUserService;
 use App\User;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Validator;
 
 use Queue;
 
@@ -49,10 +48,14 @@ class AppServiceProvider extends ServiceProvider
 
         Project::observe([
             ProjectObserver::class,
-            ProjectImageObserver::class,
+            ProjectImageObserver::class
         ]);
+        Board::observe([
+            BoardObserver::class,
+            BoardImageObserver::class
+        ]);
+
         Issue::observe(IssueObserver::class);
-        Board::observe(BoardObserver::class);
         IssueDiscussion::observe(IssueDiscussionObserver::class);
         Path::observe(PathObserver::class);
     }
@@ -86,13 +89,10 @@ class AppServiceProvider extends ServiceProvider
             ->give(function() {
                 return new ProjectImageUploadService(config('images.project_thumb_dir'));
             });
-
-        /*
-         * Repositories
-         */
-        app()->when(BoardRepository::class)->needs(AbstractFileUploadService::class)
+        app()->when(BoardImageObserver::class)->needs(AbstractFileUploadService::class)
             ->give(function() {
                 return new BoardImageUploadService(config('images.boards_images_dir'));
             });
+
     }
 }

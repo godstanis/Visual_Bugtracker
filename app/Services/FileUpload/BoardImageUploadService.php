@@ -8,7 +8,6 @@ use Intervention\Image\ImageManager as Image;
 
 class BoardImageUploadService extends AbstractFileUploadService
 {
-    protected $basePath;
 
     /**
      * BoardImageUploadContract constructor.
@@ -45,6 +44,7 @@ class BoardImageUploadService extends AbstractFileUploadService
      */
     public function delete(string $name): bool
     {
+        Storage::delete( $this->basePath . '/' . $name );
         return true;
     }
 }
