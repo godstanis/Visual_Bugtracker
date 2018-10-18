@@ -29,11 +29,7 @@ class ProjectObserver
      */
     public function created(Project $project)
     {
-        $project_access = app()->make(ProjectAccess::class);
-        $project_access->user_id = $project->creator_user_id;
-        $project_access->project_id = $project->id;
-
-        $project_access->save();
+        $project->members()->attach($project->creator_user_id);
 
         \Log::info('Project with id:'.$project->id.'created by user with id:'.$project->creator_user_id);
     }
