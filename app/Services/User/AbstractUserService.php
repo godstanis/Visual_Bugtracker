@@ -4,7 +4,7 @@ namespace App\Services\User;
 
 use App\User;
 
-use App\Services\FileUpload\FileUploadContract;
+use App\Services\FileUpload\AbstractFileUploadService;
 use Illuminate\Http\UploadedFile;
 
 abstract class AbstractUserService
@@ -15,9 +15,9 @@ abstract class AbstractUserService
     /**
      * UserRepository constructor.
      * @param User $user
-     * @param FileUploadContract $uploadService
+     * @param AbstractFileUploadService $uploadService
      */
-    public function __construct(User $user, FileUploadContract $uploadService)
+    public function __construct(User $user, AbstractFileUploadService $uploadService)
     {
         $this->user = $user;
         $this->uploadService = $uploadService;

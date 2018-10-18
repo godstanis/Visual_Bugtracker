@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager as Image;
 
-class ProjectImageUploadService extends FileUploadContract
+class ProjectImageUploadService extends AbstractFileUploadService
 {
     protected $defaultProjectImageName;
 

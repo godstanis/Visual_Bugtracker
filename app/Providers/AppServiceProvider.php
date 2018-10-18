@@ -18,7 +18,7 @@ use App\Observers\BoardObserver;
 use App\Observers\IssueObserver;
 use App\Observers\ProjectObserver;
 
-use App\Services\FileUpload\FileUploadContract;
+use App\Services\FileUpload\AbstractFileUploadService;
 use App\Services\FileUpload\AvatarUploadService;
 use App\Services\FileUpload\BoardImageUploadService;
 use App\Services\FileUpload\ProjectImageUploadService;
@@ -62,18 +62,18 @@ class AppServiceProvider extends ServiceProvider
             return app()->makeWith(UserService::class, $parameters);
         });
 
-        app()->when(UserService::class)->needs(FileUploadContract::class)
+        app()->when(UserService::class)->needs(AbstractFileUploadService::class)
             ->give(function() {
                 return new AvatarUploadService(config('images.user_avatar_dir'));
             });
 
 
-        app()->when(ProjectRepository::class)->needs(FileUploadContract::class)
+        app()->when(ProjectRepository::class)->needs(AbstractFileUploadService::class)
             ->give(function() {
                 return new ProjectImageUploadService(config('images.project_thumb_dir'));
             });
 
-        app()->when(BoardRepository::class)->needs(FileUploadContract::class)
+        app()->when(BoardRepository::class)->needs(AbstractFileUploadService::class)
             ->give(function() {
                 return new BoardImageUploadService(config('images.boards_images_dir'));
             });

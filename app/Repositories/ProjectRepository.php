@@ -6,7 +6,7 @@ use App\Project;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use App\Services\FileUpload\FileUploadContract;
+use App\Services\FileUpload\AbstractFileUploadService;
 
 class ProjectRepository
 {
@@ -15,9 +15,9 @@ class ProjectRepository
     /**
      * ProjectRepository constructor.
      * @param Project $user
-     * @param FileUploadContract $uploadService
+     * @param AbstractFileUploadService $uploadService
      */
-    public function __construct(Project $project, FileUploadContract $uploadService)
+    public function __construct(Project $project, AbstractFileUploadService $uploadService)
     {
         $this->project = $project;
         $this->uploadService = $uploadService;

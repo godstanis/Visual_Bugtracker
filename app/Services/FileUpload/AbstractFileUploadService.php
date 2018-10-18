@@ -9,7 +9,7 @@ use Illuminate\Http\UploadedFile;
  *
  * @package App\Services\FileUpload
  */
-abstract class FileUploadContract
+abstract class AbstractFileUploadService
 {
     protected $basePath;
 

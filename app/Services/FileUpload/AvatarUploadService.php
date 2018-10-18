@@ -7,7 +7,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager as Image;
 
-class AvatarUploadService extends FileUploadContract
+class AvatarUploadService extends AbstractFileUploadService
 {
     protected $defaultAvatarName;
 

@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Board;
 use App\Project;
 
-use App\Services\FileUpload\FileUploadContract;
+use App\Services\FileUpload\AbstractFileUploadService;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -20,9 +20,9 @@ class BoardRepository
      * ProjectRepository constructor.
      *
      * @param Board $board
-     * @param FileUploadContract $uploadService
+     * @param AbstractFileUploadService $uploadService
      */
-    public function __construct(Board $board, FileUploadContract $uploadService)
+    public function __construct(Board $board, AbstractFileUploadService $uploadService)
     {
         $this->board = $board;
         $this->uploadService = $uploadService;

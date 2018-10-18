@@ -4,7 +4,7 @@ namespace App\Services\User;
 
 use App\User;
 
-use App\Services\FileUpload\FileUploadContract;
+use App\Services\FileUpload\AbstractFileUploadService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\UploadedFile;
 use Mockery\Exception;

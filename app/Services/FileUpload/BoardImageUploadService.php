@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager as Image;
 
-class BoardImageUploadService extends FileUploadContract
+class BoardImageUploadService extends AbstractFileUploadService
 {
     protected $basePath;
 
