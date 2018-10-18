@@ -29,4 +29,12 @@ abstract class AbstractFileUploadService
      * @return string $newName
      */
     public abstract function upload(UploadedFile $file, string $newName = null, string $oldName = null): string;
+
+    /**
+     * @param UploadedFile $file
+     * @param string $newName
+     * @param string|null $oldName Defines a file name to be deleted/stashed.
+     * @return string $newName
+     */
+    public abstract function delete(string $name): string;
 }
