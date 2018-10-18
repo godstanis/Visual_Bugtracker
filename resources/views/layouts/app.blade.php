@@ -4,7 +4,7 @@
 <body>
 <div id="app">
     @include('layouts.partials.navbar')
-    <div class="content container fill col-md-10 col-md-offset-1 bugtracker-content-container">
+    <div class="content container fill col-md-8 col-md-offset-2 bugtracker-content-container">
         @yield('content')
     </div>
 </div>
