@@ -55,10 +55,10 @@ class AvatarUploadService extends AbstractFileUploadService
      * @param UploadedFile $file
      * @param string $newName
      * @param string|null $oldName Defines a file name to be deleted/stashed.
-     * @return string $newName
+     * @return bool
      */
-    public function delete(string $name): string
+    public function delete(string $name): bool
     {
-
+        return true;
     }
 }

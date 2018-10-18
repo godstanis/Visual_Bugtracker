@@ -34,7 +34,7 @@ abstract class AbstractFileUploadService
      * @param UploadedFile $file
      * @param string $newName
      * @param string|null $oldName Defines a file name to be deleted/stashed.
-     * @return string $newName
+     * @return bool
      */
-    public abstract function delete(string $name): string;
+    public abstract function delete(string $name): bool;
 }
