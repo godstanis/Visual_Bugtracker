@@ -33,7 +33,9 @@ class ProjectImageUploadService extends AbstractFileUploadService
             $newName = str_random(24) . uniqid("", false) . '.' . $imageExtension;
         }
 
-        $uploadedImage = (new Image)->make($file)->resize(150,150);
+        $uploadedImage = (new Image)->make($file)->resize(null,150, function ($constraint) {
+            $constraint->aspectRatio();
+        });
 
         Storage::put($this->basePath.'/' . $newName, (string)$uploadedImage->stream());
 

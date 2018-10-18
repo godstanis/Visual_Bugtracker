@@ -96,7 +96,7 @@
     height:120px;
 
     display: inline-block;
-    background-color: lightgray;
+    background-color: #f3f3f3;
 
 }
 .project-box-img img {
@@ -105,8 +105,7 @@
     left: 50%;
     top: 50%;
 
-    height: 100%;
-    width: auto;
+    width: 100%;
 
     -webkit-transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
