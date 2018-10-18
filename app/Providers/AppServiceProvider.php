@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Board;
+use App\Http\Controllers\User\UserController;
 use App\Issue;
 use App\IssueDiscussion;
 use App\Observers\IssueDiscussionObserver;
@@ -12,7 +13,6 @@ use App\Project;
 
 use App\Repositories\BoardRepository;
 use App\Repositories\ProjectRepository;
-use App\Repositories\UserRepository;
 
 use App\Observers\BoardObserver;
 use App\Observers\IssueObserver;
@@ -23,6 +23,9 @@ use App\Services\FileUpload\AvatarUploadService;
 use App\Services\FileUpload\BoardImageUploadService;
 use App\Services\FileUpload\ProjectImageUploadService;
 
+use App\Services\User\UserService;
+use App\Services\User\UserServiceContract;
+use App\User;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
@@ -55,10 +58,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        app()->when(UserRepository::class)->needs(FileUploadContract::class)
+        app()->bind(UserServiceContract::class, function($app, $parameters) {
+            return app()->makeWith(UserService::class, $parameters);
+        });
+
+        app()->when(UserService::class)->needs(FileUploadContract::class)
             ->give(function() {
                 return new AvatarUploadService(config('images.user_avatar_dir'));
             });
+
 
         app()->when(ProjectRepository::class)->needs(FileUploadContract::class)
             ->give(function() {
