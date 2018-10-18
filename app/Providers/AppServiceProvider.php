@@ -16,7 +16,8 @@ use App\Repositories\ProjectRepository;
 
 use App\Observers\BoardObserver;
 use App\Observers\IssueObserver;
-use App\Observers\ProjectObserver;
+use App\Observers\Project\ProjectObserver;
+use App\Observers\Project\ProjectImageObserver;
 
 use App\Services\FileUpload\AbstractFileUploadService;
 use App\Services\FileUpload\AvatarUploadService;
@@ -46,7 +47,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapThree();
 
-        Project::observe(ProjectObserver::class);
+        Project::observe([
+            ProjectObserver::class,
+            ProjectImageObserver::class,
+        ]);
         Issue::observe(IssueObserver::class);
         Board::observe(BoardObserver::class);
         IssueDiscussion::observe(IssueDiscussionObserver::class);
@@ -76,17 +80,19 @@ class AppServiceProvider extends ServiceProvider
         });
 
         /*
-         * Repositories
+         * Observers
          */
-        app()->when(ProjectRepository::class)->needs(AbstractFileUploadService::class)
+        app()->when(ProjectImageObserver::class)->needs(AbstractFileUploadService::class)
             ->give(function() {
                 return new ProjectImageUploadService(config('images.project_thumb_dir'));
             });
 
+        /*
+         * Repositories
+         */
         app()->when(BoardRepository::class)->needs(AbstractFileUploadService::class)
             ->give(function() {
                 return new BoardImageUploadService(config('images.boards_images_dir'));
             });
-
     }
 }

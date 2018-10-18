@@ -48,7 +48,9 @@ class ProjectImageUploadService extends AbstractFileUploadService
      */
     public function delete(string $name): bool
     {
-        Storage::delete($this->basePath . '/' . $name);
+        if($name !== $this->defaultProjectImageName) {
+            Storage::delete($this->basePath . '/' . $name);
+        }
         return true;
     }
 }

@@ -7,31 +7,11 @@ use App\Http\Controllers\BugtrackerBaseController;
 use App\Http\Requests\CreateProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 
-use App\Repositories\ProjectRepository;
 use App\Project;
-use function Aws\recursive_dir_iterator;
 use Illuminate\Http\Request;
 
 class ProjectsController extends BugtrackerBaseController
 {
-
-    protected $project_repository;
-
-    public function __construct(ProjectRepository $repository)
-    {
-        $this->project_repository = $repository;
-    }
-
-    /*
-     * Show all projects
-    */
-    public function getAllProjects()
-    {
-        $projects = $this->project_repository->all();
-        
-        return view('bugtracker.projects', compact('projects'));
-
-    }
 
     /*
      * Show projects, which current user can access
@@ -55,12 +35,12 @@ class ProjectsController extends BugtrackerBaseController
     /*
      * Create new project, and store it in DataBase
     */
-    public function postCreateProject(CreateProjectRequest $request)
+    public function postCreateProject(CreateProjectRequest $request, Project $project)
     {
-        $newProject = $this->project_repository->create($request->all());
+        $newProject = $project->create($request->all());
 
         if($request->ajax()) {
-            return view('bugtracker.project-box', ['project' => $newProject])->render();
+            return view('bugtracker.project-box', ['project' => $newProject]);
         }
 
         return redirect()->back();
@@ -72,7 +52,7 @@ class ProjectsController extends BugtrackerBaseController
     */
     public function postDeleteProject(Request $request, Project $project)
     {
-        $this->project_repository->delete($project, auth()->user());
+        $project->delete();
 
         if($request->ajax()) {
             return response("", 200);

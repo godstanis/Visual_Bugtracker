@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Observers;
+namespace App\Observers\Project;
 
 use App\Project;
 use App\ProjectAccess;
