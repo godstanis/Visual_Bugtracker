@@ -39,6 +39,7 @@ class ProjectsController extends BugtrackerBaseController
     public function getAvailableProjects()
     {
         $projects = auth()->user()->projects;
+        $projects->load('issues','boards', 'members');
 
         return view('bugtracker.projects', ['projects'=>$projects]);
     }

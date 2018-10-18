@@ -39,6 +39,11 @@
             {{count($project->issues)}}
             <span class="glyphicon glyphicon-remove-circle"></span>
         </span>
+        &nbsp;
+        <span class="small text-muted" title="Project members count">
+            {{count($project->members)}}
+            <span class="glyphicon glyphicon-user"></span>
+        </span>
     </div>
     <div class="project-box-open-btn">
         <a class="btn btn-success" href="{{ route('bugtracker.project', compact("project")) }}"><span class="glyphicon glyphicon-folder-open"></span>&nbsp; @lang('projects.open')</a>
