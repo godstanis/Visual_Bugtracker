@@ -2,33 +2,14 @@
 
 namespace App\Providers;
 
-use App\Board;
-use App\Http\Controllers\User\UserController;
-use App\Issue;
-use App\IssueDiscussion;
-use App\Observers\IssueDiscussionObserver;
-use App\Observers\PathObserver;
-use App\Path;
-use App\Project;
-
-use App\Observers\IssueObserver;
-
-use App\Observers\Board\BoardObserver;
-use App\Observers\Board\BoardImageObserver;
-
-use App\Observers\Project\ProjectObserver;
-use App\Observers\Project\ProjectImageObserver;
-
 use App\Services\FileUpload\AbstractFileUploadService;
 use App\Services\FileUpload\AvatarUploadService;
-use App\Services\FileUpload\BoardImageUploadService;
-use App\Services\FileUpload\ProjectImageUploadService;
 
 use App\Services\User\AbstractUserActivationService;
 use App\Services\User\UserActivationService;
-use App\Services\User\UserService;
 use App\Services\User\AbstractUserService;
-use App\User;
+use App\Services\User\UserService;
+
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -45,19 +26,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrapThree();
-
-        Project::observe([
-            ProjectObserver::class,
-            ProjectImageObserver::class
-        ]);
-        Board::observe([
-            BoardObserver::class,
-            BoardImageObserver::class
-        ]);
-
-        Issue::observe(IssueObserver::class);
-        IssueDiscussion::observe(IssueDiscussionObserver::class);
-        Path::observe(PathObserver::class);
     }
 
     /**
@@ -77,22 +45,9 @@ class AppServiceProvider extends ServiceProvider
             ->give(function() {
                 return new AvatarUploadService(config('images.user_avatar_dir'));
             });
-        // UserActivationService
+
         app()->bind(AbstractUserActivationService::class, function($app, $parameters) {
             return app()->makeWith(UserActivationService::class, $parameters);
         });
-
-        /*
-         * Observers
-         */
-        app()->when(ProjectImageObserver::class)->needs(AbstractFileUploadService::class)
-            ->give(function() {
-                return new ProjectImageUploadService(config('images.project_thumb_dir'));
-            });
-        app()->when(BoardImageObserver::class)->needs(AbstractFileUploadService::class)
-            ->give(function() {
-                return new BoardImageUploadService(config('images.boards_images_dir'));
-            });
-
     }
 }
