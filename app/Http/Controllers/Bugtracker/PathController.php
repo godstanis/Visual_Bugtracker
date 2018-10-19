@@ -17,8 +17,6 @@ class PathController extends Controller
     {
         $path = $board->paths()->create($request->all());
 
-        broadcast( new \App\Events\Pusher\PathCreated($path) )->toOthers();
-
         if($request->ajax()) {
             $response = [ 'path_slug' => $path->path_slug ];
             return response(json_encode($response), 200);
@@ -30,8 +28,6 @@ class PathController extends Controller
     public function deletePath(Request $request, Project $project, Board $board)
     {
         $path = $board->paths()->where('path_slug', $request->path_slug)->first();
-
-        broadcast( new \App\Events\Pusher\PathDeleted($path) )->toOthers();
 
         $path->delete();
 

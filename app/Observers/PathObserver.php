@@ -4,6 +4,9 @@ namespace App\Observers;
 
 use App\Path;
 
+use App\Events\Pusher\PathCreated;
+use App\Events\Pusher\PathDeleted;
+
 class PathObserver
 {
     /**
@@ -21,13 +24,24 @@ class PathObserver
     }
 
     /**
-     * Listen to the Path deleting event.
+     * Listen to the Path created event.
      *
      * @param  Path  $path
      * @return void
      */
-    public function deleting(Path $path)
+    public function created(Path $path)
     {
-        //
+        broadcast( new PathCreated($path) )->toOthers();
+    }
+
+    /**
+     * Listen to the Path deleted event.
+     *
+     * @param  Path  $path
+     * @return void
+     */
+    public function deleted(Path $path)
+    {
+        broadcast( new PathDeleted($path) )->toOthers();
     }
 }
