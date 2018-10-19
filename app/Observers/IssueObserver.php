@@ -18,13 +18,13 @@ class IssueObserver
     }
 
     /**
-     * Listen to the Issue deleting event.
+     * Listen to the Issue deleted event.
      *
      * @param  Issue  $issue
      * @return void
      */
-    public function deleting(Issue $issue)
+    public function deleted(Issue $issue)
     {
-        //
+        $issue->discussion()->delete();
     }
 }
