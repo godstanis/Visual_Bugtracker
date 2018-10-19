@@ -78,7 +78,12 @@
         project_id: "{{$project->id}}",
         delete_path_link:"{{route('board.delete_path', ['project'=>$project, 'board'=>$current_board]) }}",
         create_path_link: "{{route('board.create_path', ['project'=>$project, 'board'=>$current_board])}}",
-        board_paths_link: "{{route('board.paths', ['project'=>$project, 'board'=>$current_board])}}"
+        board_paths_link: "{{route('board.paths', ['project'=>$project, 'board'=>$current_board])}}",
+        board_comment_points: {
+            index: "{{route('comment_points.index', ['project'=>$project, 'board'=>$current_board])}}",
+            form: "{{route('comment_points.create', ['project'=>$project, 'board'=>$current_board])}}"
+        },
+
     };
 
     @if($current_board !== null)
@@ -100,5 +105,7 @@
 
 <script src="{{asset('editor/js/src/pusher.js')}}"></script>
 <script src="{{asset('editor/js/src/editorDataManager.js')}}"></script>
+
+<script src="{{asset('editor/js/src/commentPoint.js')}}"></script>
 
 </html>
