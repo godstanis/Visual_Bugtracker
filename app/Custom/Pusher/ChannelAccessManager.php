@@ -2,7 +2,9 @@
 
 namespace App\Custom\Pusher;
 
+use App\Custom\Pusher\Channels\AbstractChannel;
 use Illuminate\Http\Request;
+use Pusher\Pusher;
 
 class ChannelAccessManager
 {
@@ -10,7 +12,7 @@ class ChannelAccessManager
     protected $channel;
     protected $user;
 
-    public function __construct(\App\Custom\Pusher\Channels\AbstractChannel $channel, \App\User $user)
+    public function __construct(AbstractChannel $channel, \App\User $user)
     {
         $this->channel = $channel;
         $this->user = $user;
@@ -22,7 +24,7 @@ class ChannelAccessManager
 
         if ($userAuthorized)
         {
-            $pusher = app()->make('Pusher');
+            $pusher = app()->make(Pusher::class);
           
             $data = $pusher->socket_auth($request->channel_name, $request->socket_id);
 
