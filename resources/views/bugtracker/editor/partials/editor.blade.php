@@ -68,12 +68,20 @@
 
 <div id="svg-editor-area">
     <div id="svg-work-area">
+        @include('bugtracker.editor.partials.marker-form')
         <div id="svg-image-couple">
-            <svg id="svg-area" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" shape-rendering="auto">
-            </svg>
+            <svg id="svg-area" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" shape-rendering="auto"></svg>
             <div id="bg-element">
                 <img id="bg-element-image" src="{{ $current_board->sourceImageUrl() }}" alt="Board source image">
             </div>
         </div>
+        @foreach($current_board->commentPoints as $commentPoint)
+            <marker style="transform: translate({{$commentPoint->position_x}}px,{{$commentPoint->position_y}}px);" class="comment-point-marker">
+                <span style="display:block">
+                    {{$commentPoint->text}}
+                </span>
+                <span class="text-muted small">Created by {{$commentPoint->creator->name}}</span>
+            </marker>
+        @endforeach
     </div>
 </div>
