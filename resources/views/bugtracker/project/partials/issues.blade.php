@@ -17,6 +17,12 @@
                             <span class="glyphicon glyphicon-comment"></span>
                         </span>
                     @endif
+                    @if( isset($issue->commentPoint) && config('app.debug') == true )
+                        <span class="text-muted small">
+                            This issue is assigned to '{{$issue->commentPoint->board->name}}'[comment_id: <span>{{$issue->commentPoint->id}}</span>]
+                            <a href="">Open in editor</a>
+                        </span>
+                    @endif
                     <span class="small pull-right">
                         @lang('projects.issue_type'):
                         <span class="issue-badge {{ $issue->type->title }}-type">{{ $issue->type->title }}</span>
