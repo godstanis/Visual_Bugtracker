@@ -25,18 +25,6 @@ class Board extends Model
     }
 
     /**
-     * Return messages, left on the board.
-     *
-     * TODO: #1 Issue, program the board message logic.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function messages()
-    {
-        return $this->hasMany(BoardMessage::class, 'board_id', 'id');
-    }
-
-    /**
      * Returns actual board image (for the editor).
      *
      * @return string Board main image for editor
