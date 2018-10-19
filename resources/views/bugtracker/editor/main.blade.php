@@ -6,7 +6,7 @@
 <body>
 <div class="tabs-btns editor-controls">
 
-<div id="editor-controls-buttons" class="collapse in">
+<div id="editor-controls-buttons" class="collapse">
 
     <button id="browser-tab-btn" class="btn btn-success"><span class="glyphicon glyphicon-eye-open"></span> @lang('projects.viewer')</button>
     <button id="editor-tab-btn" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span> @lang('projects.editor')</button>
