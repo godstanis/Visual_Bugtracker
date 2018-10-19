@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\Pusher;
+namespace App\Events\Pusher\Board\Path;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -16,6 +16,12 @@ class PathDeleted implements ShouldBroadcastNow
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     protected $board;
+    /**
+     * Path json resource will be returned as Pusher message
+     * so we can catch it on frontend side.
+     *
+     * @var array
+     */
     public $path_json;
 
     /**
@@ -36,11 +42,14 @@ class PathDeleted implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        //return new PrivateChannel('channel-name');
         return new PrivateChannel('board_'.$this->board->id);
-        
     }
 
+    /**
+     * Event name.
+     *
+     * @return string
+     */
     public function broadcastAs()
     {
         return 'userDeletedPath';

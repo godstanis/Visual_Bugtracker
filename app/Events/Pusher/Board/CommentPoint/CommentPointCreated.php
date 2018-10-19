@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Events\Pusher;
+namespace App\Events\Pusher\Board\CommentPoint;
 
+use App\CommentPoint;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -11,23 +12,26 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class PathCreated implements ShouldBroadcastNow
+class CommentPointCreated implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    protected $path;
-    public $path_json;
+    /**
+     * CommentPoint will be returned as Pusher message
+     * so we can catch it on frontend side.
+     *
+     * @var CommentPoint
+     */
+    public $commentPoint;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(\App\Path $path)
+    public function __construct(CommentPoint $commentPoint)
     {
-        $this->path = $path;
-
-        $this->path_json = (new \App\Http\Resources\PathResource($path))->toArray((new \Illuminate\Http\Request()));
+        $this->commentPoint = $commentPoint;
     }
 
     /**
@@ -37,14 +41,17 @@ class PathCreated implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        //return new PrivateChannel('channel-name');
-
-        return new PrivateChannel('board_'.$this->path->board_id);
-        
+        return new PrivateChannel('board_'.$this->commentPoint->board_id);
     }
 
+    /**
+     * Event name.
+     *
+     * @return string
+     */
     public function broadcastAs()
     {
-        return 'userCreatedPath';
+        return 'userCreatedCommentPoint';
     }
 }
+

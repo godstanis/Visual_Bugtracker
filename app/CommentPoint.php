@@ -19,6 +19,10 @@ class CommentPoint extends Model
         'user_id', 'text', 'position_x', 'position_y'
     ];
 
+    protected $hidden = [
+        'id'
+    ];
+
     /**
      * A comment creator.
      *
