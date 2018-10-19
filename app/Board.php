@@ -25,6 +25,18 @@ class Board extends Model
     }
 
     /**
+     * Return comment points, left on the board.
+     *
+     * TODO: #1 Issue, program the board message logic.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function commentPoints()
+    {
+        return $this->hasMany(CommentPoint::class, 'board_id', 'id');
+    }
+
+    /**
      * Returns actual board image (for the editor).
      *
      * @return string Board main image for editor

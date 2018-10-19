@@ -74,6 +74,16 @@ class Issue extends Model
     }
 
     /**
+     * CommentPoint, assigned to the issue if exists.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function commentPoint()
+    {
+        return $this->hasOne(CommentPoint::class, 'issue_id', 'id');
+    }
+
+    /**
      * Closes the Issue.
      *
      * @return bool
