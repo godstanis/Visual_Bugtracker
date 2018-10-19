@@ -11,8 +11,10 @@ Bug tracking system with a visual editor.
 
 #### Application screenshots:
 
-<img width="40%" src="https://github.com/StanislavBogatov/BugWall_Visual_Bugtracker/blob/master/github_screenshots/444.JPG?raw=true"></img>
-<img width="50%" src="https://github.com/StanislavBogatov/BugWall_Visual_Bugtracker/blob/master/github_screenshots/111.JPG?raw=true"></img>
+<img height="280px" width="48%" src="https://raw.githubusercontent.com/stasgar/Visual_Bugtracker/master/github_screenshots/pages_screenshots/Projects.png"></img>
+<img height="280px" width="48%" src="https://raw.githubusercontent.com/stasgar/Visual_Bugtracker/master/github_screenshots/pages_screenshots/Issues.png"></img>
+<img height="280px" width="48%" src="https://raw.githubusercontent.com/stasgar/Visual_Bugtracker/master/github_screenshots/pages_screenshots/Team.png"></img>
+<img height="280px" width="48%" src="https://raw.githubusercontent.com/stasgar/Visual_Bugtracker/master/github_screenshots/pages_screenshots/Editor.png"></img>
 ---
 
 ## Project installation:
