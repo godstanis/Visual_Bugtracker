@@ -5,5 +5,12 @@
     <span style="display:block">
         {{$commentPoint->text}}
     </span>
+    @if(isset($commentPoint->issue))
+        <span class="text-muted"  style="display:block">
+            <a class="title-link" href="{{ route('project.issue.discussion', ['issue'=>$commentPoint->issue, 'project'=>$project]) }}">
+                <span>#{{$commentPoint->issue->id}} <b>{{$commentPoint->issue->title}}</b></span>
+            </a>
+        </span>
+    @endif
     <span class="text-muted small">Created by {{$commentPoint->creator->name}}</span>
 </marker>

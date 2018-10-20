@@ -17,11 +17,14 @@
                             <span class="glyphicon glyphicon-comment"></span>
                         </span>
                     @endif
-                    @if( isset($issue->commentPoint) && config('app.debug') == true )
-                        <span class="text-muted small">
-                            This issue is assigned to '{{$issue->commentPoint->board->name}}'[comment_id: <span>{{$issue->commentPoint->id}}</span>]
-                            <a href="">Open in editor</a>
-                        </span>
+                    @if( isset($issue->commentPoints) )
+                        <a href="{{ route('project.issue.discussion', ['issue'=>$issue, 'project'=>$project]) }}">
+                        @foreach($issue->commentPoints as $commentPoint)
+                            <span class="text-muted small">
+                                <b>#<span>{{$commentPoint->id}}</span></b>
+                            </span>
+                        @endforeach
+                        </a>
                     @endif
                     <span class="small pull-right">
                         @lang('projects.issue_type'):
