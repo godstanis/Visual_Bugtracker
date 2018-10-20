@@ -25,15 +25,15 @@ class Board extends Model
     }
 
     /**
-     * Return messages, left on the board.
+     * Return comment points, left on the board.
      *
      * TODO: #1 Issue, program the board message logic.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function messages()
+    public function commentPoints()
     {
-        return $this->hasMany(BoardMessage::class, 'board_id', 'id');
+        return $this->hasMany(CommentPoint::class, 'board_id', 'id');
     }
 
     /**

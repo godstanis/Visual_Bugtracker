@@ -25,5 +25,6 @@ class BoardObserver
     public function deleting(Board $board)
     {
         $board->paths()->delete();
+        $board->commentPoints()->delete();
     }
 }

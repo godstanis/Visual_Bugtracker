@@ -45,17 +45,35 @@
             <a href="{{ route('user', ['user_name'=>$issue->assignedUser->name]) }}">
                 <span>@</span>{{ $issue->assignedUser->name }}
             </a>
+            <br>
             <span class="small pull-right">
                 @lang('projects.issue_type'):
                 <span class="issue-badge {{ $issue->type->title }}-type">{{ $issue->type->title }}</span>
                 @lang('projects.issue_priority'):
                 <span class="issue-badge {{ $issue->priority->title }}-priority">{{ $issue->priority->title }}</span>
             </span>
+            <br>
         </div>
     </div>
     <div class="issue-body">
         <div>
             <p>{{$issue->description}}</p>
+        </div>
+        <div class="comment-points-list">
+        @if( isset($issue->commentPoints) )
+            <ul class="list-group small">
+            @foreach($issue->commentPoints as $commentPoint)
+                <li style="list-style: none">
+                    <span class="text-muted small">
+                        <a href="{{route('project.editor.board', ['project'=>$project, 'board'=>$commentPoint->board])}}">
+                            #<span>{{$commentPoint->id}}</span> <span>{{$commentPoint->text}}</span>
+                        </a>
+
+                    </span>
+                </li>
+            @endforeach
+            </ul>
+        @endif
         </div>
     </div>
 </div>

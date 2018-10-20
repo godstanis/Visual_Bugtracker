@@ -17,6 +17,15 @@
                             <span class="glyphicon glyphicon-comment"></span>
                         </span>
                     @endif
+                    @if( isset($issue->commentPoints) )
+                        <a href="{{ route('project.issue.discussion', ['issue'=>$issue, 'project'=>$project]) }}">
+                        @foreach($issue->commentPoints as $commentPoint)
+                            <span class="text-muted small">
+                                <b>#<span>{{$commentPoint->id}}</span></b>
+                            </span>
+                        @endforeach
+                        </a>
+                    @endif
                     <span class="small pull-right">
                         @lang('projects.issue_type'):
                         <span class="issue-badge {{ $issue->type->title }}-type">{{ $issue->type->title }}</span>

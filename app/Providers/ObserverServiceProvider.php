@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\CommentPoint;
 use App\IssueDiscussion;
+use App\Observers\CommentPointObserver;
 use App\Project;
 use App\Board;
 use App\Path;
@@ -45,6 +47,8 @@ class ObserverServiceProvider extends ServiceProvider
         Issue::observe(IssueObserver::class);
         IssueDiscussion::observe(IssueDiscussionObserver::class);
         Path::observe(PathObserver::class);
+
+        CommentPoint::observe(CommentPointObserver::class);
     }
 
     /**

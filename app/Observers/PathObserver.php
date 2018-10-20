@@ -4,8 +4,8 @@ namespace App\Observers;
 
 use App\Path;
 
-use App\Events\Pusher\PathCreated;
-use App\Events\Pusher\PathDeleted;
+use App\Events\Pusher\Board\Path\PathCreated;
+use App\Events\Pusher\Board\Path\PathDeleted;
 
 class PathObserver
 {

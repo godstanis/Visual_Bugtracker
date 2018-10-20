@@ -17,7 +17,7 @@ return [
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
     'login' => 'Login',
-    'register' => 'Register',
+    'register' => 'Sign up',
     'logout' => 'Logout',
     'my_profile' => 'My profile',
     'settings' => 'Settings',
@@ -30,6 +30,8 @@ return [
     'password_reset' => 'Reset Password',
     'send_reset' => 'Send Password Reset Link',
     'confirm_password' => 'Confirm password',
+
+    'signed_as' => 'Signed as',
 
     'site_uses_cookies' => 'By submitting this form, you agree to use cookie-files on this site.',
 

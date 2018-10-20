@@ -26,7 +26,7 @@
 <button style="width:100%; min-width: 60px; height: 20px; padding: 0px" class="btn btn-default" data-toggle="collapse" data-target="#editor-controls-buttons"><span class="glyphicon glyphicon-chevron-down"></span></button>
 </div>
 
-<a href="{{ route('project.boards', compact('project')) }}" class="btn btn-success return-to-boards"><span class="glyphicon glyphicon-triangle-left"></span><span class="glyphicon glyphicon-blackboard"></span> @lang('editor.return_to_boards')</a>
+<a href="{{ route('project.boards', compact('project')) }}" class="btn btn-default return-to-boards"><span class="glyphicon glyphicon-triangle-left"></span><span class="glyphicon glyphicon-blackboard"></span> @lang('editor.return_to_boards')</a>
 
 @include('bugtracker.editor.partials.create-board-modal')
 
@@ -45,7 +45,7 @@
 
 <div class="boards editor-controls">
     <div class="boards-toggle">
-    <button class="btn btn-warning" data-toggle="collapse" data-target="#boards-block">
+    <button class="btn btn-default" data-toggle="collapse" data-target="#boards-block">
         <span class="glyphicon glyphicon-chevron-up"></span>
         <span>@lang('projects.boards')</span>
     </button>
@@ -78,7 +78,12 @@
         project_id: "{{$project->id}}",
         delete_path_link:"{{route('board.delete_path', ['project'=>$project, 'board'=>$current_board]) }}",
         create_path_link: "{{route('board.create_path', ['project'=>$project, 'board'=>$current_board])}}",
-        board_paths_link: "{{route('board.paths', ['project'=>$project, 'board'=>$current_board])}}"
+        board_paths_link: "{{route('board.paths', ['project'=>$project, 'board'=>$current_board])}}",
+        board_comment_points: {
+            index: "{{route('comment_points.index', ['project'=>$project, 'board'=>$current_board])}}",
+            form: "{{route('comment_points.create', ['project'=>$project, 'board'=>$current_board])}}"
+        },
+
     };
 
     @if($current_board !== null)
@@ -100,5 +105,7 @@
 
 <script src="{{asset('editor/js/src/pusher.js')}}"></script>
 <script src="{{asset('editor/js/src/editorDataManager.js')}}"></script>
+
+<script src="{{asset('editor/js/src/commentPoint.js')}}"></script>
 
 </html>

@@ -27,6 +27,7 @@ return [
     'issue_updated_at' => 'Updated',
     'issue_controls' => 'Controls',
     'issue_created_when' => 'Created on :when by ',
+    'issue_without' => 'No issue attached',
 
     'issue_discussion' => 'Issue ":id" discussion',
 

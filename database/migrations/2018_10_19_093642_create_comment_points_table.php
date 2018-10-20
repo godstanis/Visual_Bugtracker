@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableBoardMessages extends Migration
+class CreateCommentPointsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateTableBoardMessages extends Migration
      */
     public function up()
     {
-        Schema::create('board_messages', function (Blueprint $table) {
+        Schema::create('comment_points', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('board_id');
-            $table->string('text')->default(null);
-            $table->integer('issue_id')->default(null);
+            $table->integer('user_id');
+            $table->integer('issue_id')->unique()->nullable();
+            $table->string('text')->nullable();
             $table->integer('position_x');
             $table->integer('position_y');
             $table->timestamps();
@@ -31,6 +32,6 @@ class CreateTableBoardMessages extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('board_messages');
+        Schema::dropIfExists('comment_points');
     }
 }

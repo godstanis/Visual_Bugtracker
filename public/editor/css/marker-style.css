@@ -1,10 +1,11 @@
 #create-marker-form{
     top: 0;
     position: absolute;
-    width: 200px;
+    width: 280px;
 
     background-color: white;
     padding: 10px;
+    padding-right: 25px;
 
     box-shadow:0 0 10px black;
 }
@@ -22,4 +23,49 @@
     border: 10px solid lightgreen;
 
     border-radius: 100%;
+}
+
+.comment-point-marker {
+    top: 0;
+    position: absolute;
+
+    background-color: white;
+    padding: 10px;
+    padding-right: 30px;
+
+    box-shadow:0 0 20px rgba(0, 0, 0, 0.19);
+
+    visibility: hidden;
+}
+
+.comment-point-marker:hover {
+    visibility: visible;
+}
+
+.comment-point-marker:before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+
+    width: 5px;
+    height: 5px;
+
+    border: 10px solid rgba(91, 208, 100, 0.54);
+
+    border-radius: 100%;
+
+    visibility: visible;
+}
+
+.close-marker-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.delete-marker-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
 }

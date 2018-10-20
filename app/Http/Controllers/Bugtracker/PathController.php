@@ -27,9 +27,7 @@ class PathController extends Controller
 
     public function deletePath(Request $request, Project $project, Board $board)
     {
-        $path = $board->paths()->where('path_slug', $request->path_slug)->first();
-
-        $path->delete();
+        $board->paths()->where('path_slug', $request->path_slug)->first()->delete();
 
         if($request->ajax()) {
             return response("", 200);
