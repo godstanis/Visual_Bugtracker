@@ -45,7 +45,16 @@ class ProjectObserver
     {
         $project->members()->detach();
         $project->issues()->delete();
-        $project->boards()->delete();
+
+        /*
+         * Each board deletion needed to trigger board deleted event.
+         * In order to fire the events we would have to pull the
+         * models first and then call the events with the model
+         * instances. Then call the delete query.
+         */
+        $project->boards()->each(function($board) {
+            $board->delete();
+        });
         $project->activities()->delete();
 
         \Log::info('Project deleted (id:' . $project->id . ')');
