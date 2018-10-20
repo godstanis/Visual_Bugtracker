@@ -35,6 +35,10 @@
             e.preventDefault();
 
             let url = $(e.target).attr('href');
+            if(url === undefined) { // if clicked on icon inside <a>
+                url = $(e.target).closest('a').attr('href');
+                token = $(e.target).closest('a').attr('data-token');
+            }
 
             $.ajax({
                 type: "DELETE",
