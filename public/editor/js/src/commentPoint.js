@@ -13,7 +13,7 @@
         function bindEvents()
         {
             form.on('submit', function(e) {
-                bindSubmitEvent(e);
+                bindCreateCommentPoint(e);
             });
             target.on('click', function(e) {
                 bindShowFormEvent(e);
@@ -28,16 +28,6 @@
                 let position_x = svgEditor.getCurPos(e).x;
                 let position_y = svgEditor.getCurPos(e).y;
 
-                /*
-                let markable_elements = ['path']; // elements you can mark with message
-
-                if( markable_elements.indexOf(e.target.tagName) === -1 )
-                {
-                    console.log('not markable');
-                }
-                console.log('markable');
-                */
-
                 form.show();
                 form.attr('style','transform: translate('+(position_x)+'px,'+(position_y)+'px);');
                 form.find('.input-group :input[name="position_x"]').attr('value', position_x);
@@ -48,7 +38,7 @@
             }
         }
 
-        function bindSubmitEvent(e) {
+        function bindCreateCommentPoint(e) {
             let form = $(e.target);
             e.preventDefault();
 
@@ -69,7 +59,7 @@
                          </span>
                          <span class="text-muted small">Created by ${response.creator.name}</span>
                          </marker>
-                    `
+                    `;
 
                     $('#svg-work-area').append(marker_template);
 
