@@ -76,11 +76,11 @@ class Issue extends Model
     /**
      * CommentPoint, assigned to the issue if exists.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function commentPoint()
+    public function commentPoints()
     {
-        return $this->hasOne(CommentPoint::class, 'issue_id', 'id');
+        return $this->hasMany(CommentPoint::class, 'issue_id', 'id');
     }
 
     /**

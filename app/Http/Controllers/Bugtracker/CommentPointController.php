@@ -43,6 +43,9 @@ class CommentPointController extends BugtrackerBaseController
      */
     public function store(Request $request, Project $project, Board $board)
     {
+        if(isset($request->issue_id) && !is_numeric($request->issue_id)) {
+            $request->request->remove('issue_id');
+        }
         $commentPoint = $board->commentPoints()->create($request->all()+['user_id'=>auth()->user()->id]);
         $commentPoint->load('creator');
         return response($commentPoint, 200);

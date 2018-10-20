@@ -29,7 +29,7 @@ class IssuesController extends BugtrackerBaseController
             ->getOrdered()
             ->paginate(10);
 
-        $issues->load('discussion','assignedUser', 'creator', 'type', 'priority', 'commentPoint');
+        $issues->load('discussion','assignedUser', 'creator', 'type', 'priority', 'commentPoints');
 
         if ($request->ajax()) {
             return view('bugtracker.project.partials.issues', compact('issues', 'project'));
