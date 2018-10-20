@@ -26,7 +26,7 @@
 <button style="width:100%; min-width: 60px; height: 20px; padding: 0px" class="btn btn-default" data-toggle="collapse" data-target="#editor-controls-buttons"><span class="glyphicon glyphicon-chevron-down"></span></button>
 </div>
 
-<a href="{{ route('project.boards', compact('project')) }}" class="btn btn-success return-to-boards"><span class="glyphicon glyphicon-triangle-left"></span><span class="glyphicon glyphicon-blackboard"></span> @lang('editor.return_to_boards')</a>
+<a href="{{ route('project.boards', compact('project')) }}" class="btn btn-default return-to-boards"><span class="glyphicon glyphicon-triangle-left"></span><span class="glyphicon glyphicon-blackboard"></span> @lang('editor.return_to_boards')</a>
 
 @include('bugtracker.editor.partials.create-board-modal')
 
@@ -45,7 +45,7 @@
 
 <div class="boards editor-controls">
     <div class="boards-toggle">
-    <button class="btn btn-warning" data-toggle="collapse" data-target="#boards-block">
+    <button class="btn btn-default" data-toggle="collapse" data-target="#boards-block">
         <span class="glyphicon glyphicon-chevron-up"></span>
         <span>@lang('projects.boards')</span>
     </button>

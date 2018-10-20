@@ -3,10 +3,12 @@
     let markerModule = (function() {
         let form = undefined;
         let target = undefined;
-        function init(form_element, target_element) {
+        let delete_e = undefined;
+        function init(form_element, delete_element, target_element) {
             form = form_element;
             form.hide();
             target = target_element;
+            delete_e = delete_element;
             bindEvents();
         }
 
@@ -21,6 +23,32 @@
             form.find('.close-marker-btn').on('click', function(e) {
                 bindCloseEvent(e);
             });
+            delete_e.on('click', function(e) {
+                console.log('delete marker event binded');
+                bindDeleteEvent(e);
+            });
+        }
+
+
+        function bindDeleteEvent(e)
+        {
+            e.preventDefault();
+
+            let url = delete_e.attr('href');
+
+            $.ajax({
+                type: "DELETE",
+                url: url,
+                beforeSend: function(){},
+                success: (response) => {
+                    console.log('Marker deletion success');
+                    $(e.target).closest('marker').remove();
+                },
+                error: function(data){
+                    console.log('ERROR [marker deletion failed]:'+data);
+                }
+            });
+
         }
 
         function bindShowFormEvent(e) {
@@ -80,6 +108,6 @@
         }
     })();
 
-    markerModule.init($('#create-marker-form'), $('#svg-area'));
+    markerModule.init($('#create-marker-form'), $('.delete-marker-btn'), $('#svg-area'));
 
 })();

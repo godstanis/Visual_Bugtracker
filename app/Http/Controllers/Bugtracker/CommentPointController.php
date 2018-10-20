@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Bugtracker;
 
 use App\Board;
+use App\CommentPoint;
 use App\Project;
 
 use Illuminate\Http\Request;
@@ -54,9 +55,9 @@ class CommentPointController extends BugtrackerBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project, Board $board, $id)
+    public function update(Request $request, Project $project, Board $board, CommentPoint $commentPoint)
     {
-        $board->commentPoints()->find($id)->update($request->all());
+        $commentPoint->update($request->all());
         return response("", 200);
     }
 
@@ -66,9 +67,9 @@ class CommentPointController extends BugtrackerBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Project $project, Board $board, $id)
+    public function destroy(Request $request, Project $project, Board $board, CommentPoint $commentPoint)
     {
-        $board->commentPoints()->find($id)->delete();
+        $commentPoint->delete();
         return response("", 200);
     }
 }
