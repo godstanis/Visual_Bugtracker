@@ -8,16 +8,41 @@
     }
 }
 
-
-
 #footer {
     position: absolute;
     bottom: 0;
     width: 100%;
 }
 
+#footer .dropdown-menu{
+    min-width: auto;
+}
+
+#footer .dropdown-menu::after{
+    top: unset;
+    bottom: -14px;
+    right: 10px;
+    left: auto;
+    border: 7px solid transparent;
+    border-top-color: #fff;
+    position: absolute;
+    display: inline-block;
+    content: "";
+}
+
+.navbar .dropdown-menu::after {
+    top: -14px;
+    right: 10px;
+    left: auto;
+    border: 7px solid transparent;
+    border-bottom-color: #fff;
+    position: absolute;
+    display: inline-block;
+    content: "";
+}
+
 .navbar-nav>li>a.profile-image {
-    padding: 10px;
+    padding: 14px;
 }
 
 .navbar {
@@ -34,6 +59,17 @@
     border-radius: 0;
 }
 
+.navbar-nav>li>a {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.dropdown-menu .no-underline:hover {
+    background-color: transparent;
+    color: inherit;
+
+}
+
 .navbar-brand {
     padding:0px
 }
@@ -46,4 +82,16 @@
 
 .language-dropdown-toggle img{
     padding: 1px;
+}
+
+@media only screen and (max-width:780px) {
+
+    #footer .dropdown-menu::after{
+        border-top-color: transparent;
+    }
+
+    .navbar .dropdown-menu::after {
+        border-bottom-color: transparent;
+    }
+
 }
