@@ -34,7 +34,7 @@
         {
             e.preventDefault();
 
-            let url = delete_e.attr('href');
+            let url = $(e.target).attr('href');
 
             $.ajax({
                 type: "DELETE",
