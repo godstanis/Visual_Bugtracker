@@ -41,10 +41,17 @@
                 <span>@</span>{{ $issue->creator->name }}
             </a>
             <br>
-            @lang('projects.issue_assigned_to')
-            <a href="{{ route('user', ['user_name'=>$issue->assignedUser->name]) }}">
-                <span>@</span>{{ $issue->assignedUser->name }}
-            </a>
+            <div class="small text-muted pull-right">
+                @if(count($issue->assignees))
+                    <span>@lang('projects.issue_assigned_to')</span>
+                    @foreach($issue->assignees as $assignedUser)
+                        {{ $loop->first ? '' : ', ' }}
+                        <a href="{{ route('user', ['user_name'=>$assignedUser->name]) }}">
+                            <span>@</span>{{ $assignedUser->name }}
+                        </a>
+                    @endforeach
+                @endif
+            </div>
             <br>
             <span class="small pull-right">
                 @lang('projects.issue_type'):
