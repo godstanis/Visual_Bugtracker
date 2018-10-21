@@ -10,9 +10,7 @@ use Intervention\Image\ImageManager as Image;
 
 /**
  * Class BoardThumbnailDecorator.
- * Creates thumbnail image
- * out of a full sized
- * version.
+ * Manages thumbnail image upload/deletion.
  *
  * @package App\Services\ImageUpload\Board
  */
