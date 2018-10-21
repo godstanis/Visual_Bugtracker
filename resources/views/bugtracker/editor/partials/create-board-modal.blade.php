@@ -14,7 +14,7 @@
                 <div class="modal-body">
                         <input type="text" name="name" class="form-control" placeholder="Board name">
                         <div class="help-block name"></div>
-                        <input type="file" name="thumb_image" class="form-control" >
+                        <input type="file" name="image" class="form-control" >
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 </div>
                 <div class="modal-footer">

@@ -18,7 +18,7 @@ class CreateBoardsTable extends Migration
             $table->integer('created_by_user_id');
             $table->integer('project_id');   
             $table->string('name');
-            $table->string('thumb_image');   
+            $table->string('image');
             $table->timestamps();
             $table->boolean('deleted')->default(false);
         });

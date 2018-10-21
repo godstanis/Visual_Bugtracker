@@ -8,7 +8,7 @@
                 <img class="image-update" alt="">
             </div>
             <div class="image-input-block">
-                <input type="file" name="thumb_image"  id="image-input" >
+                <input type="file" name="image"  id="image-input" >
                 <label for="image-input"><span class="glyphicon glyphicon-picture"></span> @lang('custom.choose_image_file')</label>
             </div>
         </div>

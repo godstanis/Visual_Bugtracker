@@ -25,8 +25,8 @@ class BoardImageObserver
      */
     public function creating(Board $board)
     {
-        $image = request()->thumb_image;
-        $board->thumb_image = $this->uploadService->upload($image);
+        $image = request()->image;
+        $board->image = $this->uploadService->upload($image);
     }
 
     /**
@@ -37,6 +37,6 @@ class BoardImageObserver
      */
     public function deleted(Board $board)
     {
-        $this->uploadService->delete($board->thumb_image);
+        $this->uploadService->delete($board->image);
     }
 }

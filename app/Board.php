@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Board extends Model
 {
-    protected $fillable = ['name', 'project_id', 'thumb_image', 'created_by_user_id'];
+    protected $fillable = ['name', 'project_id', 'image', 'created_by_user_id'];
 
     public function creator()
     {
@@ -43,7 +43,18 @@ class Board extends Model
      */
     public function sourceImageUrl(): string
     {
-        $imagePath = config('images.boards_images_dir') . '/' . $this->thumb_image;
+        $imagePath = config('images.boards_images_dir') . '/' . $this->image;
+        return Storage::disk('s3')->url($imagePath);
+    }
+
+    /**
+     * Returns a thumbnail version of full sized board image.
+     *
+     * @return string Board main image for editor
+     */
+    public function thumbnailImageUrl(): string
+    {
+        $imagePath = config('images.boards_images_dir') . '/' . config('images.thumbnail_prefix') . $this->image;
         return Storage::disk('s3')->url($imagePath);
     }
 

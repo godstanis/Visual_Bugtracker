@@ -7,7 +7,7 @@
         </div>
         <h4 class="board-title board-box-title">{{ $board->name }}</h4>
         <div class="board-box-img">
-            <img src="{{ $board->sourceImageUrl() }}" alt="">
+            <img src="{{ $board->thumbnailImageUrl() }}" alt="">
         </div>
         <div class="board-box-credentials">
             <span class="pull-right board-box-creator">

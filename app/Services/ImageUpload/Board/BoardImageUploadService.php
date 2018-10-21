@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Services\ImageUpload;
+namespace App\Services\ImageUpload\Board;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager as Image;
+use App\Services\ImageUpload\AbstractFileUploadService;
 
 class BoardImageUploadService extends AbstractFileUploadService
 {
+
+    protected $maxSize = 2060;
 
     /**
      * BoardImageUploadContract constructor.
@@ -31,9 +34,35 @@ class BoardImageUploadService extends AbstractFileUploadService
             $newName = str_random(24) . uniqid("", false) . '.' . $imageExtension;
         }
 
-        Storage::put($this->basePath . '/' . $newName, file_get_contents( $file ));
+        $uploadedImage = $this->optimizeImageSize($file);
+
+        Storage::put($this->basePath . '/' . $newName, (string)$uploadedImage->stream());
 
         return $newName;
+    }
+
+    /**
+     * If an image is too big - we will reduce it's size.
+     *
+     * @param UploadedFile $uploadedFile
+     * @return \Intervention\Image\Image
+     */
+    public function optimizeImageSize(UploadedFile $uploadedFile): \Intervention\Image\Image
+    {
+        $image = (new Image)->make($uploadedFile);
+
+        if($image->width() > $this->maxSize)
+        {
+            $image->resize($this->maxSize, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        } elseif($image->height() > $this->maxSize) {
+            $image->resize(null, $this->maxSize, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        }
+
+        return $image;
     }
 
     /**

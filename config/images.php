@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'thumbnail_prefix' => 'thumbnail_',
+
     'amazon_base_link'      => env('S3_BUCKET_LINK', 'https://s3.eu-central-1.amazonaws.com/bucket_name/'),
 
     'user_avatar_dir'       => env('S3_USER_AVATARS_DIR','user_profile_images'),

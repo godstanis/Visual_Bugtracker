@@ -19,7 +19,9 @@ use App\Observers\PathObserver;
 
 use App\Services\ImageUpload\AbstractFileUploadService;
 use App\Services\ImageUpload\ProjectImageUploadService;
-use App\Services\ImageUpload\BoardImageUploadService;
+
+use App\Services\ImageUpload\Board\BoardImageUploadService;
+use App\Services\ImageUpload\Board\BoardThumbnailDecorator;
 
 use App\Observers\Project\ProjectImageObserver;
 use App\Observers\Board\BoardImageObserver;
@@ -67,7 +69,10 @@ class ObserverServiceProvider extends ServiceProvider
             });
         app()->when(BoardImageObserver::class)->needs(AbstractFileUploadService::class)
             ->give(function() {
-                return new BoardImageUploadService(config('images.boards_images_dir'));
+                $defaultDir = config('images.boards_images_dir');
+                $uploadService = new BoardImageUploadService($defaultDir);
+
+                return new BoardThumbnailDecorator($defaultDir, $uploadService, config('images.thumbnail_prefix'));
             });
     }
 }
