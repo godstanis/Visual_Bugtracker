@@ -14,7 +14,9 @@ class IssueObserver
      */
     public function creating(Issue $issue)
     {
-        $issue->created_by_user_id = auth()->user()->id;
+        if(!isset($issue->created_by_user_id)) {
+            $issue->created_by_user_id = auth()->user()->id;
+        }
     }
 
     /**

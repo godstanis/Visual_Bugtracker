@@ -2,8 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
-//use TCG\Voyager\Models\Role;
-//use TCG\Voyager\Models\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -23,6 +21,8 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => str_random(60),
                 'activated' => true
             ]);
+
+            factory(User::class, 4)->create();
         }
     }
 }

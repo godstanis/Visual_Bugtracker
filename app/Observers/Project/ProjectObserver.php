@@ -17,7 +17,9 @@ class ProjectObserver
      */
     public function creating(Project $project)
     {
-        $project->creator_user_id = auth()->user()->id;
+        if(!isset($project->creator_user_id)) {
+            $project->creator_user_id = auth()->user()->id;
+        }
     }
 
     /**

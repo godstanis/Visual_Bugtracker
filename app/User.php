@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Project::class, 'project_access');
     }
 
+    public function assignedIssues()
+    {
+        return $this->belongsToMany(Issue::class, 'issue_assignees');
+    }
+
     /**
      * Returns user avatar image link.
      *
