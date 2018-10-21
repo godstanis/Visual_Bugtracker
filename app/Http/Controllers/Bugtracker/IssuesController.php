@@ -114,4 +114,18 @@ class IssuesController extends BugtrackerBaseController
         return redirect()->back();
     }
 
+    public function attachUser(Request $request, Project $project, Issue $issue, User $user)
+    {
+        if(! $issue->assignees->contains($user)) {
+            $issue->assignees()->attach($user);
+        }
+        return redirect()->back();
+    }
+
+    public function detachUser(Request $request, Project $project, Issue $issue, User $user)
+    {
+        $issue->assignees()->detach($user);
+        return redirect()->back();
+    }
+
 }

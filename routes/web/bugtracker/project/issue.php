@@ -23,11 +23,14 @@ Route::group(['prefix'=>'{project}/issues', 'middleware'=>'auth', 'namespace'=>'
     Route::post('open_issue/{issue}', 'IssuesController@openIssue')
         ->name('project.issue.open')->middleware('can:delete,issue');
 
-
     Route::get('{issue}/discussion', 'IssueDiscussionController@getDiscussion')
         ->name('project.issue.discussion');
     Route::post('{issue}/discussion', 'IssueDiscussionController@createMessage')
         ->name('project.issue.discussion.create');
 
+    Route::get('{issue}/attach/{user}', 'IssuesController@attachUser')
+        ->name('project.issue.attach_user')->middleware('can:delete,issue');
+    Route::get('{issue}/detach/{user}', 'IssuesController@detachUser')
+        ->name('project.issue.detach_user')->middleware('can:delete,issue');
 
 });

@@ -28,38 +28,27 @@
         <span class="text-muted small">#{{ $issue->id }}</span>
         @can('delete', $issue)
             <a class="delete-link small" href="{{ route('project.issue.delete', ['issue'=>$issue, 'project'=>$issue->project]) }}">
-                <span class="glyphicon glyphicon-trash"></span>
+                <span class="glyphicon glyphicon-trash text-danger "></span>
             </a>
         @endcan
     </span>
 </h2>
 <div style="background:white; border: 1px solid lightgray">
     <div class="issue-creation-details">
-        <div class="small text-muted">
+        <div class="text-muted">
             @lang('projects.issue_created_when', ['when'=>$issue->created_at])
             <a href="{{ route('user', ['user_name'=>$issue->creator->name]) }}">
                 <span>@</span>{{ $issue->creator->name }}
             </a>
             <br>
-            <div class="small text-muted pull-right">
-                @if(count($issue->assignees))
-                    <span>@lang('projects.issue_assigned_to')</span>
-                    @foreach($issue->assignees as $assignedUser)
-                        {{ $loop->first ? '' : ', ' }}
-                        <a href="{{ route('user', ['user_name'=>$assignedUser->name]) }}">
-                            <span>@</span>{{ $assignedUser->name }}
-                        </a>
-                    @endforeach
-                @endif
-            </div>
-            <br>
-            <span class="small pull-right">
+            <span class="small">
                 @lang('projects.issue_type'):
                 <span class="issue-badge {{ $issue->type->title }}-type">{{ $issue->type->title }}</span>
                 @lang('projects.issue_priority'):
                 <span class="issue-badge {{ $issue->priority->title }}-priority">{{ $issue->priority->title }}</span>
             </span>
             <br>
+            @include('bugtracker.project.issue.partials.assignees-block')
         </div>
     </div>
     <div class="issue-body">
