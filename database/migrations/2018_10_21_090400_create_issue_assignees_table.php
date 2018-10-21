@@ -14,9 +14,9 @@ class CreateIssueAssigneesTable extends Migration
     public function up()
     {
         Schema::create('issue_assignees', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('issue_id');
             $table->integer('user_id');
+            $table->primary(['issue_id', 'user_id']);
             $table->timestamps();
         });
     }
