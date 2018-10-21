@@ -54,6 +54,16 @@ class Issue extends Model
     }
 
     /**
+     * Issue assignees relation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function assignees()
+    {
+        return $this->belongsToMany(User::class, 'issue_assignees');
+    }
+
+    /**
      * Returns the project, where issue is created.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
