@@ -17,9 +17,9 @@ use App\Observers\IssueObserver;
 use App\Observers\PathObserver;
 
 
-use App\Services\FileUpload\AbstractFileUploadService;
-use App\Services\FileUpload\ProjectImageUploadService;
-use App\Services\FileUpload\BoardImageUploadService;
+use App\Services\ImageUpload\AbstractFileUploadService;
+use App\Services\ImageUpload\ProjectImageUploadService;
+use App\Services\ImageUpload\BoardImageUploadService;
 
 use App\Observers\Project\ProjectImageObserver;
 use App\Observers\Board\BoardImageObserver;

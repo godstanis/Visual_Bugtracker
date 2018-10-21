@@ -3,7 +3,7 @@
 namespace App\Observers\Board;
 
 use App\Board;
-use App\Services\FileUpload\AbstractFileUploadService;
+use App\Services\ImageUpload\AbstractFileUploadService;
 
 class BoardImageObserver
 {

@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\FileUpload\AbstractFileUploadService;
-use App\Services\FileUpload\AvatarUploadService;
+use App\Services\ImageUpload\AbstractFileUploadService;
+use App\Services\ImageUpload\AvatarUploadService;
 
 use App\Services\User\AbstractUserActivationService;
 use App\Services\User\UserActivationService;

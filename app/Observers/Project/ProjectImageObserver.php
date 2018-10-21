@@ -3,7 +3,7 @@
 namespace App\Observers\Project;
 
 use App\Project;
-use App\Services\FileUpload\AbstractFileUploadService;
+use App\Services\ImageUpload\AbstractFileUploadService;
 
 class ProjectImageObserver
 {

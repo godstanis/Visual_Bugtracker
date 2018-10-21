@@ -1,28 +1,30 @@
 <?php
 
-namespace App\Services\FileUpload;
+namespace App\Services\ImageUpload;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager as Image;
 
-class BoardImageUploadService extends AbstractFileUploadService
+class ProjectImageUploadService extends AbstractFileUploadService
 {
+    protected $defaultProjectImageName;
 
     /**
-     * BoardImageUploadContract constructor.
+     * AvatarUploadContract constructor.
      * @param string $basePath
      */
     public function __construct(string $basePath)
     {
         parent::__construct($basePath);
+        $this->defaultProjectImageName = config('images.default_project_thumb');
     }
 
     /**
      * @param UploadedFile $file
      * @param string $newName
      * @param string|null $oldName
-     * @return string $newName
+     * @return string  $newName
      */
     public function upload(UploadedFile $file, string $newName = null, string $oldName = null) :string
     {
@@ -31,7 +33,11 @@ class BoardImageUploadService extends AbstractFileUploadService
             $newName = str_random(24) . uniqid("", false) . '.' . $imageExtension;
         }
 
-        Storage::put($this->basePath . '/' . $newName, file_get_contents( $file ));
+        $uploadedImage = (new Image)->make($file)->resize(null,150, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+
+        Storage::put($this->basePath.'/' . $newName, (string)$uploadedImage->stream());
 
         return $newName;
     }
@@ -44,7 +50,9 @@ class BoardImageUploadService extends AbstractFileUploadService
      */
     public function delete(string $name): bool
     {
-        Storage::delete( $this->basePath . '/' . $name );
+        if($name !== $this->defaultProjectImageName) {
+            Storage::delete($this->basePath . '/' . $name);
+        }
         return true;
     }
 }
