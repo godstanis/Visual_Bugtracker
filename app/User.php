@@ -64,6 +64,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Return all issues this user is assigned to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function assignedIssues()
+    {
+        return $this->belongsToMany(Issue::class, 'issue_assignees');
+    }
+
+    /**
      * Returns user avatar image link.
      *
      * @return string User profile image link.

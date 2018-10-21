@@ -57,7 +57,6 @@ $factory->define(App\Issue::class, function (Faker\Generator $faker, array $para
         'description' => str_random(100),
         'created_by_user_id' => 1,
         'priority_id' => 1,
-        'type_id' => 1,
-        'assigned_to_user_id' => 1
+        'type_id' => 1
     ];
 });

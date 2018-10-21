@@ -28,6 +28,7 @@ return [
     'issue_controls' => 'Controls',
     'issue_created_when' => 'Created on :when by ',
     'issue_without' => 'No issue attached',
+    'issue_assign_user' => 'Assign a member',
 
     'issue_discussion' => 'Issue ":id" discussion',
 

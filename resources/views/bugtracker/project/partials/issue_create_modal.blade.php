@@ -30,13 +30,6 @@
                     @endforeach
                 </select>
                 <div class="help-block priority_id"></div>
-                <select class="form-control" name="assigned_to_user_id" id="">
-                    <option hidden selected>@lang('projects.issue_assigned_to')</option>
-                    @foreach($project->members()->get() as $member)
-                        <option value="{{ $member->id }}">{{ $member->name }}</option>
-                    @endforeach
-                </select>
-                <div class="help-block assigned_to_user_name"></div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             
         </div>

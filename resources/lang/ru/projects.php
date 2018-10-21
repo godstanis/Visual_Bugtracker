@@ -28,6 +28,7 @@ return [
     'issue_controls' => 'Управление',
     'issue_created_when' => 'Создано :when участником ',
     'issue_without' => 'Без задачи',
+    'issue_assign_user' => 'Прикрепить участника',
 
     'issue_discussion' => 'Обсуждение задачи ":id"',
 
