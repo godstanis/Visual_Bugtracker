@@ -4,16 +4,15 @@
 
     console.log ('board_'+board_id);
 
-    Echo.private('board_'+board_id).listen('.userCreatedCommentPoint', function(message){
+    Echo.private('board_'+board_id).listen('.userCreatedCommentPoint', function(data){
         console.log ('someone created comment:');
-        console.log(message);
+        console.log(data.commentPoint.id);
 
     });
 
-    Echo.private('board_'+board_id).listen('.userDeletedCommentPoint', function(message){
-        console.log ('someone deleted comment:');
-        console.log(message);
-
+    Echo.private('board_'+board_id).listen('.userDeletedCommentPoint', function(data){
+        console.log ('someone deleted a comment point with id:' + data.commentPoint.id);
+        $('#marker_id_'+data.commentPoint.id).remove();
     });
 
     Echo.private('board_'+board_id).listen('.userCreatedPath', function(message){

@@ -14,7 +14,7 @@ class PathResource extends JsonResource
      */
     public function toArray($request)
     {
-        self::withoutWrapping(); // {"data":[...]} wrapping remove for this response.
+        //self::withoutWrapping(); // {"data":[...]} wrapping remove for this response.
 
         $path = [
             'path_slug'=>$this->path_slug,

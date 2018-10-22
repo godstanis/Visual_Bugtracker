@@ -46,7 +46,7 @@
                 beforeSend: function(){},
                 success: (response) => {
                     console.log('Marker deletion success');
-                    $(e.target).closest('marker').remove();
+                    //$(e.target).closest('marker').remove();
                 },
                 error: function(data){
                     console.log('ERROR [marker deletion failed]:'+data);
@@ -85,7 +85,7 @@
                     console.log('Marker created successfully');
 
                     let marker_template = `
-                        <marker style="transform: translate(${response.position_x}px,${response.position_y}px);" class="comment-point-marker">
+                        <marker id="marker_id_${response.id}" style="transform: translate(${response.position_x}px,${response.position_y}px);" class="comment-point-marker">
                          <span style="display:block">
                          ${response.text}
                          </span>

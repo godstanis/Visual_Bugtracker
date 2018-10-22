@@ -19,7 +19,8 @@ class PathCollection extends ResourceCollection
         $paths = [];
 
         foreach ($this->collection as $path) {
-            $paths[$path->path_slug] = [
+            $paths[] = [
+                'path_slug' => $path->path_slug,
                 'stroke'=>$path->stroke_color,
                 'stroke-width'=>$path->stroke_width,
                 'd'=>$path->path_data,

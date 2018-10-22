@@ -89,10 +89,6 @@
     @if($current_board !== null)
         let image = document.getElementById('bg-element-image').src;
         svgEditor.initImage(image);
-
-        $.getJSON(editor_page_data.board_paths_link, function(data){
-            dataConstructor.drawElementsFromJSON(drawSVG, data);
-        });
     @endif
 
 </script>
@@ -103,9 +99,12 @@
 <script src="{{asset('editor/js/src/drawModule.js')}}"></script>
 <script src="{{asset('editor/js/src/editor.js')}}"></script>
 
-<script src="{{asset('editor/js/src/pusher.js')}}"></script>
+
 <script src="{{asset('editor/js/src/editorDataManager.js')}}"></script>
 
 <script src="{{asset('editor/js/src/commentPoint.js')}}"></script>
+
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{asset('editor/js/src/pusher.js')}}"></script>
 
 </html>

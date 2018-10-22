@@ -16,11 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 class CommentPoint extends Model
 {
     protected $fillable = [
-        'user_id', 'text', 'position_x', 'position_y', 'issue_id'
-    ];
-
-    protected $hidden = [
-        'id'
+        'id', 'user_id', 'text', 'position_x', 'position_y', 'issue_id'
     ];
 
     /**

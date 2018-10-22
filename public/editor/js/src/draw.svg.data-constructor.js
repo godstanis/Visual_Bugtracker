@@ -3,11 +3,11 @@
     Can be used to generate json representation of drawing objects for later saving.
 */
 
-var dataConstructor = (function(){
-    var elements = {}; // object that contains our svg elements
-    var last_element_id = undefined;
+let dataConstructor = (function(){
+    let elements = {}; // object that contains our svg elements
+    let last_element_id = undefined;
     function storeElement(element){ // function to add new svg element to 'elements' object.
-        var item_id = element.id;
+        let item_id = element.id;
 
         elements[item_id] = createObjectFromPath(element);
         last_element_id = item_id;
@@ -19,7 +19,7 @@ var dataConstructor = (function(){
     };
 
     function getLastElement(){
-        var last_element = elements[last_element_id];
+        let last_element = elements[last_element_id];
         return last_element;
     };
 
@@ -49,11 +49,11 @@ var dataConstructor = (function(){
     {
         json_obj_arr = JSON.stringify(json_obj_arr);
 
-        var obj = this.generateObject(json_obj_arr);
+        let obj = this.generateObject(json_obj_arr);
 
-        for(var id in obj)
+        for(let id in obj)
         {
-            var curObj = obj[id];
+            let curObj = obj[id];
 
             drawSVG.createElement(id);
             element = document.getElementById(id);
