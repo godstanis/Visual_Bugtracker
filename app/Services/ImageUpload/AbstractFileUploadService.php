@@ -5,7 +5,7 @@ namespace App\Services\ImageUpload;
 use Illuminate\Http\UploadedFile;
 
 /**
- * Class FileUploadContract is used to unify a file upload process.
+ * Class AbstractFileUploadService is used to unify a file upload process.
  *
  * @package App\Services\FileUpload
  */
