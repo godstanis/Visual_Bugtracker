@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Bugtracker;
 
 use App\Board;
 use App\CommentPoint;
+use App\Http\Resources\CommentPoint\CommentPointCollection;
+use App\Http\Resources\CommentPoint\CommentPointResource;
 use App\Project;
 
 use Illuminate\Http\Request;
@@ -19,7 +21,7 @@ class CommentPointController extends BugtrackerBaseController
      */
     public function index(Request $request, Project $project, Board $board)
     {
-        $boardCommentPoints = $board->commentPoints()->get();
+        $boardCommentPoints = new CommentPointCollection($board->commentPoints()->with('issue', 'issue.project', 'creator')->get());
         return response($boardCommentPoints, 200);
     }
 
@@ -31,7 +33,7 @@ class CommentPointController extends BugtrackerBaseController
      */
     public function show(Project $project, Board $board, $id)
     {
-        $commentPoints = $board->commentPoints()->find($id);
+        $commentPoints = new CommentPointResource($board->commentPoints()->find($id));
         return response($commentPoints, 200);
     }
 

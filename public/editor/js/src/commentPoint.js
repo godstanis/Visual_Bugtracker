@@ -23,35 +23,6 @@
             form.find('.close-marker-btn').on('click', function(e) {
                 bindCloseEvent(e);
             });
-            delete_e.on('click', function(e) {
-                console.log('delete marker event binded');
-                bindDeleteEvent(e);
-            });
-        }
-
-
-        function bindDeleteEvent(e)
-        {
-            e.preventDefault();
-
-            let url = $(e.target).attr('href');
-            if(url === undefined) { // if clicked on icon inside <a>
-                url = $(e.target).closest('a').attr('href');
-                token = $(e.target).closest('a').attr('data-token');
-            }
-
-            $.ajax({
-                type: "DELETE",
-                url: url,
-                beforeSend: function(){},
-                success: (response) => {
-                    console.log('Marker deletion success');
-                    //$(e.target).closest('marker').remove();
-                },
-                error: function(data){
-                    console.log('ERROR [marker deletion failed]:'+data);
-                }
-            });
 
         }
 

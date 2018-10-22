@@ -14,3 +14,6 @@ require('./bootstrap');
  */
 
 require('./components/Path/PathsRenderComponent');
+
+require('./components/Marker/MarkerComponent');
+require('./components/Marker/MarkersCollectionComponent');

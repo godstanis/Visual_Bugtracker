@@ -66,13 +66,15 @@
     <div id="svg-work-area">
         @include('bugtracker.editor.partials.components.marker-form')
         <div id="svg-image-couple">
-            <svg id="svg-area" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" shape-rendering="auto"></svg>
+            <svg id="svg-area" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" shape-rendering="auto">
+                <!-- PathsRender react.js component container -->
+            </svg>
             <div id="bg-element">
                 <img id="bg-element-image" src="{{ $current_board->sourceImageUrl() }}" alt="Board source image">
             </div>
         </div>
-        @foreach($current_board->commentPoints as $commentPoint)
-            @include('bugtracker.editor.partials.components.comment-point-marker', compact('$commentPoint'))
-        @endforeach
+        <div id="markers-container">
+            <!-- MarkersRender react.js component container -->
+        </div>
     </div>
 </div>

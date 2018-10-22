@@ -23,6 +23,7 @@ class EditorController extends BugtrackerBaseController
      */
     public function getBoardEditor(BoardEditorRequest $request, Project $project, Board $board)
     {
+        $project->boards->load('creator');
         return view('bugtracker.editor.main', ['project'=>$project, 'boards'=>$project->boards, 'current_board'=>$board]);
     }
 
