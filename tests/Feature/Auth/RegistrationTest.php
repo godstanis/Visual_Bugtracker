@@ -2,16 +2,16 @@
 
 namespace Tests\Feature;
 
-use Faker\Factory as Faker;
-
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class RegistrationTest extends TestCase
 {
-    use DatabaseTransactions;
+    use WithFaker,
+        DatabaseTransactions;
 
     /**
      * A basic test example.
@@ -36,13 +36,11 @@ class RegistrationTest extends TestCase
     {
         $this->expectsEvents(\App\Events\UserRegistered::class);
 
-        $faker = Faker::create();
-
-        $password = $faker->password;
+        $password = $this->faker()->password;
 
         $response = $this->post('/register', [
-            'name' => $faker->name,
-            'email' => $faker->email,
+            'name' => $this->faker()->name,
+            'email' => $this->faker()->email,
             'password' => $password,
             'password_confirmation' => $password
         ]);
@@ -59,12 +57,11 @@ class RegistrationTest extends TestCase
      */
     public function testAnInvalidUserDoesNotRegisters()
     {
-        $faker = Faker::create();
-        $password = $faker->password;
+        $password = $this->faker()->password;
 
         $response = $this->post('/register', [
-            'name' => $faker->name,
-            'email' => $faker->email,
+            'name' => $this->faker()->name,
+            'email' => $this->faker()->email,
             'password' => $password,
             'password_confirmation' => $password.'invalid'
         ]);
