@@ -34,28 +34,10 @@ class UserActivationService extends AbstractUserActivationService
     public function activateUserByToken(string $token): bool
     {
         $userActivation = $this->userActivation->where('token', $token)->first();
-
         if($userActivation == null) {
             return false;
         }
 
         return $userActivation->user->activateAccount();
-    }
-
-    /**
-     * Returns true or found UserActivation instance.
-     *
-     * @param $token
-     * @return bool|UserActivation
-     */
-    public function findByToken(string $token)
-    {
-        $this->userActivation->where('token', $token)->first();
-
-        if($this->userActivation == null) {
-            return false;
-        }
-
-        return $this->userActivation;
     }
 }

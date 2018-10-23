@@ -31,11 +31,4 @@ abstract class AbstractUserActivationService
      */
     public abstract function activateUserByToken(string $token): bool;
 
-    /**
-     * Returns true or found UserActivation instance.
-     *
-     * @param $token
-     * @return bool|UserActivation
-     */
-    public abstract function findByToken(string $token);
 }
