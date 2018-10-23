@@ -13,7 +13,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class PasswordResetTest extends TestCase
 {
-    //use DatabaseTransactions;
+    use DatabaseTransactions;
 
     /**
      * The reset form can be displayed.

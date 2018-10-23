@@ -8,10 +8,12 @@ use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserServiceTest extends TestCase
 {
-    use WithFaker;
+    use WithFaker,
+        DatabaseTransactions;
 
     protected $user;
     protected $fileUploadService;

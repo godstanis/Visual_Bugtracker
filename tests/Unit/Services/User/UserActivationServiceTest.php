@@ -7,9 +7,12 @@ use App\UserActivation;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserActivationServiceTest extends TestCase
 {
+    use DatabaseTransactions;
+
     protected $userActivationService;
     protected $userActivation;
     protected $user;

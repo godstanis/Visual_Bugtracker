@@ -9,10 +9,12 @@ use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ProjectsTest extends TestCase
 {
-    use WithFaker;
+    use WithFaker,
+        DatabaseTransactions;
 
     protected $projectsPage = '/tracker/projects';
     protected $createProjectRoute = '/tracker/projects/create';
