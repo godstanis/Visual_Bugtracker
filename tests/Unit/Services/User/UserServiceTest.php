@@ -30,6 +30,9 @@ class UserServiceTest extends TestCase
         );
     }
 
+    /**
+     * @covers UserService::updateUserImage()
+     */
     public function testUpdatesUserImage()
     {
         $newAvatarName = 'new_avatar.jpg';
