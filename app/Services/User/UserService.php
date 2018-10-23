@@ -20,11 +20,12 @@ class UserService extends AbstractUserService
      * @param UploadedFile $image
      * @return void
      */
-    public function updateUserImage(UploadedFile $image): void
+    public function updateUserImage(UploadedFile $image, string $imageName = ""): void
     {
         $oldImageName = $this->user->profile_image;
 
-        $newImageName = uniqid("", false) . '.png';
+        $newImageName = (strlen($imageName)>0)?$imageName:uniqid("", false) . '.png';
+
         $this->user->profile_image = $newImageName;
 
         try {
