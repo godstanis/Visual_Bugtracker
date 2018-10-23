@@ -74,6 +74,6 @@ class Project extends Model
     public function thumbnailUrl(): string
     {
         $imagePath = config('images.project_thumb_dir') . '/' . $this->image;
-        return Storage::disk('s3')->url($imagePath);
+        return Storage::url($imagePath);
     }
 }

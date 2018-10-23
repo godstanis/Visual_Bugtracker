@@ -44,7 +44,7 @@ class Board extends Model
     public function sourceImageUrl(): string
     {
         $imagePath = config('images.boards_images_dir') . '/' . $this->image;
-        return Storage::disk('s3')->url($imagePath);
+        return Storage::url($imagePath);
     }
 
     /**
@@ -55,7 +55,7 @@ class Board extends Model
     public function thumbnailImageUrl(): string
     {
         $imagePath = config('images.boards_images_dir') . '/' . config('images.thumbnail_prefix') . $this->image;
-        return Storage::disk('s3')->url($imagePath);
+        return Storage::url($imagePath);
     }
 
 }

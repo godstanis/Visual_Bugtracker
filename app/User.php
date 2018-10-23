@@ -81,7 +81,7 @@ class User extends Authenticatable
     public function imageLink(): string
     {
         $imagePath = config('images.user_avatar_dir') . '/' . $this->profile_image;
-        return Storage::disk('s3')->url($imagePath);
+        return Storage::url($imagePath);
     }
 
 }
