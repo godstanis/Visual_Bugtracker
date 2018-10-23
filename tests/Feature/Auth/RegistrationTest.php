@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class BasicRegistrationTest extends TestCase
+class RegistrationTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -18,7 +18,7 @@ class BasicRegistrationTest extends TestCase
      *
      * @return void
      */
-    public function testRegistrationFormDisplayed()
+    public function testDisplaysRegistrationForm()
     {
         $this->get('/register')
             ->assertStatus(200)
@@ -30,9 +30,9 @@ class BasicRegistrationTest extends TestCase
      *
      * @return void
      *
-     * @depends testRegistrationFormDisplayed
+     * @depends testDisplaysRegistrationForm
      */
-    public function testAValidUserRegistered()
+    public function testAValidUserRegisters()
     {
         $this->expectsEvents(\App\Events\UserRegistered::class);
 
@@ -55,9 +55,9 @@ class BasicRegistrationTest extends TestCase
      *
      * @return void
      *
-     * @depends testRegistrationFormDisplayed
+     * @depends testDisplaysRegistrationForm
      */
-    public function testAnInvalidUserRegistered()
+    public function testAnInvalidUserDoesNotRegisters()
     {
         $faker = Faker::create();
         $password = $faker->password;

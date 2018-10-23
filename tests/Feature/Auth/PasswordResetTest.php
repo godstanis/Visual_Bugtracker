@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class BasicPasswordResetTest extends TestCase
+class PasswordResetTest extends TestCase
 {
     //use DatabaseTransactions;
 
@@ -20,7 +20,7 @@ class BasicPasswordResetTest extends TestCase
      *
      * @return void
      */
-    public function testEnterEmailToResetFormDisplayed()
+    public function testDisplaysEnterEmailToResetForm()
     {
         $this->get('/password/reset')
             ->assertStatus(200)
@@ -32,11 +32,11 @@ class BasicPasswordResetTest extends TestCase
      *
      * @return void
      *
-     * @depends testEnterEmailToResetFormDisplayed
+     * @depends testDisplaysEnterEmailToResetForm
      *
      * @covers \App\Http\Controllers\Auth\ResetPasswordController
      */
-    public function testResetPasswordFormDisplayed()
+    public function testDisplaysResetPasswordForm()
     {
         $this->get('/password/reset/random_token')
             ->assertStatus(200)
@@ -48,7 +48,7 @@ class BasicPasswordResetTest extends TestCase
      *
      * @return void
      *
-     * @depends testResetPasswordFormDisplayed
+     * @depends testDisplaysResetPasswordForm
      */
     public function testSendsPasswordResetEmail()
     {
@@ -65,7 +65,7 @@ class BasicPasswordResetTest extends TestCase
      *
      * @return void
      *
-     * @depends testResetPasswordFormDisplayed
+     * @depends testDisplaysResetPasswordForm
      */
     public function testResetsUserPassword()
     {

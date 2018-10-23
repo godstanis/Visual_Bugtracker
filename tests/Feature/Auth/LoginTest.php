@@ -8,9 +8,12 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class BasicLoginTest extends TestCase
+class LoginTest extends TestCase
 {
     use DatabaseTransactions;
+
+    protected $loginPage = '/login';
+    protected $logoutPage = '/logout';
 
     /**
      * The login form can be displayed.
@@ -31,9 +34,9 @@ class BasicLoginTest extends TestCase
      *
      * @covers \App\Http\Controllers\Auth\LoginController
      */
-    public function testLoginFormDisplayed()
+    public function testDisplaysLoginForm()
     {
-        $this->get('/login')
+        $this->get($this->loginPage)
             ->assertStatus(200)
             ->assertSee(__('auth.login'));
     }
@@ -44,15 +47,15 @@ class BasicLoginTest extends TestCase
      * @return void
      *
      * @depends testUserIsGuest
-     * @depends testLoginFormDisplayed
+     * @depends testDisplaysLoginForm
      */
-    public function testValidActivatedUserLogin()
+    public function testValidActivatedUserLogsIn()
     {
         $validUser = factory(User::class)
             ->states('activated')
             ->create();
 
-        $response = $this->post('/login', [
+        $response = $this->post($this->loginPage, [
             'email' => $validUser->email,
             'password' => 'secret'
         ]);
@@ -68,15 +71,15 @@ class BasicLoginTest extends TestCase
      * @return void
      *
      * @depends testUserIsGuest
-     * @depends testLoginFormDisplayed
+     * @depends testDisplaysLoginForm
      */
-    public function testValidNotActivatedUserLoginDenied()
+    public function testValidNotActivatedUserDoesNotLogIn()
     {
         $notActivatedUser = factory(User::class)
             ->states('not_activated')
             ->create();
 
-        $response = $this->post('/login', [
+        $response = $this->post($this->loginPage, [
             'email' => $notActivatedUser->email,
             'password' => 'secret'
         ]);
@@ -93,15 +96,15 @@ class BasicLoginTest extends TestCase
      * @return void
      *
      * @depends testUserIsGuest
-     * @depends testLoginFormDisplayed
+     * @depends testDisplaysLoginForm
      */
-    public function testInvalidUserLoginDenied()
+    public function testInvalidUserDoesNotLogin()
     {
         $invalidUser = factory(User::class)
             ->states('activated')
             ->create();
 
-        $response = $this->post('/login', [
+        $response = $this->post($this->loginPage, [
             'email' => $invalidUser->email,
             'password' => 'invalid_password'
         ]);
@@ -118,15 +121,15 @@ class BasicLoginTest extends TestCase
      * @return void
      *
      * @depends testUserIsGuest
-     * @depends testLoginFormDisplayed
+     * @depends testDisplaysLoginForm
      */
-    public function testLogoutAnAuthenticatedUser()
+    public function testAuthenticatedUserCanLogOut()
     {
         $validUser = factory(User::class)
             ->states('activated')
             ->create();
 
-        $response = $this->actingAs($validUser)->post('/logout');
+        $response = $this->actingAs($validUser)->post($this->logoutPage);
 
         $response->assertStatus(302);
 
@@ -139,11 +142,11 @@ class BasicLoginTest extends TestCase
      * @return void
      *
      * @depends testUserIsGuest
-     * @depends testLoginFormDisplayed
+     * @depends testDisplaysLoginForm
      */
-    public function testLogoutAGuestDenied()
+    public function testAGuestDoesNotLogsOut()
     {
-        $response = $this->post('/logout');
+        $response = $this->post($this->logoutPage);
 
         $response->assertStatus(302);
 

@@ -38,7 +38,7 @@ class UserTest extends TestCase
      *
      * @covers \App\Http\Controllers\User\UserController::getUserPage()
      */
-    public function testValidUserPageDisplayed()
+    public function testDisplaysValidUserPage()
     {
         $viewedUser = factory(\App\User::class)->create(); // creating a user model with a db row
 
@@ -58,7 +58,7 @@ class UserTest extends TestCase
      *
      * @covers \App\Http\Controllers\User\UserController::getUserPage()
      */
-    public function testInvalidUserPageDisplayDenied()
+    public function testInvalidUserPageDoesNotDisplayed()
     {
         $viewedUser = factory(\App\User::class)->make(); // creating a user model without a db row
 
@@ -76,7 +76,7 @@ class UserTest extends TestCase
      *
      * @covers \App\Http\Controllers\User\UserController::getUserPage()
      */
-    public function testGuestUserPageDisplayDenied()
+    public function testGuestUserPageDoesNotDisplayed()
     {
         $viewedUser = factory(\App\User::class)->create(); // creating a user model with a db row
 
@@ -93,7 +93,7 @@ class UserTest extends TestCase
      *
      * @covers \App\Http\Controllers\User\UserController::getUserSettings()
      */
-    public function testValidUserSettingsPageDisplayed()
+    public function testDisplaysValidUserSettingsPage()
     {
         $authenticatedUser = $this->authenticatedUser;
 
@@ -111,7 +111,7 @@ class UserTest extends TestCase
      *
      * @covers \App\Http\Controllers\User\UserController::getUserSettings()
      */
-    public function testGuestUserSettingsPageDisplayDenied()
+    public function testGuestUserSettingsPageDoesNotDisplayed()
     {
        $this->get('/user/settings')
             ->assertStatus(302);

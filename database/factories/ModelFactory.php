@@ -21,7 +21,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker, array $param
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
         'profile_image' => config('images.default_user_avatar'),
-        'activated' => false,
+        'activated' => true,
     ];
 });
 
@@ -38,12 +38,12 @@ $factory->state(App\User::class, 'not_activated', function (Faker\Generator $fak
 });
 
 
-$factory->define(App\Project::class, function (Faker\Generator $faker) {
+$factory->define(App\Project::class, function (Faker\Generator $faker, array $params) {
     return [
         'name' => str_random(14),
-        'description' => str_random(300),
+        'description' => str_random(255),
         'user_id' => function(){
-            return factory(App\User::class)->create()->id;
+            return isset($params['user_id'])? $params['user_id']:factory(App\User::class)->create()->id;
         },
         'image' => str_random(100),
     ];

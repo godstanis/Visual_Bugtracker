@@ -15,7 +15,7 @@ Route::group(['middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
 
         Route::get('', 'ProjectsController@getAvailableProjects')
             ->name('bugtracker.projects');
-        Route::post('create-project', 'ProjectsController@postCreateProject')
+        Route::post('create', 'ProjectsController@postCreateProject')
             ->name('bugtracker.create_project');
 
     });
@@ -25,7 +25,7 @@ Route::group(['middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
         Route::get('', 'ProjectsController@getProjectById')
             ->name('bugtracker.project');
 
-        Route::post('delete-project', 'ProjectsController@postDeleteProject')
+        Route::post('delete', 'ProjectsController@postDeleteProject')
             ->name('bugtracker.delete_project')->middleware('can:delete,project');
 
 
