@@ -32,7 +32,7 @@ class PathDeleted implements ShouldBroadcastNow
     public function __construct(\App\Path $path)
     {
         $this->board = $path->board;
-        $this->path_json = (new \App\Http\Resources\PathResource($path))->toArray((new \Illuminate\Http\Request()));
+        $this->path_json = (new \App\Http\Resources\Path\PathResource($path))->toArray((new \Illuminate\Http\Request()));
     }
 
     /**

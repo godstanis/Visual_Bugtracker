@@ -14,10 +14,14 @@ class CreateIssueAssigneesTable extends Migration
     public function up()
     {
         Schema::create('issue_assignees', function (Blueprint $table) {
-            $table->integer('issue_id');
-            $table->integer('user_id');
+            $table->unsignedInteger('issue_id');
+            $table->unsignedInteger('user_id');
             $table->primary(['issue_id', 'user_id']);
             $table->timestamps();
+        });
+        Schema::table('issue_assignees', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('issue_id')->references('id')->on('issues');
         });
     }
 

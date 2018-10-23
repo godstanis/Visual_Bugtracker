@@ -17,8 +17,8 @@ class ProjectObserver
      */
     public function creating(Project $project)
     {
-        if(!isset($project->creator_user_id)) {
-            $project->creator_user_id = auth()->user()->id;
+        if(!isset($project->user_id)) {
+            $project->user_id = auth()->user()->id;
         }
     }
 
@@ -31,9 +31,9 @@ class ProjectObserver
      */
     public function created(Project $project)
     {
-        $project->members()->attach($project->creator_user_id);
+        $project->members()->attach($project->user_id);
 
-        \Log::info('Project with id:'.$project->id.'created by user with id:'.$project->creator_user_id);
+        \Log::info('Project with id:'.$project->id.'created by user with id:'.$project->user_id);
     }
 
     /**

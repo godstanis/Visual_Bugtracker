@@ -34,7 +34,7 @@ class PathCreated implements ShouldBroadcastNow
     {
         $this->path = $path;
 
-        $this->path_json = (new \App\Http\Resources\PathResource($path))->toArray((new \Illuminate\Http\Request()));
+        $this->path_json = (new \App\Http\Resources\Path\PathResource($path))->toArray((new \Illuminate\Http\Request()));
     }
 
     /**

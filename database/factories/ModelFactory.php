@@ -42,10 +42,10 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
     return [
         'name' => str_random(14),
         'description' => str_random(300),
-        'creator_user_id' => function(){
+        'user_id' => function(){
             return factory(App\User::class)->create()->id;
         },
-        'thumbnail_img' => str_random(100),
+        'image' => str_random(100),
     ];
 });
 
@@ -55,7 +55,7 @@ $factory->define(App\Issue::class, function (Faker\Generator $faker, array $para
         'project_id' => $params['project_id'],
         'title' => str_random(20),
         'description' => str_random(100),
-        'created_by_user_id' => 1,
+        'user_id' => 1,
         'priority_id' => 1,
         'type_id' => 1
     ];

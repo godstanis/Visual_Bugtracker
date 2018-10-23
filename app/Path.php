@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Path extends Model
 {
     protected $fillable = [
-        'board_id', 'created_by_user_id', 'path_slug', 'stroke_color', 'stroke_width', 'path_data', 'deleted'
+        'board_id', 'user_id', 'path_slug', 'stroke_color', 'stroke_width', 'path_data', 'deleted'
     ];
 
     /**
@@ -33,7 +33,7 @@ class Path extends Model
      */
     public function creator()
     {
-        return $this->hasOne(User::class, 'id', 'created_by_user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     /**

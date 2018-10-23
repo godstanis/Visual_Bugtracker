@@ -15,11 +15,15 @@ class CreateIssueDiscussionTable extends Migration
     {
         Schema::create('issue_discussions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('issue_id');
-            $table->integer('user_id');
+            $table->unsignedInteger('issue_id');
+            $table->unsignedInteger('user_id');
             $table->longText('text');
             $table->boolean('deleted')->default(false);
             $table->timestamps();
+        });
+        Schema::table('issue_discussions', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('issue_id')->references('id')->on('issues');
         });
     }
 

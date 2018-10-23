@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Issue extends Model
 {
     protected $fillable = [
-        'title', 'project_id', 'description', 'closed', 'type_id', 'priority_id', 'created_by_user_id', 'closed_by_user_id', 'assigned_to_user_id', 'path_id'
+        'title', 'project_id', 'description', 'closed', 'type_id', 'priority_id', 'user_id', 'closed_by_user_id', 'assigned_to_user_id'
     ];
 
     /**
@@ -38,7 +38,7 @@ class Issue extends Model
      */
     public function creator()
     {
-        return $this->hasOne(User::class, 'id', 'created_by_user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     /**

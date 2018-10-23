@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Storage;
 
 class Board extends Model
 {
-    protected $fillable = ['name', 'project_id', 'image', 'created_by_user_id'];
+    protected $fillable = ['name', 'project_id', 'image', 'user_id'];
 
     public function creator()
     {
-        return $this->hasOne(User::class, 'id', 'created_by_user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function project()

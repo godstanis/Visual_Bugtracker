@@ -15,16 +15,20 @@ class CreatePathsTable extends Migration
     {
         Schema::create('paths', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('board_id');
-            $table->integer('created_by_user_id');
+            $table->unsignedInteger('board_id');
+            $table->unsignedInteger('user_id');
             //path attributes
             $table->string('stroke_color')->default('green');
             $table->integer('stroke_width')->default(4);
             $table->string('path_slug');
             $table->longText('path_data');
-            // end attributes
+
             $table->boolean('deleted')->default(false);
             $table->timestamps();
+        });
+        Schema::table('paths', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('board_id')->references('id')->on('boards');
         });
     }
 

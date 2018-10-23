@@ -13,7 +13,7 @@ class Project extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'thumbnail_img', 'creator_user_id', 'website_url'
+        'name', 'description', 'image', 'user_id', 'website_url'
     ];
 
     /**
@@ -23,7 +23,7 @@ class Project extends Model
      */
     public function creator()
     {
-        return $this->hasOne(User::class, 'id', 'creator_user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     /**
@@ -73,7 +73,7 @@ class Project extends Model
      */
     public function thumbnailUrl(): string
     {
-        $imagePath = config('images.project_thumb_dir') . '/' . $this->thumbnail_img;
+        $imagePath = config('images.project_thumb_dir') . '/' . $this->image;
         return Storage::disk('s3')->url($imagePath);
     }
 }

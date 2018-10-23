@@ -16,11 +16,14 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
-            $table->integer('creator_user_id');
-            $table->string('thumbnail_img');
+            $table->string('description')->nullable();
+            $table->unsignedInteger('user_id');
+            $table->string('image');
             $table->string('website_url')->nullable();
             $table->timestamps();
+        });
+        Schema::table('projects', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

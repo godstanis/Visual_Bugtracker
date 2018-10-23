@@ -15,8 +15,8 @@ class ProjectsTableSeeder extends Seeder
         $defaultProject = [
             'name' => 'BugWall',
             'description' => 'BugWall is a visual bugtracking system.',
-            'creator_user_id' => 1,
-            'thumbnail_img' => 'default.jpg',
+            'user_id' => 1,
+            'image' => 'default.jpg',
             'website_url' => route('home')
         ];
 

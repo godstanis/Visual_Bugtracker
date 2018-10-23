@@ -25,14 +25,14 @@ class ProjectImageObserver
      */
     public function creating(Project $project)
     {
-        $image = request()->thumbnail_img;
+        $image = request()->image;
 
         if( ! isset( $image ) ) {
-            $project->thumbnail_img = config('images.default_project_thumb');
+            $project->image = config('images.default_project_thumb');
             return;
         }
 
-        $project->thumbnail_img = $this->uploadService->upload($image);
+        $project->image = $this->uploadService->upload($image);
     }
 
     /**
@@ -43,7 +43,7 @@ class ProjectImageObserver
      */
     public function deleted(Project $project)
     {
-        $this->uploadService->delete($project->thumbnail_img);
+        $this->uploadService->delete($project->image);
     }
 
 }

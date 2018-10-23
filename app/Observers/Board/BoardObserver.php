@@ -14,7 +14,7 @@ class BoardObserver
      */
     public function creating(Board $board)
     {
-        $board->created_by_user_id = auth()->user()->id;
+        $board->user_id = auth()->user()->id;
     }
 
     /**

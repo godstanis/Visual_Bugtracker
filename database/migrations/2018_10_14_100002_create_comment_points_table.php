@@ -15,13 +15,18 @@ class CreateCommentPointsTable extends Migration
     {
         Schema::create('comment_points', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('board_id');
-            $table->integer('user_id');
-            $table->integer('issue_id')->unique()->nullable();
+            $table->unsignedInteger('board_id');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('issue_id')->nullable();
             $table->string('text')->nullable();
             $table->integer('position_x');
             $table->integer('position_y');
             $table->timestamps();
+        });
+        Schema::table('comment_points', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('board_id')->references('id')->on('boards');
+            $table->foreign('issue_id')->references('id')->on('issues');
         });
     }
 

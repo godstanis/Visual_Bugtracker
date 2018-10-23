@@ -15,9 +15,13 @@ class CreateProjectAccessTable extends Migration
     {
         Schema::create('project_access', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('project_id');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('project_id');
             $table->timestamps();
+        });
+        Schema::table('project_access', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('project_id')->references('id')->on('projects');
         });
     }
 

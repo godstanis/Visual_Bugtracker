@@ -60,8 +60,8 @@ class IssuesPolicy
 
         $project = $issue->project;
 
-        $issueCreatedByUser = $issue->created_by_user_id === $user->id;
-        $projectCreatedByUser = $project->creator_user_id === $user->id;
+        $issueCreatedByUser = $issue->user_id === $user->id;
+        $projectCreatedByUser = $project->user_id === $user->id;
 
         return ( $issueCreatedByUser || $projectCreatedByUser);
     }
