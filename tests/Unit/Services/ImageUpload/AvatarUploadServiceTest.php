@@ -21,6 +21,9 @@ class AvatarUploadServiceTest extends TestCase
         Storage::fake('s3');
     }
 
+    /**
+     * @covers AvatarUploadService::upload()
+     */
     public function testUploadsImage()
     {
         $newProfileImage = UploadedFile::fake()->image('new_avatar.jpg');
@@ -34,7 +37,7 @@ class AvatarUploadServiceTest extends TestCase
 
     /**
      * @depends testUploadsImage
-     * @param string $uploadedImageName
+     * @covers AvatarUploadService::delete()
      */
     public function testDeletesImage()
     {
