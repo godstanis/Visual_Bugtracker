@@ -18,7 +18,7 @@ Bug tracking system with a visual editor.
 ---
 
 ## Project installation:
-### Pre requirenments:
+### Pre requirements:
 - Basic LAMP/LNMP or WAMP/WNMP server configuration.
 - [PHP >=7.1.3](https://php.net "PHP official website")
     - [Composer](https://getcomposer.org "Composer official website")
