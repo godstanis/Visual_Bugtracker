@@ -45,7 +45,8 @@ class AvatarUploadService extends AbstractFileUploadService
         ); // save new avatar
 
         if( $oldName !== $defaultAvatarName && $oldName !== null){
-            Storage::delete( $avatarsDirectory . '/' . $oldName ); // delete old avatar
+            //Storage::delete( $avatarsDirectory . '/' . $oldName ); // delete old avatar
+            $this->delete($oldName);
         }
 
         return $newName;
@@ -59,6 +60,6 @@ class AvatarUploadService extends AbstractFileUploadService
      */
     public function delete(string $name): bool
     {
-        return true;
+        return Storage::delete( $this->basePath . '/' . $name ); // delete old avatar
     }
 }
