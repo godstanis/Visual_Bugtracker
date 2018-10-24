@@ -1,9 +1,11 @@
 <div class="board-box">
     <div class="board-box-content">
         <div class="board-box-controls pull-right btn-group">
-            <a class="btn btn-danger btn-sm" href="{{route('project.delete_board', ['board'=>$board, 'project'=>$project])}}">
+            @can('delete', $board)
+            <a class="btn btn-danger btn-sm" href="{{route('project.delete_board', compact('board', 'project'))}}">
                 <span class="glyphicon glyphicon-trash"></span>
             </a>
+            @endcan
         </div>
         <h4 class="board-title board-box-title">{{ $board->name }}</h4>
         <div class="board-box-img">
