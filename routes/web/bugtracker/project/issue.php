@@ -29,8 +29,8 @@ Route::group(['prefix'=>'{project}/issues', 'middleware'=>['auth', 'can:view,pro
         ->name('project.issue.discussion.create');
 
     Route::get('{issue}/attach/{user}', 'IssuesController@attachUser')
-        ->name('project.issue.attach_user')->middleware('can:delete,issue');
+        ->name('project.issue.attach_user')->middleware('can:attach,issue,user');
     Route::get('{issue}/detach/{user}', 'IssuesController@detachUser')
-        ->name('project.issue.detach_user')->middleware('can:delete,issue');
+        ->name('project.issue.detach_user')->middleware('can:attach,issue,user');
 
 });

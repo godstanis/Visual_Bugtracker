@@ -71,7 +71,7 @@ class IssuesController extends BugtrackerBaseController
             return response("", 200);
         }
 
-        return redirect()->back();
+        return redirect(route('project.issues', compact('project')));
     }
 
     /**

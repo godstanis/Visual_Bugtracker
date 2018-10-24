@@ -28,7 +28,9 @@ return [
     'issue_controls' => 'Управление',
     'issue_created_when' => 'Создано :when участником ',
     'issue_without' => 'Без задачи',
-    'issue_assign_user' => 'Прикрепить участника',
+    'issue_attach_user' => 'Прикрепить участника',
+    'issue_attach_myself' => 'Прикрепить себя',
+    'issue_deattach_myself' => 'Открепить себя',
 
     'issue_discussion' => 'Обсуждение задачи ":id"',
 
