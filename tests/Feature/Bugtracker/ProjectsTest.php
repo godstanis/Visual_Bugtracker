@@ -63,6 +63,23 @@ class ProjectsTest extends TestCase
     /**
      * @covers \App\Http\Controllers\Bugtracker\ProjectsController::getAvailableProjects()
      */
+    public function testAnAuthenticatedUserDoesNotSeeProjectsHeDidNotCreateAndHasNoMembership()
+    {
+        $validUser = factory(User::class)->create();
+        $otherUser = factory(User::class)->create();
+
+        $projectUserHasNoAccessTo = factory(Project::class)
+            ->create(['user_id'=>$otherUser->id]);
+
+        $response = $this->actingAs($validUser)->get($this->projectsPage);
+        $response->assertStatus(200)
+            ->assertDontSee($projectUserHasNoAccessTo->name)
+            ->assertDontSee($projectUserHasNoAccessTo->description);
+    }
+
+    /**
+     * @covers \App\Http\Controllers\Bugtracker\ProjectsController::getAvailableProjects()
+     */
     public function testAnAuthenticatedUserSeesProjectsHeHasMembershipIn()
     {
         $validUser = factory(User::class)->create();
