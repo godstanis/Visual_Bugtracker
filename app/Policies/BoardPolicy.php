@@ -54,6 +54,9 @@ class BoardPolicy
      */
     public function delete(User $user, Board $board): bool
     {
-        return $user->id === $board->user_id;
+        $isProjectCreator = $board->project->creator->id === $user->id;
+        $isBoardCreator = $user->id === $board->creator->id;
+
+        return $isBoardCreator || $isProjectCreator;
     }
 }

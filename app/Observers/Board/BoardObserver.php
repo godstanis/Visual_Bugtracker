@@ -14,7 +14,9 @@ class BoardObserver
      */
     public function creating(Board $board)
     {
-        $board->user_id = auth()->user()->id;
+        if(!isset($board->user_id)) {
+            $board->user_id = auth()->user()->id;
+        }
     }
 
     /**

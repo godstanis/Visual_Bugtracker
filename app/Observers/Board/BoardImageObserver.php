@@ -25,8 +25,9 @@ class BoardImageObserver
      */
     public function creating(Board $board)
     {
-        $image = request()->image;
-        $board->image = $this->uploadService->upload($image);
+        if(isset(request()->image)) {
+            $board->image = $this->uploadService->upload(request()->image);
+        }
     }
 
     /**

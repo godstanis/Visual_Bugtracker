@@ -86,6 +86,6 @@ class IssuesPolicy
      */
     public function attach(User $user, Issue $issue, User $userToAttach): bool
     {
-        return ($userToAttach->id === auth()->user()->id) || $this->delete($user, $issue);
+        return ($userToAttach->id === $user->id) || $this->delete($user, $issue);
     }
 }
