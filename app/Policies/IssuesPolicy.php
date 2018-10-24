@@ -74,7 +74,18 @@ class IssuesPolicy
      */
     public function close(User $user, Issue $issue): bool
     {
-        //dd($this->delete($user, $issue));
         return ($issue->assignees->contains($user) || $this->delete($user, $issue));
+    }
+
+    /**
+     * Determine whether the user can attach another user(or himself) to the issue.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Issue  $issue
+     * @return bool
+     */
+    public function attach(User $user, Issue $issue, User $userToAttach): bool
+    {
+        return ($userToAttach->id === auth()->user()->id) || $this->delete($user, $issue);
     }
 }
