@@ -12,8 +12,13 @@ use App\Board;
 class PathController extends Controller
 {
 
+    public function all(Project $project, Board $board)
+    {
+        $board->paths->load('creator');
+        return new \App\Http\Resources\Path\PathCollection($board->paths);
+    }
 
-    public function savePath(Request $request, Project $project, Board $board)
+    public function create(Request $request, Project $project, Board $board)
     {
         $path = $board->paths()->create($request->all());
 
@@ -25,7 +30,7 @@ class PathController extends Controller
         return redirect()->back();
     }
 
-    public function deletePath(Request $request, Project $project, Board $board)
+    public function destroy(Request $request, Project $project, Board $board)
     {
         $board->paths()->where('path_slug', $request->path_slug)->first()->delete();
 

@@ -12,12 +12,12 @@
 Route::group(['prefix'=>'{project}/editor', 'middleware'=>['auth', 'can:view,project'], 'namespace'=>'Bugtracker'], function(){
     Route::group(['prefix'=>'{board}'], function() {
 
-        Route::post('delete-path', 'PathController@deletePath')
+        Route::post('delete-path', 'PathController@destroy')
             ->name('board.delete_path');
-        Route::post('create-path', 'PathController@savePath')
+        Route::post('create-path', 'PathController@create')
             ->name('board.create_path');
         Route::get('/', 'EditorController@getBoardEditor')->name('project.editor.board');
-        Route::get('paths', 'BoardsController@paths')->name('board.paths');
+        Route::get('paths', 'PathController@all')->name('board.paths');
 
         Route::resource('comment_points', 'CommentPointController');
     });
