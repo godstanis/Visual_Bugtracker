@@ -39,14 +39,19 @@ class IssuesTest extends TestCase
 
     }
 
+    public function testAGuestDoesNotSeeIssuesPage()
+    {
+        $response = $this->get($this->projectIssuesPage);
+        $response->assertStatus(302);
+    }
+
     /**
      * @covers \App\Http\Controllers\Bugtracker\IssuesController::getProjectIssues()
      */
     public function testUserSeesIssuesPage()
     {
-        $response = $this->actingAs($this->validUser)->get($this->projectIssuesPage);
-
-        $response->assertStatus(200)->assertSee( __('projects.issue_create') );
+        $this->actingAs($this->validUser)->get($this->projectIssuesPage)
+            ->assertStatus(200)->assertSee( __('projects.issue_create') );
     }
 
     /**
