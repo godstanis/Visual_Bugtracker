@@ -9,7 +9,7 @@
 |
 */
 
-Route::group(['prefix'=>'{project}/team', 'middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
+Route::group(['prefix'=>'{project}/team', 'middleware'=>['auth', 'can:view,project'], 'namespace'=>'Bugtracker'], function(){
 
     Route::get('', 'TeamController@getAllTeamMembers')
         ->name('project.team');

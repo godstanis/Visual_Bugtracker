@@ -57,12 +57,24 @@ class IssuesPolicy
      */
     public function delete(User $user, Issue $issue): bool
     {
-
         $project = $issue->project;
 
         $issueCreatedByUser = $issue->user_id === $user->id;
         $projectCreatedByUser = $project->user_id === $user->id;
 
         return ( $issueCreatedByUser || $projectCreatedByUser);
+    }
+
+    /**
+     * Determine whether the user can close the issue.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Issue  $issue
+     * @return bool
+     */
+    public function close(User $user, Issue $issue): bool
+    {
+        //dd($this->delete($user, $issue));
+        return ($issue->assignees->contains($user) || $this->delete($user, $issue));
     }
 }

@@ -9,19 +9,19 @@
 |
 */
 
-Route::group(['prefix'=>'{project}/issues', 'middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
+Route::group(['prefix'=>'{project}/issues', 'middleware'=>['auth', 'can:view,project'], 'namespace'=>'Bugtracker'], function(){
 
     Route::get('', 'IssuesController@getProjectIssues')
         ->name('project.issues');
-    Route::post('create-issue', 'IssuesController@postCreateIssue')
+    Route::post('create', 'IssuesController@postCreateIssue')
         ->name('project.issue.create');
 
-    Route::get('delete_issue/{issue}', 'IssuesController@getDeleteIssue')
+    Route::get('{issue}/delete', 'IssuesController@getDeleteIssue')
         ->name('project.issue.delete')->middleware('can:delete,issue');
-    Route::post('close_issue/{issue}', 'IssuesController@closeIssue')
-        ->name('project.issue.close')->middleware('can:delete,issue');
-    Route::post('open_issue/{issue}', 'IssuesController@openIssue')
-        ->name('project.issue.open')->middleware('can:delete,issue');
+    Route::post('{issue}/close', 'IssuesController@closeIssue')
+        ->name('project.issue.close')->middleware('can:close,issue');
+    Route::post('{issue}/open', 'IssuesController@openIssue')
+        ->name('project.issue.open')->middleware('can:close,issue');
 
     Route::get('{issue}/discussion', 'IssueDiscussionController@getDiscussion')
         ->name('project.issue.discussion');

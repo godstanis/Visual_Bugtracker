@@ -9,7 +9,7 @@
 |
 */
 
-Route::group(['prefix'=>'{project}/settings', 'middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
+Route::group(['prefix'=>'{project}/settings', 'middleware'=>['auth', 'can:view,project'], 'namespace'=>'Bugtracker'], function(){
 
     Route::get('', 'ProjectsController@getSettingsPage')
         ->name('project.settings');

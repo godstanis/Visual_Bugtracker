@@ -7,7 +7,7 @@
 
 @section('project-content')
 {!! Breadcrumbs::render('discussion', $project, $issue) !!}
-@can('delete', $issue)
+@can('close', $issue)
     @if(!$issue->closed)
         <form action="{{route('project.issue.close', compact('project', 'issue'))}}" method="POST">
             <button class="btn btn-success pull-right"><span class="glyphicon glyphicon-ok"></span> Close issue</button>

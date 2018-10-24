@@ -20,15 +20,12 @@ Route::group(['middleware'=>'auth', 'namespace'=>'Bugtracker'], function(){
 
     });
 
-    Route::group(['prefix'=>'project/{project}', 'middleware'=>'can:view,project'], function(){
+    Route::group(['prefix'=>'project/{project}'], function(){
 
         Route::get('', 'ProjectsController@getProjectById')
             ->name('bugtracker.project');
-
         Route::post('delete', 'ProjectsController@postDeleteProject')
             ->name('bugtracker.delete_project')->middleware('can:delete,project');
-
-
         Route::get('activity', 'ActivityController@getProjectActivities')
             ->name('project.activity');
 
