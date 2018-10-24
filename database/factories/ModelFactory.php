@@ -58,3 +58,12 @@ $factory->define(App\Issue::class, function (Faker\Generator $faker, array $para
         'type_id' => 1
     ];
 });
+
+$factory->define(App\Board::class, function (Faker\Generator $faker, array $params) {
+    return [
+        'project_id' => isset($params['project_id'])? $params['project_id']:factory(App\Project::class)->create()->id,
+        'user_id' => isset($params['user_id'])? $params['user_id']:factory(App\User::class)->create()->id,
+        'name' => str_random(8),
+        'image' => isset($params['image'])? $params['image']:$faker->text(20),
+    ];
+});
