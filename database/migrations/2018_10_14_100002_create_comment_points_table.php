@@ -24,9 +24,9 @@ class CreateCommentPointsTable extends Migration
             $table->timestamps();
         });
         Schema::table('comment_points', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('board_id')->references('id')->on('boards');
-            $table->foreign('issue_id')->references('id')->on('issues');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('board_id')->references('id')->on('boards')->onDelete('cascade');
+            $table->foreign('issue_id')->references('id')->on('issues')->onDelete('cascade');
         });
     }
 

@@ -29,11 +29,11 @@ class CreateIssuesTable extends Migration
             $table->timestamps();
         });
         Schema::table('issues', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('closed_by_user_id')->references('id')->on('users');
-            $table->foreign('type_id')->references('id')->on('issue_type');
-            $table->foreign('priority_id')->references('id')->on('issue_priority');
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('closed_by_user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('type_id')->references('id')->on('issue_type')->onDelete('cascade');
+            $table->foreign('priority_id')->references('id')->on('issue_priority')->onDelete('cascade');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
     }
 

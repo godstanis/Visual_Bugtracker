@@ -22,8 +22,8 @@ class CreateIssueDiscussionTable extends Migration
             $table->timestamps();
         });
         Schema::table('issue_discussions', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('issue_id')->references('id')->on('issues');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('issue_id')->references('id')->on('issues')->onDelete('cascade');
         });
     }
 

@@ -23,8 +23,8 @@ class CreateBoardsTable extends Migration
             $table->boolean('deleted')->default(false);
         });
         Schema::table('boards', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
     }
 
