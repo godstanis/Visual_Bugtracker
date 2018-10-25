@@ -2,6 +2,7 @@
 
 Bug tracking system with a visual editor.
 
+---
 
 #### Technologies used in this project:
 <p align="center">
@@ -11,11 +12,9 @@ Bug tracking system with a visual editor.
 
 #### Application screenshots:
 
-<img height="280px" width="48%" src="https://raw.githubusercontent.com/stasgar/Visual_Bugtracker/master/github_screenshots/pages_screenshots/Projects.png"></img>
-<img height="280px" width="48%" src="https://raw.githubusercontent.com/stasgar/Visual_Bugtracker/master/github_screenshots/pages_screenshots/Issues.png"></img>
-<img height="280px" width="48%" src="https://raw.githubusercontent.com/stasgar/Visual_Bugtracker/master/github_screenshots/pages_screenshots/Team.png"></img>
-<img height="280px" width="48%" src="https://raw.githubusercontent.com/stasgar/Visual_Bugtracker/master/github_screenshots/pages_screenshots/Editor.png"></img>
----
+<img height="192px" width="33%" src="https://raw.githubusercontent.com/stasgar/Visual_Bugtracker/master/github_screenshots/pages_screenshots/Projects.png"></img>
+<img height="192px" width="33%" src="https://raw.githubusercontent.com/stasgar/Visual_Bugtracker/master/github_screenshots/pages_screenshots/Issues.png"></img>
+<img height="192px" width="33%" src="https://raw.githubusercontent.com/stasgar/Visual_Bugtracker/master/github_screenshots/pages_screenshots/Editor.png"></img>
 
 ## Project installation:
 ### Pre requirements:
