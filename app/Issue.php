@@ -42,19 +42,7 @@ class Issue extends Model
     }
 
     /**
-     * Returns the user, assigned to the issue.
-     *
-     * TODO: #4 Issue, mass assignment should be implemented.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function assignedUser()
-    {
-        return $this->hasOne(User::class, 'id', 'assigned_to_user_id');
-    }
-
-    /**
-     * Issue assignees relation.
+     * Returns all users, assigned to the issue.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

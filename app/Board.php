@@ -9,16 +9,31 @@ class Board extends Model
 {
     protected $fillable = ['name', 'project_id', 'image', 'user_id'];
 
+    /**
+     * Returns the board creator.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function creator()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    /**
+     * Returns the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function project()
     {
         return $this->hasOne(Project::class, 'id', 'project_id');
     }
 
+    /**
+     * Returns all the paths, created on the board.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function paths()
     {
         return $this->hasMany(Path::class, 'board_id', 'id');
@@ -26,8 +41,6 @@ class Board extends Model
 
     /**
      * Return comment points, left on the board.
-     *
-     * TODO: #1 Issue, program the board message logic.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
