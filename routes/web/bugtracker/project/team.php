@@ -13,9 +13,9 @@ Route::group(['prefix'=>'{project}/team', 'middleware'=>['auth', 'can:view,proje
 
     Route::get('', 'TeamController@getAllTeamMembers')
         ->name('project.team');
-    Route::post('add-member', 'TeamController@postAddMember')
+    Route::post('attach', 'TeamController@postAddMember')
         ->name('project.team.add')->middleware('can:delete,project');
-    Route::get('remove-member/{user}', 'TeamController@getRemoveMember')
+    Route::get('deattach/{user}', 'TeamController@getRemoveMember')
         ->name('project.team.remove')->middleware('can:delete,project');
     Route::get('search-member', 'TeamController@searchUser')
         ->name('project.team.search')->middleware('can:delete,project');
