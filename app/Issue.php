@@ -42,7 +42,17 @@ class Issue extends Model
     }
 
     /**
-     * Returns all users, assigned to the issue.
+     * Returns the user, assigned to the issue.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function assignedUser()
+    {
+        return $this->hasOne(User::class, 'id', 'assigned_to_user_id');
+    }
+
+    /**
+     * Issue assignees relation.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
