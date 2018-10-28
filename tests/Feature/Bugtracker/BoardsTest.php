@@ -17,26 +17,28 @@ class BoardsTest extends TestCase
     use WithFaker,
         DatabaseTransactions;
 
-    protected $validUser;
-    protected $projectCreatedByAValidUser;
+    /**
+     * @var \App\User A blank user for advanced manipulations.
+     */
+    protected $user;
 
-    protected $anotherUser;
-    protected $projectCreatedByAnotherUser;
-
+    protected $project;
+    protected $projectCreator;
+    protected $projectMember;
     protected $projectBoardsPage;
-    protected $anotherProjectBoardsPage;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->validUser = factory(User::class)->create();
-        $this->projectCreatedByAValidUser = factory(Project::class)->create(['user_id'=>$this->validUser]);
-        $this->projectBoardsPage = '/tracker/project/' . $this->projectCreatedByAValidUser->id . '/boards';
+        $this->user = factory(User::class)->create();
 
-        $this->anotherUser = factory(User::class)->create();
-        $this->projectCreatedByAnotherUser = factory(Project::class)->create(['user_id'=>$this->anotherUser]);
-        $this->anotherProjectBoardsPage = '/tracker/project/' . $this->projectCreatedByAnotherUser->id . '/boards';
+        $this->projectCreator = factory(User::class)->create();
+        $this->projectMember = factory(User::class)->create();
+        $this->project = factory(Project::class)->create(['user_id'=>$this->projectCreator]);
+        $this->projectBoardsPage = '/tracker/project/' . $this->project->id . '/boards';
+
+        $this->project->members()->attach($this->projectMember);
 
         Storage::fake();
     }
@@ -53,7 +55,7 @@ class BoardsTest extends TestCase
     public function testAValidUserSeesProjectBoardsPage()
     {
 
-        $this->actingAs($this->validUser)->get($this->projectBoardsPage)
+        $this->actingAs($this->projectCreator)->get($this->projectBoardsPage)
             ->assertStatus(200)
             ->assertSee(__('projects.create'));
     }
@@ -68,12 +70,12 @@ class BoardsTest extends TestCase
             'image' => UploadedFile::fake()->image('board_image.png')
          ];
 
-        $response = $this->actingAs($this->validUser)
+        $response = $this->actingAs($this->projectCreator)
             ->post($this->projectBoardsPage . '/create', $board);
 
         $response->assertStatus(302);
 
-        $this->actingAs($this->validUser)->get($this->projectBoardsPage)
+        $this->actingAs($this->projectCreator)->get($this->projectBoardsPage)
             ->assertSee($board['name']);
     }
 
@@ -87,15 +89,15 @@ class BoardsTest extends TestCase
             'image' => UploadedFile::fake()->image('board_image.png')
         ];
 
-        $createdBoard = $this->projectCreatedByAValidUser->boards()->create(['user_id'=>$this->validUser->id]+$board);
+        $createdBoard = $this->project->boards()->create(['user_id'=>$this->projectCreator->id]+$board);
 
-        $this->actingAs($this->validUser)->get($this->projectBoardsPage)
+        $this->actingAs($this->projectCreator)->get($this->projectBoardsPage)
             ->assertSee($board['name']);
 
-        $this->actingAs($this->validUser)->get($this->projectBoardsPage . '/' . $createdBoard->id . '/delete')
+        $this->actingAs($this->projectCreator)->get($this->projectBoardsPage . '/' . $createdBoard->id . '/delete')
             ->assertStatus(302);
 
-        $this->actingAs($this->validUser)->get($this->projectBoardsPage)
+        $this->actingAs($this->projectCreator)->get($this->projectBoardsPage)
             ->assertDontSee($board['name']);
     }
 
@@ -104,22 +106,27 @@ class BoardsTest extends TestCase
      */
     public function testAValidUserDoesNotDeleteAnotherUserBoard()
     {
-        $board = [
+        $board = [ // New board request data
             'name' => $this->faker()->text(10),
             'image' => UploadedFile::fake()->image('board_image.png')
         ];
 
-        $this->projectCreatedByAnotherUser->members()->attach($this->validUser);
+        $this->project->members()->attach($this->user); // Attach a blank user to the project
 
-        $createdBoard = $this->projectCreatedByAnotherUser->boards()->create(['user_id'=>$this->anotherUser->id]+$board);
+        // Create a board as a blank user
+        $createdBoard = $this->project->boards()->create(['user_id'=>$this->user->id]+$board);
 
-        $this->actingAs($this->validUser)->get($this->anotherProjectBoardsPage)
+        $this->actingAs($this->projectMember)->get($this->projectBoardsPage)
             ->assertSee($board['name']);
 
-        $this->actingAs($this->validUser)->get($this->anotherProjectBoardsPage . '/' . $createdBoard->id . '/delete')
+
+        // Try to delete other's board as a member, assert unauthorized (403)
+        $this->actingAs($this->projectMember)->get($this->projectBoardsPage . '/' . $createdBoard->id . '/delete')
             ->assertStatus(403);
 
-        $this->actingAs($this->validUser)->get($this->anotherProjectBoardsPage)
+        $this->actingAs($this->projectMember)->get($this->projectBoardsPage)
             ->assertSee($board['name']);
     }
+
+
 }
