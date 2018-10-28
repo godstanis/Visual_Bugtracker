@@ -19,6 +19,26 @@ class ProjectsTest extends TestCase
     protected $projectsPage = '/tracker/projects';
     protected $createProjectRoute = '/tracker/projects/create';
 
+    protected $creator;
+    protected $project;
+    protected $member;
+
+    /**
+     * @var \App\User A blank user for advanced manipulations.
+     */
+    protected $user;
+
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->creator = factory(User::class)->create();
+        $this->member = factory(User::class)->create();
+        $this->user = factory(User::class)->create();
+        $this->project = factory(Project::class)->create(['user_id'=>$this->creator->id]);
+        $this->project->members()->attach($this->member);
+    }
+
     public function testAGuestDoesNotSeeProjectsPage()
     {
         $response = $this->get($this->projectsPage);
@@ -30,18 +50,13 @@ class ProjectsTest extends TestCase
      */
     public function testAnAuthenticatedUserSeesProjectSettingsPageOfHisProject()
     {
-        $validUser = factory(User::class)->create();
+        $projectSettingsPage = '/tracker/project/'.$this->project->id.'/settings';
 
-        $projectCreatedByUser = factory(Project::class)
-            ->create(['user_id'=>$validUser->id]);
-
-        $projectSettingsPage = '/tracker/project/'.$projectCreatedByUser->id.'/settings';
-
-        $response = $this->actingAs($validUser)->get($projectSettingsPage);
+        $response = $this->actingAs($this->creator)->get($projectSettingsPage);
 
         $response->assertStatus(200)
-            ->assertSee($projectCreatedByUser->name)
-            ->assertSee($projectCreatedByUser->description);
+            ->assertSee($this->project->name)
+            ->assertSee($this->project->description);
     }
 
     /**
@@ -49,15 +64,10 @@ class ProjectsTest extends TestCase
      */
     public function testAnAuthenticatedUserSeesProjectsHeCreated()
     {
-        $validUser = factory(User::class)->create();
-
-        $projectCreatedByUser = factory(Project::class)
-            ->create(['user_id'=>$validUser->id]);
-
-        $response = $this->actingAs($validUser)->get($this->projectsPage);
+        $response = $this->actingAs($this->creator)->get($this->projectsPage);
         $response->assertStatus(200)
-            ->assertSee($projectCreatedByUser->name)
-            ->assertSee($projectCreatedByUser->description);
+            ->assertSee($this->project->name)
+            ->assertSee($this->project->description);
     }
 
     /**
@@ -65,16 +75,10 @@ class ProjectsTest extends TestCase
      */
     public function testAnAuthenticatedUserDoesNotSeeProjectsHeDidNotCreateAndHasNoMembership()
     {
-        $validUser = factory(User::class)->create();
-        $otherUser = factory(User::class)->create();
-
-        $projectUserHasNoAccessTo = factory(Project::class)
-            ->create(['user_id'=>$otherUser->id]);
-
-        $response = $this->actingAs($validUser)->get($this->projectsPage);
+        $response = $this->actingAs($this->user)->get($this->projectsPage);
         $response->assertStatus(200)
-            ->assertDontSee($projectUserHasNoAccessTo->name)
-            ->assertDontSee($projectUserHasNoAccessTo->description);
+            ->assertDontSee($this->project->name)
+            ->assertDontSee($this->project->description);
     }
 
     /**
@@ -82,19 +86,11 @@ class ProjectsTest extends TestCase
      */
     public function testAnAuthenticatedUserSeesProjectsHeHasMembershipIn()
     {
-        $validUser = factory(User::class)->create();
-        $otherUser = factory(User::class)->create();
-
-        $projectCreatedByOtherUser = factory(Project::class)
-            ->create(['user_id'=>$otherUser->id]);
-
-        $projectCreatedByOtherUser->members()->attach($validUser);
-
-        $response = $this->actingAs($validUser)->get($this->projectsPage);
+        $response = $this->actingAs($this->member)->get($this->projectsPage);
         $response->assertStatus(200);
 
-        $response->assertSeeText($projectCreatedByOtherUser->name);
-        $response->assertSeeText($projectCreatedByOtherUser->description);
+        $response->assertSeeText($this->project->name);
+        $response->assertSeeText($this->project->description);
     }
 
     /**
@@ -102,21 +98,19 @@ class ProjectsTest extends TestCase
      */
     public function testAnAuthenticatedUserCreatesANewProject()
     {
-        $validUser = factory(User::class)->create();
+        $projectName = $this->faker()->name;
+        $projectDescription = $this->faker()->text(255);
 
-        $createdProjectName = $this->faker()->name;
-        $createdProjectDescription = $this->faker()->text(255);
-
-        $response = $this->actingAs($validUser)->post($this->createProjectRoute, [
-            'name' => $createdProjectName,
-            'description' => $createdProjectDescription
+        $response = $this->actingAs($this->user)->post($this->createProjectRoute, [
+            'name' => $projectName,
+            'description' => $projectDescription
         ]);
 
         $response->assertStatus(302);
 
-        $this->actingAs($validUser)->get($this->projectsPage)
-            ->assertSee($createdProjectName)
-            ->assertSee($createdProjectDescription);
+        $this->actingAs($this->user)->get($this->projectsPage)
+            ->assertSee($projectName)
+            ->assertSee($projectDescription);
 
     }
 
@@ -125,24 +119,19 @@ class ProjectsTest extends TestCase
      */
     public function testAnAuthenticatedUserUpdatesHisProject()
     {
-        $validUser = factory(User::class)->create();
-
         $newName = $this->faker()->name;
         $newDescription = $this->faker()->text(255);
 
-        $projectCreatedByUser = factory(Project::class)
-            ->create(['user_id'=>$validUser->id]);
+        $projectSettingsRoute = '/tracker/project/'.$this->project->id.'/settings';
 
-        $projectSettingsRoute = '/tracker/project/'.$projectCreatedByUser->id.'/settings';
-
-        $response = $this->actingAs($validUser)->post($projectSettingsRoute, [
+        $response = $this->actingAs($this->creator)->post($projectSettingsRoute, [
             'name' => $newName,
             'description' => $newDescription
         ]);
 
         $response->assertStatus(302);
 
-        $this->actingAs($validUser)->get($this->projectsPage)
+        $this->actingAs($this->creator)->get($this->projectsPage)
             ->assertSee($newName)
             ->assertSee($newDescription);
     }
@@ -152,20 +141,15 @@ class ProjectsTest extends TestCase
      */
     public function testAnAuthenticatedUserDeletesHisProject()
     {
-        $validUser = factory(User::class)->create();
+        $deleteProjectRoute = '/tracker/project/'.$this->project->id.'/delete';
 
-        $projectCreatedByUser = factory(Project::class)
-            ->create(['user_id'=>$validUser->id]);
-
-        $deleteProjectRoute = '/tracker/project/'.$projectCreatedByUser->id.'/delete';
-
-        $response = $this->actingAs($validUser)->post($deleteProjectRoute);
+        $response = $this->actingAs($this->creator)->post($deleteProjectRoute);
 
         $response->assertStatus(302);
 
-        $this->actingAs($validUser)->get($this->projectsPage)
-            ->assertDontSee($projectCreatedByUser->name)
-            ->assertDontSee($projectCreatedByUser->description);
+        $this->actingAs($this->creator)->get($this->projectsPage)
+            ->assertDontSee($this->project->name)
+            ->assertDontSee($this->project->description);
     }
 
     /**
@@ -173,23 +157,15 @@ class ProjectsTest extends TestCase
      */
     public function testAnAuthenticatedUserDoesNotDeleteAProjectHeHasMembershipIn()
     {
-        $validUser = factory(User::class)->create();
-        $otherUser = factory(User::class)->create();
+        $deleteProjectRoute = '/tracker/project/'.$this->project->id.'/delete';
 
-        $projectCreatedByOtherUser = factory(Project::class)
-            ->create(['user_id'=>$otherUser->id]);
-
-        $projectCreatedByOtherUser->members()->attach($validUser);
-
-        $deleteProjectRoute = '/tracker/project/'.$projectCreatedByOtherUser->id.'/delete';
-
-        $response = $this->actingAs($validUser)->post($deleteProjectRoute);
+        $response = $this->actingAs($this->member)->post($deleteProjectRoute);
 
         $response->assertStatus(403);
 
-        $this->actingAs($validUser)->get($this->projectsPage)
-            ->assertSee($projectCreatedByOtherUser->name)
-            ->assertSee($projectCreatedByOtherUser->description);
+        $this->actingAs($this->creator)->get($this->projectsPage)
+            ->assertSee($this->project->name)
+            ->assertSee($this->project->description);
     }
 
 

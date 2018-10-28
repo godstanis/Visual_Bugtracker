@@ -14,29 +14,42 @@ class IssuesTest extends TestCase
 {
     use WithFaker,
         DatabaseTransactions;
-
+    /*
     protected $validUser;
-    protected $projectCreatedByAValidUser;
+    protected $project;
     protected $projectIssuesPage;
 
     protected $anotherUser;
-    protected $projectCreatedByAnotherUser;
+    protected $anotherUserProject;
     protected $anotherProjectIssuesPage;
+    */
+
+    /**
+     * @var \App\User A blank user for advanced manipulations.
+     */
+    protected $user;
+
+    protected $project;
+    protected $projectCreator;
+    protected $projectMember;
+
+    protected $baseProjectPage;
+    protected $projectIssuesPage;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->validUser = factory(User::class)->create();
-        $this->projectCreatedByAValidUser = factory(Project::class)
-            ->create(['user_id'=>$this->validUser]);
-        $this->projectIssuesPage = '/tracker/project/' . $this->projectCreatedByAValidUser->id . '/issues';
+        $this->baseProjectPage = '/tracker/project/';
 
-        $this->anotherUser = factory(User::class)->create();
-        $this->projectCreatedByAnotherUser = factory(Project::class)
-            ->create(['user_id'=>$this->anotherUser]);
-        $this->anotherProjectIssuesPage = '/tracker/project/' . $this->projectCreatedByAnotherUser->id . '/issues';
+        $this->user = factory(User::class)->create();
 
+        $this->projectCreator = factory(User::class)->create();
+        $this->projectMember = factory(User::class)->create();
+        $this->project = factory(Project::class)->create(['user_id'=>$this->projectCreator]);
+        $this->projectIssuesPage = $this->baseProjectPage . $this->project->id . '/issues';
+
+        $this->project->members()->attach($this->projectMember);
     }
 
     public function testAGuestDoesNotSeeIssuesPage()
@@ -50,7 +63,9 @@ class IssuesTest extends TestCase
      */
     public function testUserSeesIssuesPage()
     {
-        $this->actingAs($this->validUser)->get($this->projectIssuesPage)
+        $this->actingAs($this->projectCreator)->get($this->projectIssuesPage)
+            ->assertStatus(200)->assertSee( __('projects.issue_create') );
+        $this->actingAs($this->projectMember)->get($this->projectIssuesPage)
             ->assertStatus(200)->assertSee( __('projects.issue_create') );
     }
 
@@ -68,9 +83,9 @@ class IssuesTest extends TestCase
             'priority_id' => 1
         ];
 
-        $this->actingAs($this->validUser)->post($createIssueRoute, $newIssue)->assertStatus(302);
+        $this->actingAs($this->projectCreator)->post($createIssueRoute, $newIssue)->assertStatus(302);
 
-        $this->actingAs($this->validUser)->get($this->projectIssuesPage)
+        $this->actingAs($this->projectCreator)->get($this->projectIssuesPage)
             ->assertSee($newIssue['title']);
     }
 
@@ -81,15 +96,15 @@ class IssuesTest extends TestCase
     {
         $issueUserCreated = factory(Issue::class)
             ->create([
-                'user_id' => $this->validUser->id,
-                'project_id' => $this->projectCreatedByAValidUser->id
+                'user_id' => $this->projectMember->id,
+                'project_id' => $this->project->id
             ]);
 
         $deleteIssueRoute = $this->projectIssuesPage . '/' . $issueUserCreated->id . '/delete';
 
-        $this->actingAs($this->validUser)->get($deleteIssueRoute)->assertStatus(302);
+        $this->actingAs($this->projectMember)->get($deleteIssueRoute)->assertStatus(302);
 
-        $this->actingAs($this->validUser)->get($this->projectIssuesPage)
+        $this->actingAs($this->projectMember)->get($this->projectIssuesPage)
             ->assertDontSee($issueUserCreated->title);
     }
 
@@ -98,56 +113,59 @@ class IssuesTest extends TestCase
      */
     public function testAValidUserDoesNotDeleteIssueHeHasNoAccessToDelete()
     {
+        $this->project->members()->attach($this->user);
+
         $issueUserCreated = factory(Issue::class)
             ->create([
-                'user_id' => $this->anotherUser->id,
-                'project_id' => $this->projectCreatedByAnotherUser->id
+                'user_id' => $this->user->id,
+                'project_id' => $this->project->id
             ]);
 
-        $otherUsersProjectIssuesPage = '/tracker/project/' . $this->projectCreatedByAnotherUser->id . '/issues';
-
-        $this->projectCreatedByAnotherUser->members()->attach($this->validUser);
-
-        $this->actingAs($this->validUser)->get($otherUsersProjectIssuesPage)
+        $this->actingAs($this->user)->get($this->projectIssuesPage)
             ->assertSee($issueUserCreated->title);
 
-        $deleteIssueRoute = $otherUsersProjectIssuesPage . '/' . $issueUserCreated->id . '/delete';
+        $deleteIssueRoute = $this->projectIssuesPage . '/' . $issueUserCreated->id . '/delete';
 
-        $this->actingAs($this->validUser)->get($deleteIssueRoute)->assertStatus(403);
+        $this->actingAs($this->projectMember)->get($deleteIssueRoute)->assertStatus(403);
 
-        $this->actingAs($this->validUser)->get($otherUsersProjectIssuesPage)
+        $this->actingAs($this->projectMember)->get($this->projectIssuesPage)
             ->assertSee($issueUserCreated->title);
     }
 
     public function testAValidUserDoesAttachAMemberToHisIssue()
     {
+        $this->project->members()->attach($this->user);
+
         $issueUserCreated = factory(Issue::class)
             ->create([
-                'user_id' => $this->validUser->id,
-                'project_id' => $this->projectCreatedByAValidUser->id
+                'user_id' => $this->projectMember->id,
+                'project_id' => $this->project->id
             ]);
-        $this->projectCreatedByAValidUser->members()->attach($this->anotherUser);
-        $attachUserRoute = $this->projectIssuesPage . '/' . $issueUserCreated->id . '/attach/' . $this->anotherUser->name;
 
-        $this->actingAs($this->validUser)->get($attachUserRoute)->assertStatus(302);
+        $attachUserRoute = $this->projectIssuesPage . '/' . $issueUserCreated->id . '/attach/' . $this->user->name;
 
-        $this->assertTrue($issueUserCreated->assignees->contains($this->anotherUser));
+        $this->actingAs($this->projectMember)->get($attachUserRoute)->assertStatus(302);
+
+        $this->assertTrue($issueUserCreated->assignees->contains($this->user));
     }
 
 
-    public function testAValidUserDoesNotAttachAMemberToTheIssueHeNotCreated()
+    public function testAValidUserDoesNotAttachAMemberToTheIssueHeDidNotCreated()
     {
+        $this->project->members()->attach($this->user);
+
         $issueUserCreated = factory(Issue::class)
             ->create([
-                'user_id' => $this->anotherUser->id,
-                'project_id' => $this->projectCreatedByAnotherUser->id
+                'user_id' => $this->projectCreator->id,
+                'project_id' => $this->project->id
             ]);
-        $this->projectCreatedByAnotherUser->members()->attach($this->validUser);
-        $attachUserRoute = $this->projectIssuesPage . '/' . $issueUserCreated->id . '/attach/' . $this->anotherUser->name;
 
-        $this->actingAs($this->validUser)->get($attachUserRoute)->assertStatus(403);
+        $attachUserRoute = $this->projectIssuesPage . '/' . $issueUserCreated->id . '/attach/' . $this->user->name;
 
-        $this->assertFalse($issueUserCreated->assignees->contains($this->anotherUser));
+        // Another project member tries to add another member to the issue, created by project creator
+        $this->actingAs($this->projectMember)->get($attachUserRoute)->assertStatus(403);
+
+        $this->assertFalse($issueUserCreated->assignees->contains($this->user));
     }
 
 }
