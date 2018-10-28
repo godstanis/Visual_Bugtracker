@@ -12,6 +12,15 @@ class Issue extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'closed' => 'bool',
+    ];
+
+    /**
      * Returns the type of the issue.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
