@@ -53,9 +53,17 @@ $factory->define(App\Issue::class, function (Faker\Generator $faker, array $para
         'project_id' => isset($params['project_id'])? $params['project_id']:factory(App\Project::class)->create()->id,
         'title' => str_random(20),
         'description' => str_random(100),
-        'user_id' => isset($params['user_id'])? $params['user_id']:factory(App\User::class)->create()->id,
         'priority_id' => 1,
         'type_id' => 1
+    ];
+});
+
+$factory->define(App\IssueDiscussion::class, function (Faker\Generator $faker, array $params) {
+    return [
+        'project_id' => isset($params['project_id'])? $params['project_id']:factory(App\Project::class)->create()->id,
+        'issue_id' => isset($params['issue_id'])? $params['issue_id']:factory(App\Issue::class)->create()->id,
+        'user_id' => isset($params['user_id'])? $params['user_id']:factory(App\User::class)->create()->id,
+        'text' => str_random(100)
     ];
 });
 

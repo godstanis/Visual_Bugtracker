@@ -36,6 +36,10 @@ class IssuesTest extends TestCase
     protected $baseProjectPage;
     protected $projectIssuesPage;
 
+    protected $issue;
+    protected $issueCreator;
+    protected $issuePageRoute;
+
     public function setUp()
     {
         parent::setUp();
@@ -50,8 +54,16 @@ class IssuesTest extends TestCase
         $this->projectIssuesPage = $this->baseProjectPage . $this->project->id . '/issues';
 
         $this->project->members()->attach($this->projectMember);
+
+        $this->issueCreator = factory(User::class)->create();
+        $this->project->members()->attach($this->issueCreator);
+        $this->issue = factory(Issue::class)->create(['project_id'=>$this->project->id, 'user_id'=>$this->issueCreator->id]);
+        $this->issuePageRoute = '/tracker/project/' . $this->project->id . '/issues/' . $this->issue->id;
     }
 
+    /**
+     * @covers \App\Http\Controllers\Bugtracker\IssuesController::getProjectIssues()
+     */
     public function testAGuestDoesNotSeeIssuesPage()
     {
         $response = $this->get($this->projectIssuesPage);
@@ -132,6 +144,9 @@ class IssuesTest extends TestCase
             ->assertSee($issueUserCreated->title);
     }
 
+    /**
+     * @covers \App\Http\Controllers\Bugtracker\IssuesController::attachUser()
+     */
     public function testAValidUserDoesAttachAMemberToHisIssue()
     {
         $this->project->members()->attach($this->user);
@@ -150,6 +165,9 @@ class IssuesTest extends TestCase
     }
 
 
+    /**
+     * @covers \App\Http\Controllers\Bugtracker\IssuesController::attachUser()
+     */
     public function testAValidUserDoesNotAttachAMemberToTheIssueHeDidNotCreated()
     {
         $this->project->members()->attach($this->user);
@@ -166,6 +184,94 @@ class IssuesTest extends TestCase
         $this->actingAs($this->projectMember)->get($attachUserRoute)->assertStatus(403);
 
         $this->assertFalse($issueUserCreated->assignees->contains($this->user));
+    }
+
+    /**
+     * @covers \App\Http\Controllers\Bugtracker\IssuesController::closeIssue()
+     */
+    public function testIssueCreatorClosesIssue()
+    {
+        $closeIssueRoute = $this->issuePageRoute . '/close';
+
+        $this->actingAs($this->issueCreator)->post($closeIssueRoute)->assertStatus(302);
+        $this->issue->refresh();
+
+        $this->assertTrue($this->issue->closed);
+    }
+
+    /**
+     * @covers \App\Http\Controllers\Bugtracker\IssuesController::closeIssue()
+     */
+    public function testIssueAssignedUserClosesIssue()
+    {
+        $this->issue->assignees()->attach($this->projectMember);
+
+        $closeIssueRoute = $this->issuePageRoute . '/close';
+        $this->actingAs($this->projectMember)->post($closeIssueRoute)->assertStatus(302);
+        $this->issue->refresh();
+        $this->assertTrue($this->issue->closed);
+    }
+
+    /**
+     * @covers \App\Http\Controllers\Bugtracker\IssuesController::closeIssue()
+     */
+    public function testNotAssignedUserDoesNotCloseIssue()
+    {
+        $closeIssueRoute = $this->issuePageRoute . '/close';
+        $this->actingAs($this->projectMember)->post($closeIssueRoute)->assertStatus(403);
+        $this->issue->refresh();
+        $this->assertFalse($this->issue->closed);
+    }
+
+    /**
+     * @covers \App\Http\Controllers\Bugtracker\IssuesController::attachUser()
+     */
+    public function testTheCreatorDoesAssignOtherMember()
+    {
+        $assignMemberRoute = $this->issuePageRoute . '/attach/';
+
+        $this->actingAs($this->projectCreator)->get($assignMemberRoute . $this->projectMember->name)->assertStatus(302);
+        $this->issue->refresh();
+        $this->assertTrue($this->issue->assignees->contains($this->projectMember));
+    }
+
+    /**
+     * @covers \App\Http\Controllers\Bugtracker\IssuesController::attachUser()
+     */
+    public function testNotACreatorDoesNotAssignOtherMembers()
+    {
+        $this->project->members()->attach($this->user);
+        $this->issue->assignees()->attach($this->projectMember);
+
+        $assignMemberRoute = $this->issuePageRoute . '/attach/';
+
+        $this->actingAs($this->projectMember)->get($assignMemberRoute . $this->user->name)->assertStatus(403);
+        $this->issue->refresh();
+        $this->assertFalse($this->issue->assignees->contains($this->projectCreator));
+    }
+
+    /**
+     * @covers \App\Http\Controllers\Bugtracker\IssuesController::attachUser()
+     */
+    public function testNotACreatorDoesAssignHimself()
+    {
+        $assignMemberRoute = $this->issuePageRoute . '/attach/';
+
+        $this->actingAs($this->projectMember)->get($assignMemberRoute . $this->projectMember->name)->assertStatus(302);
+        $this->issue->refresh();
+        $this->assertTrue($this->issue->assignees->contains($this->projectMember));
+    }
+
+    /**
+     * @covers \App\Http\Controllers\Bugtracker\IssuesController::detachUser()
+     */
+    public function testAnAssignedUserDeAssignHimself()
+    {
+        $assignMemberRoute = $this->issuePageRoute . '/detach/';
+
+        $this->actingAs($this->projectMember)->get($assignMemberRoute . $this->projectMember->name)->assertStatus(302);
+        $this->issue->refresh();
+        $this->assertFalse($this->issue->assignees->contains($this->projectMember));
     }
 
 }
