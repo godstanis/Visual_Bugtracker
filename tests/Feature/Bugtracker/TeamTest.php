@@ -13,9 +13,13 @@ class TeamTest extends TestCase
 {
     use WithFaker, DatabaseTransactions;
 
+    /**
+     * @var \App\User A blank user for advanced manipulations.
+     */
+    protected $user;
+
     protected $creator;
     protected $member;
-    protected $otherUser;
     protected $project;
     protected $projectsTeamPage;
 
@@ -24,7 +28,7 @@ class TeamTest extends TestCase
         parent::setUp();
         $this->creator = factory(User::class)->create();
         $this->member = factory(User::class)->create();
-        $this->otherUser = factory(User::class)->create();
+        $this->user = factory(User::class)->create();
         $this->project = factory(Project::class)->create(['user_id'=>$this->creator->id]);
         $this->project->members()->attach($this->member);
         $this->projectsTeamPage = '/tracker/project/' . $this->project->id . '/team';
@@ -47,10 +51,10 @@ class TeamTest extends TestCase
     public function testACreatorAddsMember()
     {
         $this->actingAs($this->creator)
-            ->post($this->projectsTeamPage.'/attach', ['user_name'=>$this->otherUser->name])
+            ->post($this->projectsTeamPage.'/attach', ['user_name'=>$this->user->name])
             ->assertStatus(302);
 
-        $this->actingAs($this->creator)->get($this->projectsTeamPage)->assertSee($this->otherUser->name);
+        $this->actingAs($this->creator)->get($this->projectsTeamPage)->assertSee($this->user->name);
     }
 
     /**
@@ -71,10 +75,10 @@ class TeamTest extends TestCase
     public function testMemberDoesNotAddAnotherMember()
     {
         $this->actingAs($this->member)
-            ->post($this->projectsTeamPage.'/attach', ['user_name'=>$this->otherUser->name])
+            ->post($this->projectsTeamPage.'/attach', ['user_name'=>$this->user->name])
             ->assertStatus(403);
 
-        $this->actingAs($this->member)->get($this->projectsTeamPage)->assertDontSee($this->otherUser->name);
+        $this->actingAs($this->member)->get($this->projectsTeamPage)->assertDontSee($this->user->name);
     }
 
     /**
@@ -82,12 +86,12 @@ class TeamTest extends TestCase
      */
     public function testMemberDoesNotRemoveAnotherMember()
     {
-        $this->project->members()->attach($this->otherUser);
+        $this->project->members()->attach($this->user);
 
         $this->actingAs($this->member)
-            ->get($this->projectsTeamPage.'/deattach/'.$this->otherUser->name)
+            ->get($this->projectsTeamPage.'/deattach/'.$this->user->name)
             ->assertStatus(403);
 
-        $this->actingAs($this->creator)->get($this->projectsTeamPage)->assertSee($this->otherUser->name);
+        $this->actingAs($this->creator)->get($this->projectsTeamPage)->assertSee($this->user->name);
     }
 }
