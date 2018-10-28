@@ -22,6 +22,10 @@ class ProjectsTest extends TestCase
     protected $creator;
     protected $project;
     protected $member;
+
+    /**
+     * @var \App\User A blank user for advanced manipulations.
+     */
     protected $user;
 
 
