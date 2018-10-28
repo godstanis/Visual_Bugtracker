@@ -36,6 +36,21 @@ class ProjectImageObserver
     }
 
     /**
+     * Handle the project "updating" event and upload an image to disk.
+     *
+     * @param  \App\Project  $project
+     * @return void
+     */
+    public function updating(Project $project)
+    {
+        $image = request()->image;
+
+        if( isset( $image ) ) {
+            $project->image = $this->uploadService->upload($image);
+        }
+    }
+
+    /**
      * Handle the project "deleted" event and delete the project image from disk.
      *
      * @param  \App\Project  $project

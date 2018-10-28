@@ -39,6 +39,10 @@ class ProjectImageUploadService extends AbstractFileUploadService
 
         Storage::put($this->basePath.'/' . $newName, (string)$uploadedImage->stream());
 
+        if($oldName!==null) {
+            $this->delete($oldName); // delete old project image if exists
+        }
+
         return $newName;
     }
 
