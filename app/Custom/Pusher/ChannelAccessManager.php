@@ -22,8 +22,7 @@ class ChannelAccessManager
     {
         $userAuthorized = $this->channel->getUserAuthorizationStatus($this->user);
 
-        if ($userAuthorized)
-        {
+        if ($userAuthorized) {
             $pusher = app()->make(Pusher::class);
           
             $data = $pusher->socket_auth($request->channel_name, $request->socket_id);

@@ -12,6 +12,10 @@ abstract class AbstractChannel
         $this->channel_name = $channel_name;
     }
 
-    abstract public function getUserAuthorizationStatus(\App\User $user);
+    /**
+     * @param \App\User $user
+     * @return mixed Flag that indicates authorization status
+     */
+    abstract public function getUserAuthorizationStatus(\App\User $user): bool;
 
 }
