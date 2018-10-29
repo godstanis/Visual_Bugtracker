@@ -14,6 +14,15 @@ use App\Http\Controllers\BugtrackerBaseController;
 
 class CommentPointController extends BugtrackerBaseController
 {
+
+    /**
+     * We register the policy to authorize every action.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(CommentPoint::class);
+    }
+
     /**
      * Display a listing of the comment points for the board.
      *

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\CommentPoint;
+use App\Policies\CommentPointPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -26,7 +28,8 @@ class AuthServiceProvider extends ServiceProvider
         Project::class => ProjectPolicy::class,
         Issue::class => IssuesPolicy::class,
         Board::class => BoardPolicy::class,
-        Path::class => PathPolicy::class
+        Path::class => PathPolicy::class,
+        CommentPoint::class => CommentPointPolicy::class,
     ];
 
     /**
