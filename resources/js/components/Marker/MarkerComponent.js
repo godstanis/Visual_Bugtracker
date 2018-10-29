@@ -41,9 +41,9 @@ class MarkerComponent extends React.Component {
                 <span style={display_block}>
                                 {this.comment_point.text}
                             </span>
-                {this.comment_point.issue && ( // is issue exists
+                {this.comment_point.issue && ( // if issue exists
                     <span className="text-muted" style={display_block}>
-                                    <a className="title-link" href={this.comment_point.url.issue}>
+                                    <a className="title-link" href={this.comment_point.issue.url}>
                                         <span>#{this.comment_point.issue.id} <b>{this.comment_point.issue.title}</b></span>
                                     </a>
                                 </span>
