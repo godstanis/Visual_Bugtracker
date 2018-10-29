@@ -75,3 +75,28 @@ $factory->define(App\Board::class, function (Faker\Generator $faker, array $para
         'image' => isset($params['image'])? $params['image']:$faker->text(20),
     ];
 });
+
+$factory->define(App\Path::class, function (Faker\Generator $faker, array $params) {
+    if(!function_exists('generatePath')) {
+        // Generates a valid random path data
+        function generatePath() {
+            $iterations = random_int(1,10);
+            $pathData = "M".random_int(1,250).",".random_int(1,250);
+
+            for($i = 0; $i <= $iterations; $i++) {
+                $pathData .= "L".random_int(1,250).",".random_int(1,250);
+            }
+
+            return $pathData;
+        }
+    }
+
+    return [
+        'board_id' => isset($params['board_id'])? $params['board_id']:factory(App\Board::class)->create()->id,
+        'user_id' => isset($params['user_id'])? $params['user_id']:factory(App\User::class)->create()->id,
+        // Generates random valid hex color, example: #14FAD2
+        'stroke_color' => '#' . substr(str_shuffle('ABCDEF0123456789'), 0, 6),
+        'stroke_width' => random_int(1,10),
+        'path_data' => isset($params['path_data'])? $params['path_data']:generatePath(),
+    ];
+});
