@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Bugtracker;
 
 use App\Http\Controllers\Controller;
 
+use App\Http\Requests\DeletePathRequest;
+use App\Path;
 use Illuminate\Http\Request;
 
 use App\Project;
@@ -24,7 +26,7 @@ class PathController extends Controller
         return new \App\Http\Resources\Path\PathResource($path);
     }
 
-    public function destroy(Request $request, Project $project, Board $board)
+    public function destroy(DeletePathRequest $request, Project $project, Board $board, Path $path)
     {
         $board->paths()->where('path_slug', $request->path_slug)->first()->delete();
 
