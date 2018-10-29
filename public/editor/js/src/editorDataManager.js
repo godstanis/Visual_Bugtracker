@@ -14,17 +14,18 @@ let editorDataManager = (function(){
                 stroke_color:path_json['stroke'],
             },
             success: function(data){
-                data = JSON.parse(data);
+                //console.log(data);
+                //data = JSON.parse(data);
                 cheangeElementId(element, data.path_slug);
             }
         });
 
         
-    };
+    }
 
     function cheangeElementId(element, id){
         element.setAttribute('id', id);
-    };
+    }
 
     function deletePath(path_id)
     {
@@ -42,12 +43,12 @@ let editorDataManager = (function(){
             },
         });
 
-    };
+    }
 
     function deleteElement(path_id){
         drawSVG.deleteObject(path_id);
         dataConstructor.removeElement(path_id);
-    };
+    }
 
     return {
         savePath: savePath,

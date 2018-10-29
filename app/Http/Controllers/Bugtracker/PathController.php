@@ -21,13 +21,7 @@ class PathController extends Controller
     public function create(Request $request, Project $project, Board $board)
     {
         $path = $board->paths()->create($request->all());
-
-        if($request->ajax()) {
-            $response = [ 'path_slug' => $path->path_slug ];
-            return response(json_encode($response), 200);
-        }
-
-        return redirect()->back();
+        return new \App\Http\Resources\Path\PathResource($path);
     }
 
     public function destroy(Request $request, Project $project, Board $board)

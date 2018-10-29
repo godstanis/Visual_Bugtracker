@@ -17,7 +17,9 @@ class PathObserver
      */
     public function creating(Path $path)
     {
-        $path->user_id = auth()->user()->id;
+        if(!isset($path->user_id)) {
+            $path->user_id = auth()->user()->id;
+        }
 
         $pathSlug = uniqid('path_', false).str_random(4);
         $path->path_slug = $pathSlug;

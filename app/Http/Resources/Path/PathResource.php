@@ -14,13 +14,16 @@ class PathResource extends JsonResource
      */
     public function toArray($request)
     {
-        //self::withoutWrapping(); // {"data":[...]} wrapping remove for this response.
+        self::withoutWrapping(); // {"data":[...]} wrapping remove for this response.
 
         $path = [
             'path_slug'=>$this->path_slug,
             'stroke'=>$this->stroke_color,
             'stroke-width'=>$this->stroke_width,
-            'd'=>$this->path_data
+            'd'=>$this->path_data,
+            'info' => [
+                'creator_id' => $this->creator->id
+            ]
         ];
 
         return $path;
