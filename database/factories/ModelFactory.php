@@ -42,7 +42,7 @@ $factory->define(App\Project::class, function (Faker\Generator $faker, array $pa
     return [
         'name' => str_random(14),
         'description' => str_random(255),
-        'user_id' => isset($params['user_id'])? $params['user_id']:factory(App\User::class)->create()->id,
+        'user_id' => $params['user_id'] ?? factory(App\User::class)->create()->id,
         'image' => str_random(100),
     ];
 });
@@ -54,8 +54,8 @@ $factory->define(App\Issue::class, function (Faker\Generator $faker, array $para
     $project->members()->attach($user);
 
     return [
-        'project_id' => isset($params['project_id'])? $params['project_id']:$project->id,
-        'user_id' => isset($params['user_id'])? $params['user_id']:$user->id,
+        'project_id' => $params['project_id'] ?? $project->id,
+        'user_id' => $params['user_id'] ?? $user->id,
         'title' => str_random(20),
         'description' => str_random(100),
         'priority_id' => 1,
@@ -65,19 +65,19 @@ $factory->define(App\Issue::class, function (Faker\Generator $faker, array $para
 
 $factory->define(App\IssueDiscussion::class, function (Faker\Generator $faker, array $params) {
     return [
-        'project_id' => isset($params['project_id'])? $params['project_id']:factory(App\Project::class)->create()->id,
-        'issue_id' => isset($params['issue_id'])? $params['issue_id']:factory(App\Issue::class)->create()->id,
-        'user_id' => isset($params['user_id'])? $params['user_id']:factory(App\User::class)->create()->id,
+        'project_id' => $params['project_id'] ?? factory(App\Project::class)->create()->id,
+        'issue_id' => $params['issue_id'] ?? factory(App\Issue::class)->create()->id,
+        'user_id' => $params['user_id'] ?? factory(App\User::class)->create()->id,
         'text' => str_random(100)
     ];
 });
 
 $factory->define(App\Board::class, function (Faker\Generator $faker, array $params) {
     return [
-        'project_id' => isset($params['project_id'])? $params['project_id']:factory(App\Project::class)->create()->id,
-        'user_id' => isset($params['user_id'])? $params['user_id']:factory(App\User::class)->create()->id,
+        'project_id' => $params['project_id'] ?? factory(App\Project::class)->create()->id,
+        'user_id' => $params['user_id'] ?? factory(App\User::class)->create()->id,
         'name' => str_random(8),
-        'image' => isset($params['image'])? $params['image']:$faker->text(20),
+        'image' => $params['image'] ?? $faker->text(20),
     ];
 });
 
@@ -97,20 +97,20 @@ $factory->define(App\Path::class, function (Faker\Generator $faker, array $param
     }
 
     return [
-        'board_id' => isset($params['board_id'])? $params['board_id']:factory(App\Board::class)->create()->id,
-        'user_id' => isset($params['user_id'])? $params['user_id']:factory(App\User::class)->create()->id,
+        'board_id' => $params['board_id'] ?? factory(App\Board::class)->create()->id,
+        'user_id' => $params['user_id'] ?? factory(App\User::class)->create()->id,
         // Generates random valid hex color, example: #14FAD2
         'stroke_color' => '#' . substr(str_shuffle('ABCDEF0123456789'), 0, 6),
         'stroke_width' => random_int(1,10),
-        'path_data' => isset($params['path_data'])? $params['path_data']:generatePath(),
+        'path_data' => $params['path_data'] ?? generatePath(),
     ];
 });
 
 $factory->define(App\CommentPoint::class, function (Faker\Generator $faker, array $params) {
     return [
-        'board_id' => isset($params['board_id'])? $params['board_id']:factory(App\Board::class)->create()->id,
-        'user_id' => isset($params['user_id'])? $params['user_id']:factory(App\User::class)->create()->id,
-        'issue_id' => isset($params['issue_id'])? $params['issue_id']:factory(App\Issue::class)->create()->id,
+        'board_id' => $params['board_id'] ?? factory(App\Board::class)->create()->id,
+        'user_id' => $params['user_id'] ?? factory(App\User::class)->create()->id,
+        'issue_id' => $params['issue_id'] ?? factory(App\Issue::class)->create()->id,
         // Generates random valid hex color, example: #14FAD2
         'position_x' => random_int(1,100),
         'position_y' => random_int(1,100),
