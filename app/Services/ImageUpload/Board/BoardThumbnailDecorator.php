@@ -20,7 +20,7 @@ class BoardThumbnailDecorator extends AbstractFileUploadService
     protected $uploadService;
     protected $prefix;
 
-    function __construct(string $basePath, AbstractFileUploadService $uploadService, string $prefix = 'thumbnail_')
+    public function __construct(string $basePath, AbstractFileUploadService $uploadService, string $prefix = 'thumbnail_')
     {
         parent::__construct($basePath);
 
@@ -51,9 +51,7 @@ class BoardThumbnailDecorator extends AbstractFileUploadService
     }
 
     /**
-     * @param UploadedFile $file
-     * @param string $newName
-     * @param string|null $oldName Defines a file name to be deleted/stashed.
+     * @param string $name
      * @return bool
      */
     public function delete(string $name): bool

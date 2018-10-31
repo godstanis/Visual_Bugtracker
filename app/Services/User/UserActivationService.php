@@ -2,9 +2,6 @@
 
 namespace App\Services\User;
 
-use App\User;
-use App\UserActivation;
-
 class UserActivationService extends AbstractUserActivationService
 {
     protected $user;
@@ -20,9 +17,8 @@ class UserActivationService extends AbstractUserActivationService
         $this->userActivation->user_id = $this->user->id;
         $this->userActivation->token = str_random(32).uniqid('',false);
 
-        if($this->userActivation->save()) {
-            return $this->userActivation->token;
-        }
+        $this->userActivation->save();
+        return $this->userActivation->token;
     }
 
     /**
@@ -34,7 +30,7 @@ class UserActivationService extends AbstractUserActivationService
     public function activateUserByToken(string $token): bool
     {
         $userActivation = $this->userActivation->where('token', $token)->first();
-        if($userActivation == null) {
+        if($userActivation === null) {
             return false;
         }
 

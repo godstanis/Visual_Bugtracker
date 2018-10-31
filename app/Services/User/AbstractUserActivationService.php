@@ -21,7 +21,7 @@ abstract class AbstractUserActivationService
      *
      * @return string
      */
-    public abstract function createToken(): string;
+    abstract public function createToken(): string;
 
     /**
      * Activates User account by a valid token.
@@ -29,6 +29,6 @@ abstract class AbstractUserActivationService
      * @param string $token
      * @return bool
      */
-    public abstract function activateUserByToken(string $token): bool;
+    abstract public function activateUserByToken(string $token): bool;
 
 }

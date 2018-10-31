@@ -31,7 +31,7 @@ class AvatarUploadService extends AbstractFileUploadService
     {
         if($newName === null) {
             $imageExtension = $file->getClientOriginalExtension();
-            $newName = str_random(24) . uniqid("", false) . '.' . $imageExtension;
+            $newName = str_random(24) . uniqid('', false) . '.' . $imageExtension;
         }
 
         $uploadedImage = (new Image)->make($file)->resize(150,150);
@@ -53,9 +53,7 @@ class AvatarUploadService extends AbstractFileUploadService
     }
 
     /**
-     * @param UploadedFile $file
-     * @param string $newName
-     * @param string|null $oldName Defines a file name to be deleted/stashed.
+     * @param string $name
      * @return bool
      */
     public function delete(string $name): bool

@@ -29,5 +29,5 @@ abstract class AbstractUserService
      * @param UploadedFile $image
      * @return void
      */
-    public abstract function updateUserImage(UploadedFile $image): void;
+    abstract public function updateUserImage(UploadedFile $image): void;
 }

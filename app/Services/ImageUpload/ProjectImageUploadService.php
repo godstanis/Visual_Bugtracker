@@ -14,7 +14,7 @@ class ProjectImageUploadService extends AbstractFileUploadService
      * AvatarUploadContract constructor.
      * @param string $basePath
      */
-    public function __construct(string $basePath)
+    public function __construct (string $basePath)
     {
         parent::__construct($basePath);
         $this->defaultProjectImageName = config('images.default_project_thumb');
@@ -30,7 +30,7 @@ class ProjectImageUploadService extends AbstractFileUploadService
     {
         if($newName === null) {
             $imageExtension = $file->getClientOriginalExtension();
-            $newName = str_random(24) . uniqid("", false) . '.' . $imageExtension;
+            $newName = str_random(24) . uniqid('', false) . '.' . $imageExtension;
         }
 
         $uploadedImage = (new Image)->make($file)->resize(null,150, function ($constraint) {
@@ -47,9 +47,7 @@ class ProjectImageUploadService extends AbstractFileUploadService
     }
 
     /**
-     * @param UploadedFile $file
-     * @param string $newName
-     * @param string|null $oldName Defines a file name to be deleted/stashed.
+     * @param string $name
      * @return bool
      */
     public function delete(string $name): bool
