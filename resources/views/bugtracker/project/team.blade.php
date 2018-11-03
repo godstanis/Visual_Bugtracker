@@ -6,28 +6,28 @@
 @endsection
 
 @section('scripts')
-<script>
+<script> // TODO: Refactor this madness
 $(document).ready(function() {
 
-    var delay = (function(){
-        var timer = 0;
-        return function(callback, ms){
+    let delay = (function() {
+        let timer = 0;
+        return function(callback, ms) {
             clearTimeout (timer);
             timer = setTimeout(callback, ms);
         };
     })();
 
-    $('.user-name-search-input').keyup(function(e){
-        var input_element = $(e.target);
-        var input_val = $(e.target).val();
+    $('.user-name-search-input').keyup(function(e) {
+        let input_element = $(e.target);
+        let input_val = $(e.target).val();
         console.log (input_val);
 
-        var url = "{{route('project.team.search', ['project'=>$project, 'search_query'=>'query_string'])}}";
+        let url = "{{route('project.team.search', ['project'=>$project, 'name'=>'query_string'])}}";
 
         url = url.replace('query_string', input_val);
 
-        delay(function(){
-            if(input_val===""){
+        delay(function() {
+            if(input_val==="") {
                 showResults('');
                 return false;
             }
@@ -41,10 +41,9 @@ $(document).ready(function() {
             });
         }, 200);
 
-        function showResults(results)
-        {
+        function showResults(results) {
             $('.user-name-search-results').html('');
-            var users_view = formTableView(results);
+            let users_view = formTableView(results);
 
             $('.user-name-search-results').append(users_view);
 
@@ -53,43 +52,36 @@ $(document).ready(function() {
 
         function formTableView(users)
         {
-            var view;
-            var user_link = returnLink;
+            let view;
 
-            for(var i=0; i<users.length; i++){
-                //view += '<tr><td>'+returnLink(users[i])+'</tr></tr>';
-                view += '<tr><td>'+returnLink(users[i]['name'], users[i]['avatar'])+'</tr></tr>';
+            for(let i=0; i<users.length; i++) {
+                view += returnLink(users[i]['name'], users[i]['profile_url'], users[i]['profile_image_url']);
+            }
+
+            function returnLink(user_name, profile_url, profile_image_url) {
+                return '<tr><td>\
+                <a href="'+profile_url+'"> \
+                    <span>@</span>'+user_name+' \
+                </a> \
+                <img class="user-profile-image" src="'+profile_image_url+'" alt="" width="20px"> \
+                <span class="insert-in-input-block"><a href="'+user_name+'" class="btn btn-success btn-xs insert-user-in-input"><span class="glyphicon glyphicon-plus"></span></a></span>\
+                </tr></tr>';
             }
 
             return view;
-
-            function returnLink(user_name, profile_image)
-            {
-                var link = '\
-                <a href="{{ route("user", ["user_name"=>"user_name_string"]) }}"> \
-                    <span>@</span>user_name_string \
-                    <img class="user-profile-image" src="{{ config('images.amazon_base_link') . config('images.user_avatar_dir') }}/'+profile_image+'" alt="" width="20px"> \
-                </a> \
-                <span class="insert-in-input-block"><a href="user_name_string" class="btn btn-success btn-xs insert-user-in-input"><span class="glyphicon glyphicon-plus"></span></a></span>\
-                ';
-
-                link = link.replace(/user_name_string/g, user_name);
-
-                return link;
-            }
         }
 
         function setFoundUserAddEvent(input)
         {
             $('.insert-in-input-block a.insert-user-in-input').click({input_element: input},function(e){
                 e.preventDefault();
-                var user_name = $(e.target).attr('href');
+                let user_name = $(e.target).attr('href');
 
-                if(user_name === undefined){ // if clicked on icon inside a
+                if(user_name === undefined) { // if clicked on icon inside a
                     user_name = $(e.target).closest('a').attr('href');
                 }
 
-                var input = e.data.input_element;
+                let input = e.data.input_element;
 
                 input.val(user_name);
             });
@@ -111,7 +103,7 @@ $(document).ready(function() {
         <td>
             <a href="{{ route('user', ['user_name'=>$member->name]) }}">
                 <span>@</span>{{ $member->name }}
-                <img class="user-profile-image" src="{{ $member->imageLink() }}" alt="" width="20px"></a>
+                <img class="user-profile-image" src="{{ $member->imageLink() }}" alt="" width="20px">
             </a>
             @if($member->can('delete', $project))
                 <div class="project-creator-badge" title="Project creator"><b>@lang('projects.team_creator_badge')</b></div>
@@ -146,7 +138,7 @@ $(document).ready(function() {
                 <strong>{{ $errors->first('user_name') }}</strong>
             </span>
         @endif
-    <div class="col-md-6">
+    <div class="col-md-12">
         <table class="table table-inverse">
             <tbody class="user-name-search-results">
                 

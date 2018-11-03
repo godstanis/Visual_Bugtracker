@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Bugtracker;
 
 use App\Http\Requests\AddMemberRequest;
 use App\Http\Requests\RemoveMemberRequest;
-use App\Repositories\TeamRepository;
+use App\Http\Resources\User\UserCollection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BugtrackerBaseController;
 
 use App\User;
 use App\Project;
-use App\ProjectAccess;
 
 class TeamController extends BugtrackerBaseController
 {
@@ -65,43 +64,30 @@ class TeamController extends BugtrackerBaseController
         $project->members()->detach($user);
 
         if($request->ajax()) {
-            return response("", 200);
+            return response('', 200);
         }
 
         return redirect()->back();
     }
 
     /**
-     * Dirty method to search all users which match the given query.
-     *
-     * TODO: #6 Issue, team management improvements.
+     * Search all users matching query.
      *
      * @param Request $request
      * @param Project $project
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @param User $user
+     * @return UserCollection
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function searchUser(Request $request, Project $project)
+    public function searchUser(Request $request, Project $project, User $user)
     {
         $this->validate($request, [
-            'search_query' => 'required|string'
+            'name' => 'required|string'
         ]);
 
-        $search_query = $request->search_query;
-        $users = User::where('name', 'REGEXP', $search_query)->take(10)->get();
-        
-        $foundNames = [];
+        $users = $user->where('name', 'LIKE', '%'.$request->name.'%')->take(5)->get();
 
-        foreach ($users as $user) {
-            $foundNames[] = ['name'=>$user->name, 'avatar'=>$user->profile_image];
-        }
-
-        $jsonObj = json_encode($foundNames);
-
-        if($request->ajax()) {
-            return response($jsonObj, 200)->header('Content-Type', 'application/json');
-        }
-
-        return response($jsonObj, 200);
+        return new UserCollection($users);
     }
 
 }
