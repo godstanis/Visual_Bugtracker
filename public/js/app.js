@@ -394,6 +394,51 @@ module.exports = __webpack_require__(30);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
+  }
+  if (true) {
+    // This branch is unreachable because this function is only called
+    // in production, but the condition is true only in development.
+    // Therefore if the branch is still here, dead code elimination wasn't
+    // properly applied.
+    // Don't change the message. React DevTools relies on it. Also make sure
+    // this message doesn't occur elsewhere in this function, or it will cause
+    // a false positive.
+    throw new Error('^_^');
+  }
+  try {
+    // Verify that the code above has been dead code eliminated (DCE'd).
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools shouldn't crash React, no matter what.
+    // We should still report in case we break this code.
+    console.error(err);
+  }
+}
+
+if (false) {
+  // DCE check should happen before ReactDOM bundle executes so that
+  // DevTools can report bad minification during injection.
+  checkDCE();
+  module.exports = require('./cjs/react-dom.production.min.js');
+} else {
+  module.exports = __webpack_require__(25);
+}
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
@@ -491,7 +536,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32)))
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -588,7 +633,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -683,51 +728,6 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 }
 
 module.exports = checkPropTypes;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function checkDCE() {
-  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
-  if (
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
-  ) {
-    return;
-  }
-  if (true) {
-    // This branch is unreachable because this function is only called
-    // in production, but the condition is true only in development.
-    // Therefore if the branch is still here, dead code elimination wasn't
-    // properly applied.
-    // Don't change the message. React DevTools relies on it. Also make sure
-    // this message doesn't occur elsewhere in this function, or it will cause
-    // a false positive.
-    throw new Error('^_^');
-  }
-  try {
-    // Verify that the code above has been dead code eliminated (DCE'd).
-    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
-  } catch (err) {
-    // DevTools shouldn't crash React, no matter what.
-    // We should still report in case we break this code.
-    console.error(err);
-  }
-}
-
-if (false) {
-  // DCE check should happen before ReactDOM bundle executes so that
-  // DevTools can report bad minification during injection.
-  checkDCE();
-  module.exports = require('./cjs/react-dom.production.min.js');
-} else {
-  module.exports = __webpack_require__(25);
-}
 
 
 /***/ }),
@@ -1109,7 +1109,7 @@ var MarkerComponent = function (_React$Component) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(14);
-module.exports = __webpack_require__(49);
+module.exports = __webpack_require__(50);
 
 
 /***/ }),
@@ -1132,9 +1132,10 @@ __webpack_require__(15);
  */
 
 __webpack_require__(22);
+__webpack_require__(48);
 
 __webpack_require__(12);
-__webpack_require__(48);
+__webpack_require__(49);
 
 /***/ }),
 /* 15 */
@@ -30551,7 +30552,7 @@ return /******/ (function(modules) { // webpackBootstrap
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
@@ -30566,58 +30567,250 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+__WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-var PathsRenderComponent = function (_React$Component) {
-    _inherits(PathsRenderComponent, _React$Component);
+console.log('test');
 
-    function PathsRenderComponent(props) {
-        _classCallCheck(this, PathsRenderComponent);
+var TeamComponent = function (_React$Component) {
+    _inherits(TeamComponent, _React$Component);
 
-        var _this = _possibleConstructorReturn(this, (PathsRenderComponent.__proto__ || Object.getPrototypeOf(PathsRenderComponent)).call(this, props));
+    function TeamComponent(props) {
+        _classCallCheck(this, TeamComponent);
 
-        _this.state = { paths: [] };
-        _this.href = window.location.href + '/paths';
+        var _this = _possibleConstructorReturn(this, (TeamComponent.__proto__ || Object.getPrototypeOf(TeamComponent)).call(this, props));
+
+        _this.state = { users: [], members: [] };
+        _this.members_href = window.location.href; // ajax
+        _this.attach_href = window.location.href + '/attach';
+        _this.detach_href = window.location.href + '/detach';
+        _this.search_href = window.location.href + '/search-member';
+        _this.csrf = Laravel.csrfToken;
+        _this.name_input_value = '';
+
+        _this.user_can_delete_members = window.auth_user.canRemoveMember;
+
+        _this.updateMembersListRequest();
         return _this;
     }
 
-    _createClass(PathsRenderComponent, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
+    // Search users on input change
+
+
+    _createClass(TeamComponent, [{
+        key: 'updateInputValue',
+        value: function updateInputValue(e) {
+            this.name_input_value = e.target.value;
+            this.searchUser(e.target.value);
+        }
+
+        // Updates member list wia sending a get request to the server
+
+    }, {
+        key: 'updateMembersListRequest',
+        value: function updateMembersListRequest() {
             var _this2 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.href).then(function (response) {
-                _this2.setState({ paths: response.data });
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.members_href).then(function (response) {
+                _this2.setState({ members: response.data });
+            }).catch(function (error) {});
+        }
+
+        // Send a request to attach a member
+
+    }, {
+        key: 'attachUser',
+        value: function attachUser(e) {
+            var _this3 = this;
+
+            e.preventDefault();
+            var userName = e.target.dataset.userName;
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.attach_href, { name: userName }).then(function (response) {
+                _this3.updateMembersListRequest();
+            }).catch(function (error) {});
+        }
+
+        // Send a request to detach a member
+
+    }, {
+        key: 'detachUser',
+        value: function detachUser(e) {
+            var _this4 = this;
+
+            e.preventDefault();
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(e.target.href).then(function (response) {
+                _this4.updateMembersListRequest();
+            });
+        }
+
+        // Send a search request to the server and update search output state
+
+    }, {
+        key: 'searchUser',
+        value: function searchUser(name) {
+            var _this5 = this;
+
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.search_href, { params: { name: name } }).then(function (response) {
+                _this5.setState({ users: response.data });
             });
         }
     }, {
         key: 'render',
         value: function render() {
+            var _this6 = this;
+
+            var links = {
+                attach: this.attach_href,
+                detach: this.detach_href,
+                search: this.search_href
+            };
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                'div',
                 null,
-                this.state.paths.map(function (path) {
-                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Path, { key: path.path_slug, path: path });
-                })
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'table',
+                    { className: 'table' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'tbody',
+                        null,
+                        this.state.members.map(function (member) {
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MembersList, { key: 'member_' + member.name, member: member, links: links, canDelete: _this6.user_can_delete_members, detachUser: _this6.detachUser.bind(_this6) });
+                        })
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'col-md-6 col-md-offset-3' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(SearchForm, { csrf: this.csrf, links: links, onChange: this.updateInputValue.bind(this) }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'table',
+                        { className: 'table table-inverse' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'tbody',
+                            { className: 'user-name-search-results' },
+                            this.state.users.map(function (user) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(FoundUser, { key: user.name, user: user, attachUser: _this6.attachUser.bind(_this6) });
+                            })
+                        )
+                    )
+                )
             );
         }
     }]);
 
-    return PathsRenderComponent;
+    return TeamComponent;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
-function Path(props) {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('path', {
-        id: props.path.path_slug,
-        stroke: props.path.stroke,
-        strokeWidth: props.path['stroke-width'],
-        className: 'svg-element',
-        fill: 'none',
-        d: props.path.d });
+var MembersList = function (_React$Component2) {
+    _inherits(MembersList, _React$Component2);
+
+    function MembersList(props) {
+        _classCallCheck(this, MembersList);
+
+        var _this7 = _possibleConstructorReturn(this, (MembersList.__proto__ || Object.getPrototypeOf(MembersList)).call(this, props));
+
+        _this7.props = props;
+        return _this7;
+    }
+
+    _createClass(MembersList, [{
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'tr',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'td',
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'a',
+                        { href: this.props.member.profile_url },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            null,
+                            '@'
+                        ),
+                        this.props.member.name,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { className: 'user-profile-image', src: this.props.member.profile_image_url, alt: '', width: '20px' }),
+                        " "
+                    ),
+                    this.props.canDelete && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('a', { href: this.props.links.detach + '/' + this.props.member.name, className: 'member-delete-form btn btn-danger btn-xs glyphicon glyphicon-remove', onClick: this.props.detachUser.bind(this) })
+                )
+            );
+        }
+    }]);
+
+    return MembersList;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+var SearchForm = function (_React$Component3) {
+    _inherits(SearchForm, _React$Component3);
+
+    function SearchForm(props) {
+        _classCallCheck(this, SearchForm);
+
+        var _this8 = _possibleConstructorReturn(this, (SearchForm.__proto__ || Object.getPrototypeOf(SearchForm)).call(this, props));
+
+        _this8.props = props;
+        return _this8;
+    }
+
+    _createClass(SearchForm, [{
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'form',
+                { action: this.props.links.attach, method: 'POST' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'input-group ' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'span',
+                        { className: 'input-group-addon', id: 'sizing-addon2' },
+                        '@'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'form-control user-name-search-input', type: 'text', name: 'user_name',
+                        placeholder: '\u0418\u043C\u044F \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F', onChange: this.props.onChange.bind(this) })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: this.props.csrf })
+            );
+        }
+    }]);
+
+    return SearchForm;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+function FoundUser(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'tr',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'td',
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'a',
+                { href: props.user.profile_url },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'span',
+                    null,
+                    '@'
+                ),
+                props.user.name
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { className: 'user-profile-image', src: props.user.profile_image_url, alt: '', width: '20px' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'span',
+                { className: 'insert-in-input-block' },
+                " ",
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('a', { 'data-user-name': props.user.name, onClick: props.attachUser, className: 'btn btn-success btn-xs insert-user-in-input glyphicon glyphicon-plus' })
+            )
+        )
+    );
 }
 
-if (document.getElementById('svg-area')) {
-    console.log('PathsComponent initialized');
-    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(PathsRenderComponent, null), document.getElementById('svg-area'));
+if (document.getElementById('search-team-component')) {
+    console.log('TeamComponent initialized');
+    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(TeamComponent, null), document.getElementById('search-team-component'));
 }
 
 /***/ }),
@@ -30642,8 +30835,8 @@ if (true) {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(4);
-var checkPropTypes = __webpack_require__(5);
+var _assign = __webpack_require__(5);
+var checkPropTypes = __webpack_require__(6);
 
 // TODO: this is special because it gets imported during build.
 
@@ -32409,8 +32602,8 @@ if (true) {
 'use strict';
 
 var React = __webpack_require__(1);
-var _assign = __webpack_require__(4);
-var checkPropTypes = __webpack_require__(5);
+var _assign = __webpack_require__(5);
+var checkPropTypes = __webpack_require__(6);
 var scheduler = __webpack_require__(26);
 var tracing = __webpack_require__(28);
 
@@ -52405,7 +52598,7 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(7);
 var Axios = __webpack_require__(31);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 
 /**
  * Create an instance of Axios
@@ -52461,7 +52654,7 @@ module.exports.default = axios;
 "use strict";
 
 
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(41);
 var dispatchRequest = __webpack_require__(42);
@@ -53179,7 +53372,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(43);
 var isCancel = __webpack_require__(10);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -53428,7 +53621,84 @@ module.exports = function spread(callback) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+var PathsRenderComponent = function (_React$Component) {
+    _inherits(PathsRenderComponent, _React$Component);
+
+    function PathsRenderComponent(props) {
+        _classCallCheck(this, PathsRenderComponent);
+
+        var _this = _possibleConstructorReturn(this, (PathsRenderComponent.__proto__ || Object.getPrototypeOf(PathsRenderComponent)).call(this, props));
+
+        _this.state = { paths: [] };
+        _this.href = window.location.href + '/paths';
+        return _this;
+    }
+
+    _createClass(PathsRenderComponent, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.href).then(function (response) {
+                _this2.setState({ paths: response.data });
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                null,
+                this.state.paths.map(function (path) {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Path, { key: path.path_slug, path: path });
+                })
+            );
+        }
+    }]);
+
+    return PathsRenderComponent;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+function Path(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('path', {
+        id: props.path.path_slug,
+        stroke: props.path.stroke,
+        strokeWidth: props.path['stroke-width'],
+        className: 'svg-element',
+        fill: 'none',
+        d: props.path.d });
+}
+
+if (document.getElementById('svg-area')) {
+    console.log('PathsComponent initialized');
+    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(PathsRenderComponent, null), document.getElementById('svg-area'));
+}
+
+/***/ }),
+/* 49 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
@@ -53491,7 +53761,7 @@ if (document.getElementById('markers-container')) {
 }
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

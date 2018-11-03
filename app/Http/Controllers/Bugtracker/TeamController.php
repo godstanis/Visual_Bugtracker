@@ -25,9 +25,8 @@ class TeamController extends BugtrackerBaseController
         $members = $project->members;
 
         if($request->ajax()) {
-            return json_encode($members);
+            return new UserCollection($members);
         }
-
         return view('bugtracker.project.team', compact('members', 'project'));
     }
 
@@ -41,11 +40,18 @@ class TeamController extends BugtrackerBaseController
      */
     public function postAddMember(AddMemberRequest $request, Project $project, User $user)
     {
-        $newMember = $user->where('name', $request->user_name)->first();
+        $newMember = $user->where('name', $request->name)->first();
         $alreadyMember = $project->members->contains($newMember);
 
         if(! $alreadyMember) {
             $project->members()->attach($newMember);
+            $response = response('User has been attached to the project', 200);
+        } else {
+            $response = response('User has not been attached', 422); // 422 - Unprocessable Entity status code
+        }
+
+        if($request->ajax()) {
+            return $response;
         }
 
         return redirect()->back();
