@@ -19,15 +19,7 @@ class PathCollection extends ResourceCollection
         $paths = [];
 
         foreach ($this->collection as $path) {
-            $paths[] = [
-                'path_slug' => $path->path_slug,
-                'stroke'=>$path->stroke_color,
-                'stroke-width'=>$path->stroke_width,
-                'd'=>$path->path_data,
-                'info' => [
-                    'creator_id' => $path->creator->id
-                ]
-            ];
+            $paths[] = (new PathResource($path))->toArray($request);
         }
 
         return $paths;
