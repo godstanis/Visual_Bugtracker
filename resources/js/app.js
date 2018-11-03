@@ -13,6 +13,7 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+require('./components/Team/TeamComponent');
 require('./components/Path/PathsRenderComponent');
 
 require('./components/Marker/MarkerComponent');

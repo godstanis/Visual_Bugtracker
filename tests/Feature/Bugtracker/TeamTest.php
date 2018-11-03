@@ -42,7 +42,7 @@ class TeamTest extends TestCase
         $this->actingAs($this->creator)
             ->get($this->projectsTeamPage)
             ->assertStatus(200)
-            ->assertSee(__('projects.team_creator_badge'));
+            ->assertSee($this->creator->name);
     }
 
     /**
@@ -51,10 +51,11 @@ class TeamTest extends TestCase
     public function testACreatorAddsMember()
     {
         $this->actingAs($this->creator)
-            ->post($this->projectsTeamPage.'/attach', ['user_name'=>$this->user->name])
+            ->post($this->projectsTeamPage.'/attach', ['name'=>$this->user->name])
             ->assertStatus(302);
 
-        $this->actingAs($this->creator)->get($this->projectsTeamPage)->assertSee($this->user->name);
+        //$this->actingAs($this->creator)->get($this->projectsTeamPage)->assertSee($this->user->name);
+        $this->assertTrue($this->project->members->contains($this->user));
     }
 
     /**
@@ -63,10 +64,11 @@ class TeamTest extends TestCase
     public function testACreatorRemovesMember()
     {
         $this->actingAs($this->creator)
-            ->get($this->projectsTeamPage.'/deattach/'.$this->member->name)
+            ->get($this->projectsTeamPage.'/detach/'.$this->member->name)
             ->assertStatus(302);
 
-        $this->actingAs($this->creator)->get($this->projectsTeamPage)->assertDontSee($this->member->name);
+        //$this->actingAs($this->creator)->get($this->projectsTeamPage)->assertDontSee($this->member->name);
+        $this->assertFalse($this->project->members->contains($this->member));
     }
 
     /**
@@ -78,7 +80,8 @@ class TeamTest extends TestCase
             ->post($this->projectsTeamPage.'/attach', ['user_name'=>$this->user->name])
             ->assertStatus(403);
 
-        $this->actingAs($this->member)->get($this->projectsTeamPage)->assertDontSee($this->user->name);
+        //$this->actingAs($this->member)->get($this->projectsTeamPage)->assertDontSee($this->user->name);
+        $this->assertFalse($this->project->members->contains($this->user));
     }
 
     /**
@@ -89,9 +92,10 @@ class TeamTest extends TestCase
         $this->project->members()->attach($this->user);
 
         $this->actingAs($this->member)
-            ->get($this->projectsTeamPage.'/deattach/'.$this->user->name)
+            ->get($this->projectsTeamPage.'/detach/'.$this->user->name)
             ->assertStatus(403);
 
-        $this->actingAs($this->creator)->get($this->projectsTeamPage)->assertSee($this->user->name);
+        //$this->actingAs($this->creator)->get($this->projectsTeamPage)->assertSee($this->user->name);
+        $this->assertTrue($this->project->members->contains($this->user));
     }
 }
