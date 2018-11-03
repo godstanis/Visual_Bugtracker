@@ -31,6 +31,8 @@ class BoardsTest extends TestCase
     {
         parent::setUp();
 
+        Storage::fake();
+
         $this->user = factory(User::class)->create();
 
         $this->projectCreator = factory(User::class)->create();
