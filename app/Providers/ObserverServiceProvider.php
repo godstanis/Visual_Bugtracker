@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\CommentPoint;
 use App\IssueDiscussion;
 use App\Observers\CommentPointObserver;
+use App\Observers\UserObserver;
 use App\Project;
 use App\Board;
 use App\Path;
@@ -26,6 +27,7 @@ use App\Services\ImageUpload\Board\BoardThumbnailDecorator;
 use App\Observers\Project\ProjectImageObserver;
 use App\Observers\Board\BoardImageObserver;
 
+use App\User;
 use Illuminate\Support\ServiceProvider;
 
 class ObserverServiceProvider extends ServiceProvider
@@ -37,6 +39,7 @@ class ObserverServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        User::observe(UserObserver::class);
         Project::observe([
             ProjectObserver::class,
             ProjectImageObserver::class
