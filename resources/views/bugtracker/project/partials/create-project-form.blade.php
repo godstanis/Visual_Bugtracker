@@ -8,10 +8,10 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="project-box-image-block" style="display:inline-block;">
             <div class="project-box-img">
-                <img class="image-update" src="{{ asset('images\default_project_thumb.jpg') }}" alt="">
+                <img class="image-update" src="{{ asset('images\placeholders\project_default.png') }}" alt="">
             </div>
             <div class="image-input-block">
-                <input name="thumbnail_img" type="file" id="image-input" >
+                <input name="image" type="file" id="image-input" >
                 <label for="image-input"><span class="glyphicon glyphicon-picture"></span> @lang('custom.choose_image_file')</label>
             </div>
         </div>
