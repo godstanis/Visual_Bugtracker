@@ -18,8 +18,7 @@ class VerifyCsrfToken extends BaseVerifier
     public function handle($request, \Closure $next)
     {
         // We will enable csrf verification only for non-testing requests.
-        if ('testing' !== env('APP_ENV'))
-        {
+        if ('testing' !== env('APP_ENV')) {
             return parent::handle($request, $next);
         }
 
