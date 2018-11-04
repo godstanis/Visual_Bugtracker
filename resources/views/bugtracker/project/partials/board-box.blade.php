@@ -7,10 +7,10 @@
             </a>
             @endcan
         </div>
-        <h4 class="board-title board-box-title">{{ $board->name }}</h4>
         <div class="board-box-img">
             <img src="{{ $board->thumbnailImageUrl() }}" alt="">
         </div>
+        <h4 class="board-title board-box-title">{{ $board->name }}</h4>
         <div class="board-box-credentials">
             <span class="pull-right board-box-creator">
                 <span class="text-muted"><em><small>@lang('projects.board_created_by')</small></em></span>
