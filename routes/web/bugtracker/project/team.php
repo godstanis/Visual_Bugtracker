@@ -20,4 +20,7 @@ Route::group(['prefix'=>'{project}/team', 'middleware'=>['auth', 'can:view,proje
     Route::get('search-member', 'TeamController@search')
         ->name('project.team.search')->middleware('can:delete,project');
 
+    // TODO: It's a testing route, it could be removed in future.
+    Route::post('allow', 'TeamController@addAbility')->name('project.team.allow')->middleware('can:delete,project');
+
 });

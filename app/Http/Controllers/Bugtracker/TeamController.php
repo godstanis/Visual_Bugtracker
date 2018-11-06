@@ -96,4 +96,21 @@ class TeamController extends BugtrackerBaseController
         return new UserCollection($users);
     }
 
+    /*
+     * Adds an ability (on the project) to the member.
+     *
+     * TODO: It's a prototype for testing, it will probably be removed soon.
+     */
+    public function addAbility(Request $request, Project $project, User $user)
+    {
+        /*
+         * Current officially supported abilities: 'manage{project}'
+         */
+        $user = $user->where('name', $request->user)->first();
+        //dd($user->name);
+        $ability = $request->ability_name;
+        if (in_array($ability, config('abilities.default'))) {
+            $user->allow($ability, $project);
+        }
+    }
 }

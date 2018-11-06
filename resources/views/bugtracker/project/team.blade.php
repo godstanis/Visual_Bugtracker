@@ -21,5 +21,12 @@
 
 @section('project-content')
     {!! Breadcrumbs::render('team', $project) !!}
+    <!-- TODO: This is for testing purposes only, it will be removed/changed in future-->
+    <form method="POST" action="{{route('project.team.allow', compact('project'))}}">
+        <input type="text" name="user" placeholder="user name">
+        <input type="text" name="ability_name" placeholder="ability name">
+        <input type="text" name="_token" hidden value="{{csrf_token()}}">
+        <button type="submit">Set permission</button>
+    </form>
     <div id="search-team-component"><!-- see react TeamComponent.js -->
 @endsection
