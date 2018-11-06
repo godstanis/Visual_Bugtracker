@@ -32,7 +32,6 @@ class ProjectObserver
     public function created(Project $project)
     {
         $project->members()->attach($project->creator);
-        $project->creator->allow()->to('manage', $project);
 
         \Log::info('Project with id:'.$project->id.'created by user with id:'.$project->user_id);
     }

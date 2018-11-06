@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Bugtracker;
 
 use App\Http\Requests\AddMemberRequest;
 use App\Http\Requests\RemoveMemberRequest;
-use App\Http\Resources\User\UserCollection;
+use App\Http\Resources\User\MemberCollection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BugtrackerBaseController;
 
@@ -25,7 +25,7 @@ class TeamController extends BugtrackerBaseController
         $members = $project->members;
 
         if($request->ajax()) {
-            return new UserCollection($members);
+            return new MemberCollection($members, $project);
         }
         return view('bugtracker.project.team', compact('members', 'project'));
     }
@@ -82,7 +82,7 @@ class TeamController extends BugtrackerBaseController
      * @param Request $request
      * @param Project $project
      * @param User $user
-     * @return UserCollection
+     * @return MemberCollection
      * @throws \Illuminate\Validation\ValidationException
      */
     public function search(Request $request, Project $project, User $user)
@@ -93,7 +93,7 @@ class TeamController extends BugtrackerBaseController
 
         $users = $user->where('name', 'LIKE', '%'.$request->name.'%')->take(5)->get();
 
-        return new UserCollection($users);
+        return new MemberCollection($users, $project);
     }
 
     /*
