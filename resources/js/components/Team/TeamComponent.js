@@ -16,7 +16,9 @@ class TeamComponent extends React.Component {
         this.csrf = Laravel.csrfToken;
 
         this.user_can_delete_members = window.auth_user.canRemoveMember;
+    }
 
+    componentDidMount() {
         this.updateMembersListRequest();
     }
 

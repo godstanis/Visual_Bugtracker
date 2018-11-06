@@ -1114,8 +1114,9 @@ module.exports = __webpack_require__(50);
 
 /***/ }),
 /* 14 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -30589,15 +30590,18 @@ var TeamComponent = function (_React$Component) {
         _this.csrf = Laravel.csrfToken;
 
         _this.user_can_delete_members = window.auth_user.canRemoveMember;
-
-        _this.updateMembersListRequest();
         return _this;
     }
 
-    // Updates member list wia sending a get request to the server
-
-
     _createClass(TeamComponent, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.updateMembersListRequest();
+        }
+
+        // Updates member list wia sending a get request to the server
+
+    }, {
         key: 'updateMembersListRequest',
         value: function updateMembersListRequest() {
             var _this2 = this;
