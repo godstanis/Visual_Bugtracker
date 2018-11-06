@@ -1132,6 +1132,8 @@ __webpack_require__(15);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+__webpack_require__(61);
+__webpack_require__(62);
 __webpack_require__(22);
 __webpack_require__(48);
 
@@ -30557,9 +30559,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MemberComponent__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SearchMemberFormComponent__ = __webpack_require__(62);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -30570,9 +30572,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-__WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-console.log('test');
+
+
+__WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 var TeamComponent = function (_React$Component) {
     _inherits(TeamComponent, _React$Component);
@@ -30658,14 +30661,14 @@ var TeamComponent = function (_React$Component) {
                         'tbody',
                         null,
                         this.state.members.map(function (member) {
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MembersList, { key: 'member_' + member.name, member: member, links: links, canDelete: _this5.user_can_delete_members, detachUser: _this5.detachUser.bind(_this5) });
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__MemberComponent__["default"], { key: 'member_' + member.name, member: member, links: links, canDelete: _this5.user_can_delete_members, detachUser: _this5.detachUser.bind(_this5) });
                         })
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'col-md-6 col-md-offset-3' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(SearchForm, { csrf: this.csrf, links: links, attachUser: this.attachUser.bind(this) })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__SearchMemberFormComponent__["default"], { csrf: this.csrf, links: links, attachUser: this.attachUser.bind(this) })
                 )
             );
         }
@@ -30673,156 +30676,6 @@ var TeamComponent = function (_React$Component) {
 
     return TeamComponent;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
-
-var MembersList = function (_React$Component2) {
-    _inherits(MembersList, _React$Component2);
-
-    function MembersList(props) {
-        _classCallCheck(this, MembersList);
-
-        var _this6 = _possibleConstructorReturn(this, (MembersList.__proto__ || Object.getPrototypeOf(MembersList)).call(this, props));
-
-        _this6.props = props;
-        return _this6;
-    }
-
-    _createClass(MembersList, [{
-        key: 'render',
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'tr',
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'td',
-                    null,
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'a',
-                        { href: this.props.member.profile_url },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'span',
-                            null,
-                            '@'
-                        ),
-                        this.props.member.name,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { className: 'user-profile-image', src: this.props.member.profile_image_url, alt: '', width: '20px' }),
-                        " "
-                    ),
-                    this.props.canDelete && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('a', { href: this.props.links.detach + '/' + this.props.member.name, className: 'member-delete-form btn btn-danger btn-xs glyphicon glyphicon-remove', onClick: this.props.detachUser.bind(this) })
-                )
-            );
-        }
-    }]);
-
-    return MembersList;
-}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
-
-var SearchForm = function (_React$Component3) {
-    _inherits(SearchForm, _React$Component3);
-
-    function SearchForm(props) {
-        _classCallCheck(this, SearchForm);
-
-        var _this7 = _possibleConstructorReturn(this, (SearchForm.__proto__ || Object.getPrototypeOf(SearchForm)).call(this, props));
-
-        _this7.props = props;
-        _this7.state = { users: [] };
-        _this7.search_href = window.location.href + '/search-member';
-        return _this7;
-    }
-
-    // Search users on input change
-
-
-    _createClass(SearchForm, [{
-        key: 'updateInputValue',
-        value: function updateInputValue(e) {
-            if (e.target.value.length >= 1) {
-                console.log('input updated');
-                this.searchUser(e.target.value);
-            }
-        }
-
-        // Send a search request to the server and update search output state
-
-    }, {
-        key: 'searchUser',
-        value: function searchUser(name) {
-            var _this8 = this;
-
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.search_href, { params: { name: name } }).then(function (response) {
-                console.log(response.data);
-                _this8.setState({ users: response.data });
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this9 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'form',
-                    { action: this.props.links.attach, method: 'POST' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'input-group ' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'span',
-                            { className: 'input-group-addon', id: 'sizing-addon2' },
-                            '@'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', _defineProperty({ className: 'form-control user-name-search-input', onChange: this.updateInputValue.bind(this), type: 'text', name: 'user_name',
-                            placeholder: '\u0418\u043C\u044F \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F' }, 'onChange', this.updateInputValue.bind(this)))
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: this.props.csrf })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'table',
-                    { className: 'table table-inverse' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'tbody',
-                        { className: 'user-name-search-results' },
-                        this.state.users.map(function (user) {
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(FoundUser, { key: user.name, user: user, attachUser: _this9.props.attachUser.bind(_this9) });
-                        })
-                    )
-                )
-            );
-        }
-    }]);
-
-    return SearchForm;
-}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
-
-function FoundUser(props) {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'tr',
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'td',
-            null,
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'a',
-                { href: props.user.profile_url },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'span',
-                    null,
-                    '@'
-                ),
-                props.user.name
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { className: 'user-profile-image', src: props.user.profile_image_url, alt: '', width: '20px' }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'span',
-                { className: 'insert-in-input-block' },
-                " ",
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('a', { 'data-user-name': props.user.name, onClick: props.attachUser, className: 'btn btn-success btn-xs insert-user-in-input glyphicon glyphicon-plus' })
-            )
-        )
-    );
-}
 
 if (document.getElementById('search-team-component')) {
     console.log('TeamComponent initialized');
@@ -53781,6 +53634,287 @@ if (document.getElementById('markers-container')) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var Member = function (_React$Component) {
+    _inherits(Member, _React$Component);
+
+    function Member(props) {
+        _classCallCheck(this, Member);
+
+        var _this = _possibleConstructorReturn(this, (Member.__proto__ || Object.getPrototypeOf(Member)).call(this, props));
+
+        _this.props = props;
+        return _this;
+    }
+
+    _createClass(Member, [{
+        key: "render",
+        value: function render() {
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "tr",
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "td",
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "a",
+                        { href: this.props.member.profile_url },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "span",
+                            null,
+                            "@"
+                        ),
+                        this.props.member.name,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { className: "user-profile-image", src: this.props.member.profile_image_url, alt: "", width: "20px" }),
+                        " "
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "span",
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MemberControlPanel, {
+                            key: this.props.member.name,
+                            member: this.props.member,
+                            canDelete: this.props.canDelete,
+                            detach: this.props.links.detach + '/' + this.props.member.name,
+                            detachUser: this.props.detachUser.bind(this) })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Member;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+var MemberControlPanel = function (_React$Component2) {
+    _inherits(MemberControlPanel, _React$Component2);
+
+    function MemberControlPanel(props) {
+        _classCallCheck(this, MemberControlPanel);
+
+        return _possibleConstructorReturn(this, (MemberControlPanel.__proto__ || Object.getPrototypeOf(MemberControlPanel)).call(this, props));
+    }
+
+    _createClass(MemberControlPanel, [{
+        key: "roles",
+        value: function roles() {
+            var roles = [];
+            if (this.props.member.abilities['create'] === true) {
+                roles.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(CreatorBadge, { key: this.props.member.name }));
+            }
+            if (this.props.member.abilities['manage'] === true) {
+                roles.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ManagerBadge, { key: this.props.member.name }));
+            }
+            return roles;
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "span",
+                { className: "controls" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "span",
+                    null,
+                    this.props.canDelete && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(DeleteButton, { detach: this.props.detach, detachUser: this.props.detachUser.bind(this) })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "span",
+                    null,
+                    this.roles()
+                )
+            );
+        }
+    }]);
+
+    return MemberControlPanel;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+function DeleteButton(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("a", { href: props.detach,
+        className: "member-delete-form btn btn-danger btn-xs glyphicon glyphicon-remove",
+        onClick: props.detachUser });
+}
+
+function CreatorBadge(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "span",
+        null,
+        " creator"
+    );
+}
+
+function ManagerBadge(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "span",
+        null,
+        " manager"
+    );
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Member);
+
+/***/ }),
+/* 62 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var SearchForm = function (_React$Component) {
+    _inherits(SearchForm, _React$Component);
+
+    function SearchForm(props) {
+        _classCallCheck(this, SearchForm);
+
+        var _this = _possibleConstructorReturn(this, (SearchForm.__proto__ || Object.getPrototypeOf(SearchForm)).call(this, props));
+
+        _this.props = props;
+        _this.state = { users: [] };
+        _this.search_href = window.location.href + '/search-member';
+        return _this;
+    }
+
+    // Search users on input change
+
+
+    _createClass(SearchForm, [{
+        key: 'updateInputValue',
+        value: function updateInputValue(e) {
+            if (e.target.value.length >= 1) {
+                console.log('input updated');
+                this.searchUser(e.target.value);
+            }
+        }
+
+        // Send a search request to the server and update search output state
+
+    }, {
+        key: 'searchUser',
+        value: function searchUser(name) {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(this.search_href, { params: { name: name } }).then(function (response) {
+                console.log(response.data);
+                _this2.setState({ users: response.data });
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'form',
+                    { action: this.props.links.attach, method: 'POST' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'input-group ' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { className: 'input-group-addon', id: 'sizing-addon2' },
+                            '@'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', _defineProperty({ className: 'form-control user-name-search-input', onChange: this.updateInputValue.bind(this), type: 'text', name: 'user_name',
+                            placeholder: '\u0418\u043C\u044F \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F' }, 'onChange', this.updateInputValue.bind(this)))
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: this.props.csrf })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'table',
+                    { className: 'table table-inverse' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'tbody',
+                        { className: 'user-name-search-results' },
+                        this.state.users.map(function (user) {
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(FoundUser, { key: user.name, user: user, attachUser: _this3.props.attachUser.bind(_this3) });
+                        })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return SearchForm;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+function FoundUser(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'tr',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'td',
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'a',
+                { href: props.user.profile_url },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'span',
+                    null,
+                    '@'
+                ),
+                props.user.name
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { className: 'user-profile-image', src: props.user.profile_image_url, alt: '', width: '20px' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'span',
+                { className: 'insert-in-input-block' },
+                " ",
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('a', { 'data-user-name': props.user.name, onClick: props.attachUser, className: 'btn btn-success btn-xs insert-user-in-input glyphicon glyphicon-plus' })
+            )
+        )
+    );
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (SearchForm);
 
 /***/ })
 /******/ ]);
