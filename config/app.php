@@ -150,8 +150,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
-        //Barryvdh\Debugbar\ServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -163,15 +162,19 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\PusherServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
-        /*
-         * BreadCrumbs Service Provider
-         */
-        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
 
         /*
          * Sentinel Service provider
          */
         //Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
+
+        /*
+         * Custom libraries Service Providers...
+         */
+        //Barryvdh\Debugbar\ServiceProvider::class,
+        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+        Silber\Bouncer\BouncerServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
 
     ],
@@ -223,14 +226,16 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
-
         'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
 
-        'Image' => Intervention\Image\Facades\Image::class
-
+        /**
+         * Custom libraries:
+         */
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Bouncer' => Silber\Bouncer\BouncerFacade::class
     ],
 
 ];
