@@ -49,7 +49,7 @@ class TeamComponent extends React.Component {
     // Send a request to detach a member
     detachUser(e) {
         e.preventDefault();
-        axios.get(e.target.href)
+        axios.post(e.target.href)
             .then((response) => {
                 this.updateMembersListRequest();
             });

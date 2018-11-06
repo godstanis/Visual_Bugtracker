@@ -30637,7 +30637,7 @@ var TeamComponent = function (_React$Component) {
             var _this4 = this;
 
             e.preventDefault();
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(e.target.href).then(function (response) {
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(e.target.href).then(function (response) {
                 _this4.updateMembersListRequest();
             });
         }
