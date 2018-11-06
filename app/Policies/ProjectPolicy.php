@@ -50,7 +50,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project): bool
     {
-        return $this->creator($user, $project);
+        return $this->creator($user, $project) || $this->manager($user, $project);
     }
 
     /**
@@ -75,5 +75,17 @@ class ProjectPolicy
     public function creator(User $user, Project $project): bool
     {
         return $project->creator->id === $user->id;
+    }
+
+    /**
+     * Is user has manager ability for the project.
+     *
+     * @param User $user
+     * @param Project $project
+     * @return bool
+     */
+    public function manager(User $user, Project $project): bool
+    {
+        return $user->can('manage', $project);
     }
 }
