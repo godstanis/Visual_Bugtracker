@@ -30558,6 +30558,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -30585,7 +30587,6 @@ var TeamComponent = function (_React$Component) {
         _this.detach_href = window.location.href + '/detach';
         _this.search_href = window.location.href + '/search-member';
         _this.csrf = Laravel.csrfToken;
-        _this.name_input_value = '';
 
         _this.user_can_delete_members = window.auth_user.canRemoveMember;
 
@@ -30593,19 +30594,10 @@ var TeamComponent = function (_React$Component) {
         return _this;
     }
 
-    // Search users on input change
+    // Updates member list wia sending a get request to the server
 
 
     _createClass(TeamComponent, [{
-        key: 'updateInputValue',
-        value: function updateInputValue(e) {
-            this.name_input_value = e.target.value;
-            this.searchUser(e.target.value);
-        }
-
-        // Updates member list wia sending a get request to the server
-
-    }, {
         key: 'updateMembersListRequest',
         value: function updateMembersListRequest() {
             var _this2 = this;
@@ -30641,22 +30633,10 @@ var TeamComponent = function (_React$Component) {
                 _this4.updateMembersListRequest();
             });
         }
-
-        // Send a search request to the server and update search output state
-
-    }, {
-        key: 'searchUser',
-        value: function searchUser(name) {
-            var _this5 = this;
-
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.search_href, { params: { name: name } }).then(function (response) {
-                _this5.setState({ users: response.data });
-            });
-        }
     }, {
         key: 'render',
         value: function render() {
-            var _this6 = this;
+            var _this5 = this;
 
             var links = {
                 attach: this.attach_href,
@@ -30674,25 +30654,14 @@ var TeamComponent = function (_React$Component) {
                         'tbody',
                         null,
                         this.state.members.map(function (member) {
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MembersList, { key: 'member_' + member.name, member: member, links: links, canDelete: _this6.user_can_delete_members, detachUser: _this6.detachUser.bind(_this6) });
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MembersList, { key: 'member_' + member.name, member: member, links: links, canDelete: _this5.user_can_delete_members, detachUser: _this5.detachUser.bind(_this5) });
                         })
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'col-md-6 col-md-offset-3' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(SearchForm, { csrf: this.csrf, links: links, onChange: this.updateInputValue.bind(this) }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'table',
-                        { className: 'table table-inverse' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'tbody',
-                            { className: 'user-name-search-results' },
-                            this.state.users.map(function (user) {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(FoundUser, { key: user.name, user: user, attachUser: _this6.attachUser.bind(_this6) });
-                            })
-                        )
-                    )
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(SearchForm, { csrf: this.csrf, links: links, attachUser: this.attachUser.bind(this) })
                 )
             );
         }
@@ -30707,10 +30676,10 @@ var MembersList = function (_React$Component2) {
     function MembersList(props) {
         _classCallCheck(this, MembersList);
 
-        var _this7 = _possibleConstructorReturn(this, (MembersList.__proto__ || Object.getPrototypeOf(MembersList)).call(this, props));
+        var _this6 = _possibleConstructorReturn(this, (MembersList.__proto__ || Object.getPrototypeOf(MembersList)).call(this, props));
 
-        _this7.props = props;
-        return _this7;
+        _this6.props = props;
+        return _this6;
     }
 
     _createClass(MembersList, [{
@@ -30749,30 +30718,73 @@ var SearchForm = function (_React$Component3) {
     function SearchForm(props) {
         _classCallCheck(this, SearchForm);
 
-        var _this8 = _possibleConstructorReturn(this, (SearchForm.__proto__ || Object.getPrototypeOf(SearchForm)).call(this, props));
+        var _this7 = _possibleConstructorReturn(this, (SearchForm.__proto__ || Object.getPrototypeOf(SearchForm)).call(this, props));
 
-        _this8.props = props;
-        return _this8;
+        _this7.props = props;
+        _this7.state = { users: [] };
+        _this7.search_href = window.location.href + '/search-member';
+        return _this7;
     }
 
+    // Search users on input change
+
+
     _createClass(SearchForm, [{
+        key: 'updateInputValue',
+        value: function updateInputValue(e) {
+            if (e.target.value.length >= 1) {
+                console.log('input updated');
+                this.searchUser(e.target.value);
+            }
+        }
+
+        // Send a search request to the server and update search output state
+
+    }, {
+        key: 'searchUser',
+        value: function searchUser(name) {
+            var _this8 = this;
+
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.search_href, { params: { name: name } }).then(function (response) {
+                console.log(response.data);
+                _this8.setState({ users: response.data });
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _this9 = this;
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'form',
-                { action: this.props.links.attach, method: 'POST' },
+                'div',
+                null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'input-group ' },
+                    'form',
+                    { action: this.props.links.attach, method: 'POST' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'span',
-                        { className: 'input-group-addon', id: 'sizing-addon2' },
-                        '@'
+                        'div',
+                        { className: 'input-group ' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { className: 'input-group-addon', id: 'sizing-addon2' },
+                            '@'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', _defineProperty({ className: 'form-control user-name-search-input', onChange: this.updateInputValue.bind(this), type: 'text', name: 'user_name',
+                            placeholder: '\u0418\u043C\u044F \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F' }, 'onChange', this.updateInputValue.bind(this)))
                     ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'form-control user-name-search-input', type: 'text', name: 'user_name',
-                        placeholder: '\u0418\u043C\u044F \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F', onChange: this.props.onChange.bind(this) })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: this.props.csrf })
                 ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: this.props.csrf })
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'table',
+                    { className: 'table table-inverse' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'tbody',
+                        { className: 'user-name-search-results' },
+                        this.state.users.map(function (user) {
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(FoundUser, { key: user.name, user: user, attachUser: _this9.props.attachUser.bind(_this9) });
+                        })
+                    )
+                )
             );
         }
     }]);

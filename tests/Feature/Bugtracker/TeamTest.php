@@ -35,7 +35,7 @@ class TeamTest extends TestCase
     }
 
     /**
-     * @covers \App\Http\Controllers\Bugtracker\TeamController::getAllTeamMembers()
+     * @covers \App\Http\Controllers\Bugtracker\TeamController::index()
      */
     public function testTeamPageDisplays()
     {
@@ -46,7 +46,7 @@ class TeamTest extends TestCase
     }
 
     /**
-     * @covers \App\Http\Controllers\Bugtracker\TeamController::postAddMember()
+     * @covers \App\Http\Controllers\Bugtracker\TeamController::add()
      */
     public function testACreatorAddsMember()
     {
@@ -54,25 +54,23 @@ class TeamTest extends TestCase
             ->post($this->projectsTeamPage.'/attach', ['name'=>$this->user->name])
             ->assertStatus(302);
 
-        //$this->actingAs($this->creator)->get($this->projectsTeamPage)->assertSee($this->user->name);
         $this->assertTrue($this->project->members->contains($this->user));
     }
 
     /**
-     * @covers \App\Http\Controllers\Bugtracker\TeamController::getRemoveMember()
+     * @covers \App\Http\Controllers\Bugtracker\TeamController::remove()
      */
     public function testACreatorRemovesMember()
     {
         $this->actingAs($this->creator)
-            ->get($this->projectsTeamPage.'/detach/'.$this->member->name)
+            ->post($this->projectsTeamPage.'/detach/'.$this->member->name)
             ->assertStatus(302);
 
-        //$this->actingAs($this->creator)->get($this->projectsTeamPage)->assertDontSee($this->member->name);
         $this->assertFalse($this->project->members->contains($this->member));
     }
 
     /**
-     * @covers \App\Http\Controllers\Bugtracker\TeamController::postAddMember()
+     * @covers \App\Http\Controllers\Bugtracker\TeamController::add()
      */
     public function testMemberDoesNotAddAnotherMember()
     {
@@ -80,22 +78,20 @@ class TeamTest extends TestCase
             ->post($this->projectsTeamPage.'/attach', ['user_name'=>$this->user->name])
             ->assertStatus(403);
 
-        //$this->actingAs($this->member)->get($this->projectsTeamPage)->assertDontSee($this->user->name);
         $this->assertFalse($this->project->members->contains($this->user));
     }
 
     /**
-     * @covers \App\Http\Controllers\Bugtracker\TeamController::getRemoveMember()
+     * @covers \App\Http\Controllers\Bugtracker\TeamController::remove()
      */
     public function testMemberDoesNotRemoveAnotherMember()
     {
         $this->project->members()->attach($this->user);
 
         $this->actingAs($this->member)
-            ->get($this->projectsTeamPage.'/detach/'.$this->user->name)
+            ->post($this->projectsTeamPage.'/detach/'.$this->user->name)
             ->assertStatus(403);
 
-        //$this->actingAs($this->creator)->get($this->projectsTeamPage)->assertSee($this->user->name);
         $this->assertTrue($this->project->members->contains($this->user));
     }
 }

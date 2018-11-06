@@ -20,7 +20,7 @@ class TeamController extends BugtrackerBaseController
      * @param Project $project
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
      */
-    public function getAllTeamMembers(Request $request, Project $project)
+    public function index(Request $request, Project $project)
     {
         $members = $project->members;
 
@@ -38,7 +38,7 @@ class TeamController extends BugtrackerBaseController
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postAddMember(AddMemberRequest $request, Project $project, User $user)
+    public function add(AddMemberRequest $request, Project $project, User $user)
     {
         $newMember = $user->where('name', $request->name)->first();
         $alreadyMember = $project->members->contains($newMember);
@@ -65,7 +65,7 @@ class TeamController extends BugtrackerBaseController
      * @param User $user
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function getRemoveMember(RemoveMemberRequest $request, Project $project, User $user)
+    public function remove(RemoveMemberRequest $request, Project $project, User $user)
     {
         $project->members()->detach($user);
 
@@ -85,7 +85,7 @@ class TeamController extends BugtrackerBaseController
      * @return UserCollection
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function searchUser(Request $request, Project $project, User $user)
+    public function search(Request $request, Project $project, User $user)
     {
         $this->validate($request, [
             'name' => 'required|string'

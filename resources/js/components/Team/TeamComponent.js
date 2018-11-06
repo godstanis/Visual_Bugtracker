@@ -14,17 +14,10 @@ class TeamComponent extends React.Component {
         this.detach_href = window.location.href+'/detach';
         this.search_href = window.location.href+'/search-member';
         this.csrf = Laravel.csrfToken;
-        this.name_input_value = '';
 
         this.user_can_delete_members = window.auth_user.canRemoveMember;
 
         this.updateMembersListRequest();
-    }
-
-    // Search users on input change
-    updateInputValue(e) {
-        this.name_input_value = e.target.value;
-        this.searchUser(e.target.value);
     }
 
     // Updates member list wia sending a get request to the server
@@ -55,14 +48,6 @@ class TeamComponent extends React.Component {
             });
     }
 
-    // Send a search request to the server and update search output state
-    searchUser(name) {
-        axios.get(this.search_href, {params:{name:name}})
-            .then((response) => {
-                this.setState({users:response.data});
-            });
-    }
-
     render() {
         let links = {
             attach: this.attach_href,
@@ -79,13 +64,7 @@ class TeamComponent extends React.Component {
                     </table>
 
                     <div className="col-md-6 col-md-offset-3">
-                        <SearchForm csrf={this.csrf} links={links} onChange={this.updateInputValue.bind(this)}/>
-
-                        <table className="table table-inverse">
-                            <tbody className="user-name-search-results">
-                            {this.state.users.map( (user) => <FoundUser key={user.name} user={user} attachUser={this.attachUser.bind(this)}/> )}
-                            </tbody>
-                        </table>
+                        <SearchForm csrf={this.csrf} links={links} attachUser={this.attachUser.bind(this)}/>
                     </div>
                 </div>
         )
@@ -118,18 +97,44 @@ class SearchForm extends React.Component {
     constructor(props) {
         super(props);
         this.props = props;
+        this.state = {users:[]};
+        this.search_href = window.location.href+'/search-member';
+    }
+
+    // Search users on input change
+    updateInputValue(e) {
+        if(e.target.value.length >= 1) {
+            console.log('input updated');
+            this.searchUser(e.target.value);
+        }
+    }
+
+    // Send a search request to the server and update search output state
+    searchUser(name) {
+        axios.get(this.search_href, {params:{name:name}})
+            .then((response) => {
+                console.log(response.data);
+                this.setState({users:response.data});
+            });
     }
 
     render() {
         return (
+            <div>
             <form action={this.props.links.attach} method="POST">
                 <div className="input-group ">
                     <span className="input-group-addon" id="sizing-addon2">@</span>
-                    <input className="form-control user-name-search-input" type="text" name="user_name"
-                           placeholder="Имя пользователя" onChange={this.props.onChange.bind(this)} />
+                    <input className="form-control user-name-search-input" onChange={this.updateInputValue.bind(this)}  type="text" name="user_name"
+                           placeholder="Имя пользователя" onChange={this.updateInputValue.bind(this)} />
                 </div>
                 <input type="hidden" name="_token" value={this.props.csrf}/>
             </form>
+            <table className="table table-inverse">
+                <tbody className="user-name-search-results">
+                        {this.state.users.map( (user) => <FoundUser key={user.name} user={user} attachUser={this.props.attachUser.bind(this)}/> )}
+                </tbody>
+            </table>
+            </div>
         )
     }
 }
