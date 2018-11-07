@@ -13,7 +13,7 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-
+require('./components/Team/AbilityComponent');
 require('./components/Team/MemberComponent');
 require('./components/Team/SearchMemberFormComponent');
 require('./components/Team/TeamComponent');
