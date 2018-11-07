@@ -1,3 +1,23 @@
 .member-delete-form {
     display: inline-block;
 }
+
+.member-control-element {
+    margin-left:4px;
+}
+
+.ability-badge {
+    font-size: 12px;
+    padding: 1px 5px;
+    border-radius: 10px;
+    line-height: 1.5;
+    color: white;
+}
+
+.creator-badge {
+    background-color: #2ab27b;
+}
+
+.manager-badge {
+    background-color: #ed8f00;
+}
