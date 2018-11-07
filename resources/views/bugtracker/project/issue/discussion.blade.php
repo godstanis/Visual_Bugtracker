@@ -70,6 +70,16 @@
             @endforeach
             </ul>
         @endif
+            @if($issue->closed)
+                <div>
+                    <span class="pull-right label label-warning">@lang('projects.issue_closed_by')
+                        <a href="{{ route('user', ['user_name'=>$issue->closedby->name]) }}">
+                            <span>@</span>{{ $issue->closedby->name }}
+                        </a>
+                    </span>
+                    <div class="clearfix"></div>
+                </div>
+            @endif
         </div>
     </div>
 </div>

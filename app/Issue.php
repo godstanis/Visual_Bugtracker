@@ -50,6 +50,11 @@ class Issue extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    public function closedby()
+    {
+        return $this->hasOne(User::class, 'id', 'closed_by_user_id');
+    }
+
     /**
      * Issue assignees relation.
      *
@@ -98,6 +103,7 @@ class Issue extends Model
     public function close(): bool
     {
         $this->closed = true;
+        $this->closed_by_user_id = auth()->user()->id;
         return $this->update();
     }
 
@@ -109,6 +115,7 @@ class Issue extends Model
     public function open(): bool
     {
         $this->closed = false;
+        $this->closed_by_user_id = null;
         return $this->update();
     }
 

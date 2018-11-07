@@ -31,6 +31,7 @@ return [
     'issue_attach_user' => 'Прикрепить участника',
     'issue_attach_myself' => 'Прикрепить себя',
     'issue_deattach_myself' => 'Открепить себя',
+    'issue_closed_by' => 'Задачу закрыл пользователь',
 
     'issue_discussion' => 'Обсуждение задачи ":id"',
 

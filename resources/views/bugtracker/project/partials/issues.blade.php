@@ -53,6 +53,16 @@
                     <a href="{{ route('user', ['user_name'=>$issue->creator->name]) }}">
                         <span>@</span>{{ $issue->creator->name }}
                     </a>
+                    @if($issue->closed)
+                        <div>
+                            <span class="pull-right">@lang('projects.issue_closed_by')
+                                <a href="{{ route('user', ['user_name'=>$issue->closedby->name]) }}">
+                                    <span>@</span>{{ $issue->closedby->name }}
+                                </a>
+                            </span>
+                            <div class="clearfix"></div>
+                        </div>
+                    @endif
                 </div>
             </div>
 

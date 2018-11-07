@@ -31,6 +31,7 @@ return [
     'issue_attach_user' => 'Assign a member',
     'issue_attach_myself' => 'Assign me',
     'issue_deattach_myself' => 'Deassign me',
+    'issue_closed_by' => 'Issue was closed by',
 
     'issue_discussion' => 'Issue ":id" discussion',
 
