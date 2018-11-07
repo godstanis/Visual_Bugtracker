@@ -13,7 +13,8 @@ class RemoveMemberRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('delete', $this->project);
+        $deletingCreator = $this->project->creator->id === $this->user->id;
+        return auth()->user()->can('delete', $this->project) && !$deletingCreator;
     }
 
     public function rules()

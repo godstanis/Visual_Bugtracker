@@ -13,7 +13,7 @@ class AddMemberRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('delete', $this->project);
+        return auth()->user()->can('delete', $this->project) || auth()->user()->can('manage', $this->project);
     }
 
     /**

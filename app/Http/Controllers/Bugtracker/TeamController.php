@@ -53,7 +53,6 @@ class TeamController extends BugtrackerBaseController
         if($request->ajax()) {
             return $response;
         }
-
         return redirect()->back();
     }
 
@@ -96,21 +95,42 @@ class TeamController extends BugtrackerBaseController
         return new MemberCollection($users, $project);
     }
 
-    /*
-     * Adds an ability (on the project) to the member.
+    /**
+     * Adds an ability to the user.
      *
-     * TODO: It's a prototype for testing, it will probably be removed soon.
+     * @param Request $request
+     * @param Project $project
+     * @param User $user
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function addAbility(Request $request, Project $project, User $user)
     {
-        /*
-         * Current officially supported abilities: 'manage{project}'
-         */
         $user = $user->where('name', $request->user)->first();
-        //dd($user->name);
         $ability = $request->ability_name;
-        if (in_array($ability, config('abilities.default'))) {
+        if (\in_array($ability, config('abilities.default'), true)) {
             $user->allow($ability, $project);
+            return response('Success', 200);
         }
+        return response('The input, provided with the request is not valid', 422);
     }
+
+    /**
+     * Removes an ability from the user.
+     *
+     * @param Request $request
+     * @param Project $project
+     * @param User $user
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function removeAbility(Request $request, Project $project, User $user)
+    {
+        $user = $user->where('name', $request->user)->first();
+        $ability = $request->ability_name;
+        if (\in_array($ability, config('abilities.default'), true)) {
+            $user->disallow($ability, $project);
+            return response('Success', 200);
+        }
+        return response('The input, provided with the request is not valid', 422);
+    }
+
 }
