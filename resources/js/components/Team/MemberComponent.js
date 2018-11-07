@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Ability from './AbilityComponent';
 
 class Member extends React.Component {
     constructor(props) {
@@ -7,7 +8,6 @@ class Member extends React.Component {
     }
 
     render() {
-
         return (
             <tr><td>
                 <a href={this.props.member.profile_url}>
@@ -16,12 +16,14 @@ class Member extends React.Component {
                     {" "}
                 </a>
                 <span>
-                    <MemberControlPanel
-                        key={this.props.member.name}
-                        member={this.props.member}
-                        canDelete={this.props.canDelete}
-                        detach={this.props.links.detach+'/'+this.props.member.name}
-                        detachUser={this.props.detachUser.bind(this)}/>
+                        <MemberControlPanel
+                            key={this.props.member.name}
+                            member={this.props.member}
+                            canDelete={this.props.canDelete}
+                            canManage={this.props.canManage}
+                            detach={this.props.links.detach+'/'+this.props.member.name}
+                            detachUser={this.props.detachUser.bind(this)}
+                            updateMembers={this.props.updateMembers.bind(this)}/>
                 </span>
             </td></tr>
         )
@@ -36,10 +38,10 @@ class MemberControlPanel extends React.Component {
     roles() {
         let roles = [];
         if (this.props.member.abilities['create'] === true) {
-            roles.push(<CreatorBadge key={this.props.member.name} />);
+            roles.push(<CreatorBadge key={'creator_badge_'+this.props.member.name} />);
         }
         if (this.props.member.abilities['manage'] === true) {
-            roles.push(<ManagerBadge key={this.props.member.name} />);
+            roles.push(<ManagerBadge key={'manager_badge_'+this.props.member.name} />);
         }
         return roles;
     }
@@ -48,11 +50,19 @@ class MemberControlPanel extends React.Component {
         return (
             <span className="controls">
                 <span>
-                    {(this.props.canDelete) &&
-                    <DeleteButton detach={this.props.detach} detachUser={this.props.detachUser.bind(this)} />
+                    {(this.props.canManage || this.props.canDelete) &&
+                        <DeleteButton key={'delete_button_'+this.props.member.name}
+                                      detach={this.props.detach}
+                                      detachUser={this.props.detachUser.bind(this)} />
                     }
                 </span>
-                <span>{this.roles()}</span>
+                {(this.props.canDelete) &&
+                <Ability key={'ability_'+this.props.member.name}
+                         member={this.props.member}
+                         abilities={this.props.member.abilities}
+                         updateMembers={this.props.updateMembers.bind(this)} />
+                }
+                {this.roles()}
             </span>
         )
     }
@@ -68,13 +78,13 @@ function DeleteButton(props) {
 
 function CreatorBadge(props) {
     return (
-        <span> creator</span>
+        <span className="small creator-badge ability-badge member-control-element">creator</span>
     );
 }
 
 function ManagerBadge(props) {
     return (
-        <span> manager</span>
+        <span className="small manager-badge ability-badge member-control-element">manager</span>
     );
 }
 

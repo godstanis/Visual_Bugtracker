@@ -32,8 +32,11 @@ class SearchForm extends React.Component {
                 <form action={this.props.links.attach} method="POST">
                     <div className="input-group ">
                         <span className="input-group-addon" id="sizing-addon2">@</span>
-                        <input className="form-control user-name-search-input" onChange={this.updateInputValue.bind(this)}  type="text" name="user_name"
-                               placeholder="Имя пользователя" onChange={this.updateInputValue.bind(this)} />
+                        <input className="form-control user-name-search-input"
+                               onChange={this.updateInputValue.bind(this)}
+                               type="text"
+                               name="user_name"
+                               placeholder="User Name" onChange={this.updateInputValue.bind(this)} />
                     </div>
                     <input type="hidden" name="_token" value={this.props.csrf}/>
                 </form>
@@ -56,7 +59,9 @@ function FoundUser(props) {
             <img className="user-profile-image" src={props.user.profile_image_url} alt="" width="20px"/>
             <span className="insert-in-input-block">
                     {" "}
-                <a data-user-name={props.user.name} onClick={props.attachUser} className="btn btn-success btn-xs insert-user-in-input glyphicon glyphicon-plus"></a>
+                <a data-user-name={props.user.name}
+                   onClick={props.attachUser}
+                   className="btn btn-success btn-xs insert-user-in-input glyphicon glyphicon-plus"></a>
                 </span>
         </td></tr>
     )

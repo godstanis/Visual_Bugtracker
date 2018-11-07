@@ -16,7 +16,8 @@ class TeamComponent extends React.Component {
         this.search_href = window.location.href+'/search-member';
         this.csrf = Laravel.csrfToken;
 
-        this.user_can_delete_members = window.auth_user.canRemoveMember;
+        this.authCanDelete = window.auth_user.canRemoveMember;
+        this.authCanManage = window.auth_user.canManage;
     }
 
     componentDidMount() {
@@ -25,6 +26,7 @@ class TeamComponent extends React.Component {
 
     // Updates member list wia sending a get request to the server
     updateMembersListRequest() {
+        console.log('updating members');
         axios.get(this.members_href)
             .then((response) => {
                 this.setState({members:response.data});
@@ -39,7 +41,6 @@ class TeamComponent extends React.Component {
             .then((response) => {
                 this.updateMembersListRequest();
             }).catch(error => {});
-
     }
 
     // Send a request to detach a member
@@ -62,13 +63,21 @@ class TeamComponent extends React.Component {
                 <div>
                     <table className="table">
                         <tbody>
-                            {this.state.members.map( (member) => <MemberComponent key={'member_'+member.name} member={member} links={links} canDelete={this.user_can_delete_members} detachUser={this.detachUser.bind(this)}/> )}
+                            {this.state.members.map( (member) =>
+                                <MemberComponent
+                                key={'member_'+member.name}
+                                member={member} links={links}
+                                canDelete={this.authCanDelete}
+                                canManage={this.authCanManage}
+                                detachUser={this.detachUser.bind(this)}
+                                updateMembers={this.updateMembersListRequest.bind(this)}/> )}
                         </tbody>
                     </table>
-
-                    <div className="col-md-6 col-md-offset-3">
-                        <SearchForm csrf={this.csrf} links={links} attachUser={this.attachUser.bind(this)}/>
-                    </div>
+                    { (this.authCanDelete || this.authCanManage) &&
+                        <div className="col-md-6 col-md-offset-3">
+                            <SearchForm csrf={this.csrf} links={links} attachUser={this.attachUser.bind(this)}/>
+                        </div>
+                    }
                 </div>
         )
     }
