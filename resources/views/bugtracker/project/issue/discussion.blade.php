@@ -3,6 +3,8 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/bugtracker/issue-discussion.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/bugtracker/issue.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/bugtracker/minimized-board.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{asset('editor/css/marker-style.css')}}">
 @endsection
 
 @section('project-content')
@@ -61,10 +63,16 @@
             @foreach($issue->commentPoints as $commentPoint)
                 <li style="list-style: none">
                     <span class="text-muted small">
-                        <a href="{{route('project.editor.board', ['project'=>$project, 'board'=>$commentPoint->board])}}">
-                            #<span>{{$commentPoint->id}}</span> <span>{{$commentPoint->text}}</span>
-                        </a>
-
+                        <div class="dropdown">
+                          <button class="btn btn-default dropdown-toggle btn-xs" type="button" data-toggle="dropdown">
+                               #<span>{{$commentPoint->id}}</span> <span>{{$commentPoint->text}}</span>
+                          <span class="caret"></span></button>
+                          <ul class="dropdown-menu" style="min-width: unset; padding: 0;">
+                              <li>
+                                  @include('bugtracker.board.minimized', ['current_board'=>$commentPoint->board, 'commentPoints'=>[$commentPoint]])
+                              </li>
+                          </ul>
+                        </div>
                     </span>
                 </li>
             @endforeach
