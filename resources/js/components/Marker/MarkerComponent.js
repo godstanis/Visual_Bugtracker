@@ -4,8 +4,9 @@ import axios from 'axios';
 class MarkerComponent extends React.Component {
     constructor(props) {
         super(props);
+        this.api = props.api;
         this.comment_point = props.comment_point;
-        this.delete_href = window.location.href+'/comment_points';
+        this.delete_href = this.api.getRouteObj('delete').getPath();
     }
 
     deleteButtonClick(e) {
@@ -14,11 +15,9 @@ class MarkerComponent extends React.Component {
         let url = $(e.target).attr('href');
         if(url === undefined) { // if clicked on icon inside <a>
             url = $(e.target).closest('a').attr('href');
-            let token = $(e.target).closest('a').attr('data-token');
         }
 
-        axios.delete(url)
-            .then((response) => {
+        axios.delete(url).then((response) => {
                 console.log(response)
             });
     }
