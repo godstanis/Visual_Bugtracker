@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUndefinedClassInspection */
 
 namespace Tests\Feature\Bugtracker;
 
@@ -8,6 +8,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+use Bouncer;
 
 class TeamTest extends TestCase
 {
@@ -32,6 +34,69 @@ class TeamTest extends TestCase
         $this->project = factory(Project::class)->create(['user_id'=>$this->creator->id]);
         $this->project->members()->attach($this->member);
         $this->projectsTeamPage = '/tracker/project/' . $this->project->id . '/team';
+    }
+
+    public function testACreatorSetsAbilityAndRevokesIt() {
+        // Sets a manage ability
+        $this->actingAs($this->creator)
+            ->post($this->projectsTeamPage.'/allow', ['user'=>$this->member->name, 'ability_name' => 'manage'])
+            ->assertStatus(200);
+
+        $this->assertTrue($this->member->can('manage', $this->project));
+
+        // Revokes a manage ability
+        $this->actingAs($this->creator)
+            ->post($this->projectsTeamPage.'/disallow', ['user'=>$this->member->name, 'ability_name' => 'manage'])
+            ->assertStatus(200);
+
+        Bouncer::refresh();
+        $this->assertFalse($this->member->can('manage', $this->project));
+    }
+
+    public function testAManagerDoesNotSetAbilityAndDoesNotRevokeIt() {
+        $this->member->allow('manage', $this->project);
+        $this->project->members()->attach($this->user);
+
+        // Tries to set a manage ability
+        $this->actingAs($this->member)
+            ->post($this->projectsTeamPage.'/allow', ['user'=>$this->user->name, 'ability_name' => 'manage'])
+            ->assertStatus(403);
+
+        $this->assertFalse($this->user->can('manage', $this->project));
+
+
+        // Set the ability manually
+        $this->user->allow('manage', $this->project);
+        // Tries to revoke a manage ability
+        $this->actingAs($this->member)
+            ->post($this->projectsTeamPage.'/disallow', ['user'=>$this->user->name, 'ability_name' => 'manage'])
+            ->assertStatus(403);
+
+        Bouncer::refresh();
+        $this->assertTrue($this->user->can('manage', $this->project));
+
+    }
+
+    public function testAMemberDoesNotSetAbilityAndDoesNotRevokeIt() {
+        $this->project->members()->attach($this->user);
+
+        // Tries to set a manage ability
+        $this->actingAs($this->member)
+            ->post($this->projectsTeamPage.'/allow', ['user'=>$this->user->name, 'ability_name' => 'manage'])
+            ->assertStatus(403);
+
+        $this->assertFalse($this->user->can('manage', $this->project));
+
+
+        // Set the ability manually
+        $this->user->allow('manage', $this->project);
+        // Tries to revoke a manage ability
+        $this->actingAs($this->member)
+            ->post($this->projectsTeamPage.'/disallow', ['user'=>$this->user->name, 'ability_name' => 'manage'])
+            ->assertStatus(403);
+
+        Bouncer::refresh();
+        $this->assertTrue($this->user->can('manage', $this->project));
     }
 
     /**
