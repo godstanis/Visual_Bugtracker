@@ -10,15 +10,13 @@
 <script>
     (function() {
         window.auth_user = {};
+        window.auth_user.canManage = false;
+        window.auth_user.canRemoveMember = false;
         @can('delete', $project)
             window.auth_user.canRemoveMember = true;
-        @else
-            window.auth_user.canRemoveMember = false;
         @endcan
         @can('manage', $project)
             window.auth_user.canManage = true;
-        @else
-            window.auth_user.canManage = false;
         @endcan
     })();
 </script>
