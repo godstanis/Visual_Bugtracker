@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
+import pathApi from '../Api/PathAPI';
+
 class PathsRenderComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {paths:[]};
-        this.href = window.location.href+'/paths';
+        this.api = props.api;
     }
 
     componentDidMount() {
-        axios.get(this.href)
+        axios.get(this.api.getRouteObj('paths').getPath())
             .then((response) => {
             this.setState({paths:response.data});
         });
@@ -40,7 +42,7 @@ function Path(props) {
 if(document.getElementById('svg-area')) {
     console.log('PathsComponent initialized');
     ReactDOM.render(
-        <PathsRenderComponent />,
+        <PathsRenderComponent api={pathApi} />,
         document.getElementById('svg-area')
     );
 }
