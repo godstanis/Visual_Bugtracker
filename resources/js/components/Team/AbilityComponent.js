@@ -4,8 +4,7 @@ import axios from 'axios';
 class Ability extends React.Component {
     constructor(props) {
         super(props);
-        this.allow_href = window.location.href+'/allow';
-        this.dissallow_href = window.location.href+'/disallow';
+        this.api = this.props.api;
     }
 
     updateMembers() {
@@ -17,7 +16,7 @@ class Ability extends React.Component {
         let userName = this.props.member.name;
         let ability = e.target.dataset.ability;
         console.log(ability);
-        axios.post(this.allow_href , {user:userName, ability_name:ability})
+        axios.post(this.api.getRouteObj('allow').getPath() , {user:userName, ability_name:ability})
             .then((response) => {
                 this.updateMembers();
             }).catch(error => {});
@@ -28,7 +27,7 @@ class Ability extends React.Component {
         let userName = this.props.member.name;
         let ability = e.target.dataset.ability;
         console.log(ability);
-        axios.post(this.dissallow_href , {user:userName, ability_name:ability})
+        axios.post(this.api.getRouteObj('disallow').getPath() , {user:userName, ability_name:ability})
             .then((response) => {
                 this.updateMembers();
             }).catch(error => {});

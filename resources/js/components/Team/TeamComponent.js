@@ -4,16 +4,16 @@ import axios from 'axios';
 import MemberComponent from './MemberComponent';
 import SearchForm from './SearchMemberFormComponent';
 
+import teamApi from '../Api/TeamAPI';
+
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 class TeamComponent extends React.Component {
     constructor(props) {
         super(props);
+        this.api = props.api;
         this.state = {users:[], members:[]};
-        this.members_href = window.location.href; // ajax
-        this.attach_href = window.location.href+'/attach';
-        this.detach_href = window.location.href+'/detach';
-        this.search_href = window.location.href+'/search-member';
+
         this.csrf = Laravel.csrfToken;
 
         this.authCanDelete = window.auth_user.canRemoveMember;
@@ -27,7 +27,7 @@ class TeamComponent extends React.Component {
     // Updates member list wia sending a get request to the server
     updateMembersListRequest() {
         console.log('updating members');
-        axios.get(this.members_href)
+        axios.get(this.api.getRouteObj('members').getPath())
             .then((response) => {
                 this.setState({members:response.data});
             }).catch(error => {});
@@ -37,7 +37,7 @@ class TeamComponent extends React.Component {
     attachUser(e) {
         e.preventDefault();
         let userName = e.target.dataset.userName;
-        axios.post(this.attach_href , {name:userName})
+        axios.post(this.api.getRouteObj('attach').getPath() , {name:userName})
             .then((response) => {
                 this.updateMembersListRequest();
             }).catch(error => {});
@@ -54,9 +54,9 @@ class TeamComponent extends React.Component {
 
     render() {
         let links = {
-            attach: this.attach_href,
-            detach: this.detach_href,
-            search: this.search_href,
+            attach: this.api.getRouteObj('attach').getPath(),
+            detach: this.api.getRouteObj('detach').getPath(),
+            search: this.api.getRouteObj('search').getPath(),
         };
 
         return (
@@ -66,6 +66,7 @@ class TeamComponent extends React.Component {
                             {this.state.members.map( (member) =>
                                 <MemberComponent
                                 key={'member_'+member.name}
+                                api={this.api}
                                 member={member} links={links}
                                 canDelete={this.authCanDelete}
                                 canManage={this.authCanManage}
@@ -75,7 +76,7 @@ class TeamComponent extends React.Component {
                     </table>
                     { (this.authCanDelete || this.authCanManage) &&
                         <div className="col-md-6 col-md-offset-3">
-                            <SearchForm csrf={this.csrf} links={links} attachUser={this.attachUser.bind(this)}/>
+                            <SearchForm api={this.api} csrf={this.csrf} links={links} attachUser={this.attachUser.bind(this)}/>
                         </div>
                     }
                 </div>
@@ -86,7 +87,7 @@ class TeamComponent extends React.Component {
 if(document.getElementById('search-team-component')) {
     console.log('TeamComponent initialized');
     ReactDOM.render(
-        <TeamComponent />,
+        <TeamComponent api={teamApi} />,
         document.getElementById('search-team-component')
     );
 }

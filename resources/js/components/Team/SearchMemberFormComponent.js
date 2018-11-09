@@ -6,7 +6,7 @@ class SearchForm extends React.Component {
         super(props);
         this.props = props;
         this.state = {users:[]};
-        this.search_href = window.location.href+'/search-member';
+        this.api = this.props.api;
     }
 
     // Search users on input change
@@ -19,7 +19,7 @@ class SearchForm extends React.Component {
 
     // Send a search request to the server and update search output state
     searchUser(name) {
-        axios.get(this.search_href, {params:{name:name}})
+        axios.get(this.api.getRouteObj('search').getPath(), {params:{name:name}})
             .then((response) => {
                 console.log(response.data);
                 this.setState({users:response.data});
