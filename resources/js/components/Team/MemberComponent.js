@@ -5,7 +5,7 @@ class Member extends React.Component {
     constructor(props) {
         super(props);
         this.props = props;
-        this.api = this.props.api;
+        this.api = props.api;
     }
 
     render() {
@@ -60,7 +60,7 @@ class MemberControlPanel extends React.Component {
                 </span>
                 {(this.props.canDelete) &&
                 <Ability key={'ability_'+this.props.member.name}
-                         api={this.api}
+                         api={this.props.api}
                          member={this.props.member}
                          abilities={this.props.member.abilities}
                          updateMembers={this.props.updateMembers.bind(this)} />

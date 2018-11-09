@@ -4,7 +4,7 @@ import axios from 'axios';
 class Ability extends React.Component {
     constructor(props) {
         super(props);
-        this.api = this.props.api;
+        this.api = props.api;
     }
 
     updateMembers() {

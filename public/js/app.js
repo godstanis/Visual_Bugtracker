@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(8);
+var bind = __webpack_require__(10);
 
 /*global toString:true*/
 
@@ -414,10 +414,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(9);
+    adapter = __webpack_require__(11);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(9);
+    adapter = __webpack_require__(11);
   }
   return adapter;
 }
@@ -540,6 +540,114 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ApiCollection = function () {
+    function ApiCollection(routeFactory) {
+        _classCallCheck(this, ApiCollection);
+
+        this.routeFactory = routeFactory;
+        this.routes = [];
+    }
+
+    _createClass(ApiCollection, [{
+        key: "bindRoutes",
+        value: function bindRoutes(arr) {
+            var _this = this;
+
+            arr.forEach(function (elem) {
+                _this.bindRoute(elem.name, elem.route, elem.method);
+            });
+        }
+    }, {
+        key: "bindRoute",
+        value: function bindRoute(name, url, method) {
+            var route = this.routeFactory.createRoute(name, url, method);
+            this.routes.push(route);
+        }
+    }, {
+        key: "getRouteObj",
+        value: function getRouteObj(name) {
+            return this.routes.filter(function (obj) {
+                return obj.name === name;
+            })[0];
+        }
+    }]);
+
+    return ApiCollection;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (ApiCollection);
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/*
+    Unifies a route interface for the client classes.
+ */
+var Route = function () {
+    function Route(name, url, method) {
+        _classCallCheck(this, Route);
+
+        this.name = name;
+        this.url = url;
+        this.method = method;
+    }
+
+    _createClass(Route, [{
+        key: "getName",
+        value: function getName() {
+            return this.name;
+        }
+    }, {
+        key: "getPath",
+        value: function getPath() {
+            return this.url;
+        }
+    }, {
+        key: "getMethod",
+        value: function getMethod() {
+            return this.method;
+        }
+    }]);
+
+    return Route;
+}();
+/*
+    A route factory, that builds a route class.
+ */
+
+
+var RouteFactory = function () {
+    function RouteFactory() {
+        _classCallCheck(this, RouteFactory);
+    }
+
+    _createClass(RouteFactory, [{
+        key: "createRoute",
+        value: function createRoute(name, url, method) {
+            return new Route(name, url, method);
+        }
+    }]);
+
+    return RouteFactory;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (RouteFactory);
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
@@ -564,7 +672,7 @@ var Ability = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Ability.__proto__ || Object.getPrototypeOf(Ability)).call(this, props));
 
-        _this.api = _this.props.api;
+        _this.api = props.api;
         return _this;
     }
 
@@ -631,7 +739,7 @@ var Ability = function (_React$Component) {
 /* harmony default export */ __webpack_exports__["default"] = (Ability);
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -728,7 +836,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -826,7 +934,7 @@ module.exports = checkPropTypes;
 
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -844,7 +952,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -855,7 +963,7 @@ var settle = __webpack_require__(33);
 var buildURL = __webpack_require__(35);
 var parseHeaders = __webpack_require__(36);
 var isURLSameOrigin = __webpack_require__(37);
-var createError = __webpack_require__(10);
+var createError = __webpack_require__(12);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(38);
 
 module.exports = function xhrAdapter(config) {
@@ -1028,7 +1136,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1052,7 +1160,7 @@ module.exports = function createError(message, config, code, response) {
 
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1064,7 +1172,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1090,14 +1198,14 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AbilityComponent__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AbilityComponent__ = __webpack_require__(7);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1118,7 +1226,7 @@ var Member = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Member.__proto__ || Object.getPrototypeOf(Member)).call(this, props));
 
         _this.props = props;
-        _this.api = _this.props.api;
+        _this.api = props.api;
         return _this;
     }
 
@@ -1199,7 +1307,7 @@ var MemberControlPanel = function (_React$Component2) {
                         detachUser: this.props.detachUser.bind(this) })
                 ),
                 this.props.canDelete && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__AbilityComponent__["default"], { key: 'ability_' + this.props.member.name,
-                    api: this.api,
+                    api: this.props.api,
                     member: this.props.member,
                     abilities: this.props.member.abilities,
                     updateMembers: this.props.updateMembers.bind(this) }),
@@ -1236,7 +1344,7 @@ function ManagerBadge(props) {
 /* harmony default export */ __webpack_exports__["default"] = (Member);
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1374,8 +1482,6 @@ function FoundUser(props) {
 /* harmony default export */ __webpack_exports__["default"] = (SearchForm);
 
 /***/ }),
-/* 15 */,
-/* 16 */,
 /* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1490,7 +1596,7 @@ var MarkerComponent = function (_React$Component) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(19);
-module.exports = __webpack_require__(57);
+module.exports = __webpack_require__(58);
 
 
 /***/ }),
@@ -1512,9 +1618,9 @@ __webpack_require__(20);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-__webpack_require__(5);
-__webpack_require__(13);
-__webpack_require__(14);
+__webpack_require__(7);
+__webpack_require__(15);
+__webpack_require__(16);
 __webpack_require__(47);
 __webpack_require__(54);
 
@@ -30950,8 +31056,8 @@ if (true) {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(6);
-var checkPropTypes = __webpack_require__(7);
+var _assign = __webpack_require__(8);
+var checkPropTypes = __webpack_require__(9);
 
 // TODO: this is special because it gets imported during build.
 
@@ -32702,7 +32808,7 @@ module.exports = ReactPropTypesSecret;
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(8);
+var bind = __webpack_require__(10);
 var Axios = __webpack_require__(30);
 var defaults = __webpack_require__(3);
 
@@ -32737,9 +32843,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(12);
+axios.Cancel = __webpack_require__(14);
 axios.CancelToken = __webpack_require__(45);
-axios.isCancel = __webpack_require__(11);
+axios.isCancel = __webpack_require__(13);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -33061,7 +33167,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(10);
+var createError = __webpack_require__(12);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -33477,7 +33583,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(42);
-var isCancel = __webpack_require__(11);
+var isCancel = __webpack_require__(13);
 var defaults = __webpack_require__(3);
 
 /**
@@ -33628,7 +33734,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(12);
+var Cancel = __webpack_require__(14);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -33731,9 +33837,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MemberComponent__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SearchMemberFormComponent__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Api_TeamAPI__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MemberComponent__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SearchMemberFormComponent__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Api_TeamAPI__ = __webpack_require__(53);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -33887,8 +33993,8 @@ if (true) {
 'use strict';
 
 var React = __webpack_require__(1);
-var _assign = __webpack_require__(6);
-var checkPropTypes = __webpack_require__(7);
+var _assign = __webpack_require__(8);
+var checkPropTypes = __webpack_require__(9);
 var scheduler = __webpack_require__(49);
 var tracing = __webpack_require__(51);
 
@@ -53874,7 +53980,22 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 
 
 /***/ }),
-/* 53 */,
+/* 53 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Classes_Api__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Classes_Route__ = __webpack_require__(6);
+
+
+
+var teamApi = new __WEBPACK_IMPORTED_MODULE_0__Classes_Api__["a" /* default */](new __WEBPACK_IMPORTED_MODULE_1__Classes_Route__["a" /* default */]());
+
+teamApi.bindRoutes([{ name: 'members', route: window.location.href, method: 'GET' }, { name: 'attach', route: window.location.href + '/attach', method: 'POST' }, { name: 'detach', route: window.location.href + '/detach', method: 'POST' }, { name: 'search', route: window.location.href + '/search-member', method: 'GET' }, { name: 'allow', route: window.location.href + '/allow', method: 'POST' }, { name: 'disallow', route: window.location.href + '/disallow', method: 'POST' }]);
+
+/* harmony default export */ __webpack_exports__["a"] = (teamApi);
+
+/***/ }),
 /* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -53886,7 +54007,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Api_PathAPI__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Api_PathAPI__ = __webpack_require__(55);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53955,7 +54076,22 @@ if (document.getElementById('svg-area')) {
 }
 
 /***/ }),
-/* 55 */,
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Classes_Api__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Classes_Route__ = __webpack_require__(6);
+
+
+
+var pathApi = new __WEBPACK_IMPORTED_MODULE_0__Classes_Api__["a" /* default */](new __WEBPACK_IMPORTED_MODULE_1__Classes_Route__["a" /* default */]());
+
+pathApi.bindRoutes([{ name: 'paths', route: window.location.href + '/paths', method: 'GET' }]);
+
+/* harmony default export */ __webpack_exports__["a"] = (pathApi);
+
+/***/ }),
 /* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -53967,7 +54103,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Api_MarkerAPI__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Api_MarkerAPI__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MarkerComponent__ = __webpack_require__(17);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -54030,168 +54166,11 @@ if (document.getElementById('markers-container')) {
 
 /***/ }),
 /* 57 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 58 */,
-/* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */,
-/* 69 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ApiCollection = function () {
-    function ApiCollection(routeFactory) {
-        _classCallCheck(this, ApiCollection);
-
-        this.routeFactory = routeFactory;
-        this.routes = [];
-    }
-
-    _createClass(ApiCollection, [{
-        key: "bindRoutes",
-        value: function bindRoutes(arr) {
-            var _this = this;
-
-            arr.forEach(function (elem) {
-                _this.bindRoute(elem.name, elem.route, elem.method);
-            });
-        }
-    }, {
-        key: "bindRoute",
-        value: function bindRoute(name, url, method) {
-            var route = this.routeFactory.createRoute(name, url, method);
-            this.routes.push(route);
-        }
-    }, {
-        key: "getRouteObj",
-        value: function getRouteObj(name) {
-            return this.routes.filter(function (obj) {
-                return obj.name === name;
-            })[0];
-        }
-    }]);
-
-    return ApiCollection;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (ApiCollection);
-
-/***/ }),
-/* 70 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/*
-    Unifies a route interface for the client classes.
- */
-var Route = function () {
-    function Route(name, url, method) {
-        _classCallCheck(this, Route);
-
-        this.name = name;
-        this.url = url;
-        this.method = method;
-    }
-
-    _createClass(Route, [{
-        key: "getName",
-        value: function getName() {
-            return this.name;
-        }
-    }, {
-        key: "getPath",
-        value: function getPath() {
-            return this.url;
-        }
-    }, {
-        key: "getMethod",
-        value: function getMethod() {
-            return this.method;
-        }
-    }]);
-
-    return Route;
-}();
-/*
-    A route factory, that builds a route class.
- */
-
-
-var RouteFactory = function () {
-    function RouteFactory() {
-        _classCallCheck(this, RouteFactory);
-    }
-
-    _createClass(RouteFactory, [{
-        key: "createRoute",
-        value: function createRoute(name, url, method) {
-            return new Route(name, url, method);
-        }
-    }]);
-
-    return RouteFactory;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (RouteFactory);
-
-/***/ }),
-/* 71 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Classes_Api__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Classes_Route__ = __webpack_require__(70);
-
-
-
-var teamApi = new __WEBPACK_IMPORTED_MODULE_0__Classes_Api__["a" /* default */](new __WEBPACK_IMPORTED_MODULE_1__Classes_Route__["a" /* default */]());
-
-teamApi.bindRoutes([{ name: 'members', route: window.location.href, method: 'GET' }, { name: 'attach', route: window.location.href + '/attach', method: 'POST' }, { name: 'detach', route: window.location.href + '/detach', method: 'POST' }, { name: 'search', route: window.location.href + '/search-member', method: 'GET' }, { name: 'allow', route: window.location.href + '/allow', method: 'POST' }, { name: 'disallow', route: window.location.href + '/disallow', method: 'POST' }]);
-
-/* harmony default export */ __webpack_exports__["a"] = (teamApi);
-
-/***/ }),
-/* 72 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Classes_Api__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Classes_Route__ = __webpack_require__(70);
-
-
-
-var pathApi = new __WEBPACK_IMPORTED_MODULE_0__Classes_Api__["a" /* default */](new __WEBPACK_IMPORTED_MODULE_1__Classes_Route__["a" /* default */]());
-
-pathApi.bindRoutes([{ name: 'paths', route: window.location.href + '/paths', method: 'GET' }]);
-
-/* harmony default export */ __webpack_exports__["a"] = (pathApi);
-
-/***/ }),
-/* 73 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Classes_Api__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Classes_Route__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Classes_Api__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Classes_Route__ = __webpack_require__(6);
 
 
 
@@ -54200,6 +54179,12 @@ var markerApi = new __WEBPACK_IMPORTED_MODULE_0__Classes_Api__["a" /* default */
 markerApi.bindRoutes([{ name: 'markers', route: window.location.href + '/comment_points', method: 'GET' }, { name: 'delete', route: window.location.href + '/comment_points', method: 'DELETE' }]);
 
 /* harmony default export */ __webpack_exports__["a"] = (markerApi);
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
