@@ -18,6 +18,7 @@ Bug tracking system with a visual editor.
 ## Project installation:
 ### Pre requirements:
 - Basic LAMP/LEMP or WAMP/WEMP server configuration.
+- [MySQL 5.7+](https://www.mysql.com/ "MySQL official website") is required.
 - [PHP >=7.1.3](https://php.net "PHP official website")
     - [Composer](https://getcomposer.org "Composer official website")
     - [Laravel ^5.7](https://laravel.com "Laravel official website")
