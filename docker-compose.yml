@@ -9,6 +9,8 @@ services:
     depends_on:
       - mysql
     container_name: vb_php
+
+  # Composer service
   composer:
     restart: 'no'
     image: composer:1.9.0
