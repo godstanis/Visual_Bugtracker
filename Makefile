@@ -11,6 +11,7 @@ init:
 	docker exec vb_php php artisan migrate --seed
 	docker exec vb_php php artisan storage:link
 	docker exec vb_php php artisan bugwall:init --storage
+	docker exec vb_php php artisan key:generate
 clear-volumes:
 	rm -rf .database
 	rm -rf .nginx_logs
