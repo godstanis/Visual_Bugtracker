@@ -1,5 +1,6 @@
 permissions:## Set permissions for newly created volumes
 	chmod -R 755 .database .nginx_logs
+	chmod -R 777 storage
 up:## Up the project, apply migrations and permissions
 	cp .env.example .env
 	docker-compose up -d
